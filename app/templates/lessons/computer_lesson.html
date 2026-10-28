@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Computer Fundamentals - AI-Powered Accessible Learning</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <header class="navbar">
+
+        <div class="logo">
+            AI-Powered Learning
+        </div>
+
+        <nav>
+            <a href="/">Home</a>
+            <a href="{{ url_for('learn') }}">Learn</a>
+            <a href="{{ url_for('text_lessons') }}">Text Lessons</a>
+            <a href="/#convert">Convert</a>
+            <a href="/#practice">Practice</a>
+        </nav>
+
+        {% if session.get('user_id') %}
+            <span class="welcome-user">
+                Welcome, {{ session.get('user_name') }}
+            </span>
+
+            <a href="{{ url_for('profile') }}" class="profile-btn">
+                Profile
+            </a>
+
+            <a href="{{ url_for('logout') }}" class="logout-btn">
+                Logout
+            </a>
+        {% else %}
+            <a href="{{ url_for('login') }}" class="login-btn">
+                Login
+            </a>
+        {% endif %}
+
+    </header>
+
+
+    <section class="learn-hero">
+
+        <div>
+
+            <span class="tag">LESSON 03</span>
+
+            <h1>
+                Computer<br>
+                Fundamentals
+            </h1>
+
+            <p>
+                Learn the basic concepts of computers,
+                hardware, software and their functions.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <section class="section">
+
+        <div class="section-title">
+
+            <span>COMPUTER BASICS</span>
+
+            <h2>What is a Computer?</h2>
+
+            <p>
+                A computer is an electronic device that
+                processes data and produces useful information.
+            </p>
+
+        </div>
+
+
+        <div class="lesson-content">
+
+            <h2>Definition</h2>
+
+            <p>
+                A computer is an electronic machine that accepts
+                data as input, processes it according to instructions,
+                stores information and produces output.
+            </p>
+
+
+            <h2>Simple Explanation</h2>
+
+            <p>
+                In simple words, a computer takes information,
+                processes it and gives us the required result.
+            </p>
+
+
+            <h2>Main Parts of a Computer</h2>
+
+            <div class="feature-grid">
+
+                <div class="feature-card">
+
+                    <div class="icon">⌨️</div>
+
+                    <h3>Input Devices</h3>
+
+                    <p>
+                        Devices used to enter data into a computer.
+                        Examples include keyboard, mouse and microphone.
+                    </p>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <div class="icon">🧠</div>
+
+                    <h3>CPU</h3>
+
+                    <p>
+                        The Central Processing Unit processes
+                        instructions and controls computer operations.
+                    </p>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <div class="icon">💾</div>
+
+                    <h3>Memory</h3>
+
+                    <p>
+                        Memory stores data and instructions
+                        needed by the computer.
+                    </p>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <div class="icon">🖥️</div>
+
+                    <h3>Output Devices</h3>
+
+                    <p>
+                        Devices that display or produce results.
+                        Examples include monitor, printer and speakers.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <h2>Hardware and Software</h2>
+
+            <p>
+                Computer systems mainly consist of hardware
+                and software.
+            </p>
+
+
+            <div class="feature-grid">
+
+                <div class="feature-card">
+
+                    <div class="icon">🖥️</div>
+
+                    <h3>Hardware</h3>
+
+                    <p>
+                        Hardware refers to the physical components
+                        of a computer that we can see and touch.
+                    </p>
+
+                    <p>
+                        Examples: Keyboard, mouse, monitor,
+                        CPU and hard disk.
+                    </p>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <div class="icon">💻</div>
+
+                    <h3>Software</h3>
+
+                    <p>
+                        Software is a set of programs and instructions
+                        that tells the computer what to do.
+                    </p>
+
+                    <p>
+                        Examples: Windows, web browsers,
+                        Microsoft Word and applications.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <h2>Applications of Computers</h2>
+
+            <ul>
+
+                <li>Education and online learning</li>
+
+                <li>Banking and financial services</li>
+
+                <li>Healthcare and hospitals</li>
+
+                <li>Communication and social media</li>
+
+                <li>Business and offices</li>
+
+                <li>Entertainment and gaming</li>
+
+            </ul>
+
+
+            <h2>Key Points</h2>
+
+            <div class="feature-grid">
+
+                <div class="feature-card">
+
+                    <h3>01</h3>
+
+                    <p>
+                        Computers process data and produce information.
+                    </p>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <h3>02</h3>
+
+                    <p>
+                        Hardware consists of physical components.
+                    </p>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <h3>03</h3>
+
+                    <p>
+                        Software provides instructions to hardware.
+                    </p>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <h3>04</h3>
+
+                    <p>
+                        Computers are used in many areas of daily life.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <h2>Real-World Example</h2>
+
+            <p>
+                When a student uses a laptop to attend an online class,
+                the keyboard and mouse provide input, the CPU processes
+                the information, the software runs the application,
+                and the monitor displays the lesson.
+            </p>
+
+
+            <h2>Quick Review</h2>
+
+            <div class="feature-grid">
+
+                <div class="feature-card">
+
+                    <h3>What is Hardware?</h3>
+
+                    <p>
+                        The physical parts of a computer.
+                    </p>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <h3>What is Software?</h3>
+
+                    <p>
+                        Programs and instructions used by a computer.
+                    </p>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <h3>What is CPU?</h3>
+
+                    <p>
+                        The main processing unit of a computer.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- Computer Quiz Button -->
+
+            <div style="text-align: center; margin-top: 40px;">
+
+                <a href="{{ url_for('computer_quiz') }}"
+                   class="quiz-btn">
+
+                    📝 Take Computer Quiz →
+
+                </a>
+
+            </div>
+
+
+            <!-- Back to Lessons Button -->
+
+            <div style="text-align: center; margin-top: 20px;">
+
+                <a href="{{ url_for('text_lessons') }}"
+                   class="primary-btn">
+
+                    ← Back to Lessons
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <footer>
+
+        <h3>AI-Powered Accessible Learning</h3>
+
+        <p>
+            Learning App for Deaf and Mute Students
+        </p>
+
+        <p>
+            © 2026 AI-Powered Accessible Learning
+        </p>
+
+    </footer>
+
+</body>
+
+</html>

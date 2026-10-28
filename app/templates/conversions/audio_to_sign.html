@@ -1,0 +1,770 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio to Sign Language | Accessible Learning</title>
+
+    <style>
+        :root {
+            --primary: #2855b5;
+            --primary-dark: #1d4191;
+            --background: #f3f6fc;
+            --text: #243047;
+            --muted: #64748b;
+            --border: #dce4f2;
+            --success: #15803d;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            padding: 32px 18px;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: var(--background);
+            color: var(--text);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .back-button-container { margin-bottom: 22px; }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            min-height: 44px;
+            padding: 11px 18px;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            background: white;
+            color: var(--primary);
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        .back-button:hover { background: #e9efff; }
+
+        .back-button:focus-visible,
+        .button:focus-visible,
+        .remove-button:focus-visible {
+            outline: 3px solid #93b4ff;
+            outline-offset: 3px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .header-icon {
+            width: 66px;
+            height: 66px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            border-radius: 18px;
+            background: #e3ebff;
+            font-size: 32px;
+        }
+
+        h1 {
+            margin: 0 0 12px;
+            color: var(--primary);
+            font-size: clamp(26px, 4vw, 36px);
+        }
+
+        .subtitle {
+            max-width: 600px;
+            margin: 0 auto;
+            color: var(--muted);
+            font-size: 16px;
+            line-height: 1.7;
+        }
+
+        .card {
+            padding: 28px;
+            margin-bottom: 22px;
+            background: white;
+            border: 1px solid #e9eef7;
+            border-radius: 18px;
+            box-shadow: 0 8px 28px #263d6610;
+        }
+
+        .section-title {
+            margin: 0 0 8px;
+            font-size: 21px;
+        }
+
+        .section-description {
+            margin: 0 0 22px;
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .upload-area {
+            padding: 30px 18px;
+            text-align: center;
+            border: 2px dashed #a8bce6;
+            border-radius: 14px;
+            background: #f8faff;
+            transition: background 0.2s, border-color 0.2s;
+        }
+
+        .upload-area.dragover {
+            background: #eaf0ff;
+            border-color: var(--primary);
+        }
+
+        .upload-icon {
+            margin-bottom: 12px;
+            font-size: 38px;
+        }
+
+        .upload-title {
+            margin-bottom: 8px;
+            font-size: 17px;
+            font-weight: 600;
+        }
+
+        .upload-help {
+            margin-bottom: 20px;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .file-input { display: none; }
+
+        .button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            min-height: 44px;
+            padding: 12px 20px;
+            border: 0;
+            border-radius: 9px;
+            background: var(--primary);
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        .button:hover { background: var(--primary-dark); }
+
+        .button:disabled,
+        .remove-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .button-secondary {
+            background: #e9efff;
+            color: var(--primary);
+        }
+
+        .button-secondary:hover { background: #dce6ff; }
+
+        .file-details {
+            display: none;
+            align-items: center;
+            gap: 14px;
+            margin-top: 18px;
+            padding: 15px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: white;
+            text-align: left;
+        }
+
+        .file-details.visible { display: flex; }
+
+        .file-icon {
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            border-radius: 10px;
+            background: #e9efff;
+            font-size: 22px;
+        }
+
+        .file-info { flex: 1; min-width: 0; }
+
+        .file-name {
+            margin-bottom: 5px;
+            overflow-wrap: anywhere;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .file-size {
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .remove-button {
+            padding: 8px;
+            border: 0;
+            border-radius: 7px;
+            background: #fff0f0;
+            color: #b42318;
+            cursor: pointer;
+        }
+
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 22px;
+        }
+
+        .status {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-top: 18px;
+            padding: 14px;
+            border-radius: 10px;
+            background: #f1f5f9;
+            color: #475569;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .status.success {
+            background: #ecfdf3;
+            color: var(--success);
+        }
+
+        .status.error {
+            background: #fff1f2;
+            color: #be123c;
+        }
+
+        .status-icon { flex-shrink: 0; }
+
+        .progress-track {
+            display: none;
+            height: 6px;
+            margin-top: 16px;
+            overflow: hidden;
+            border-radius: 10px;
+            background: #e2e8f0;
+        }
+
+        .progress-track.visible { display: block; }
+
+        .progress-bar {
+            width: 35%;
+            height: 100%;
+            border-radius: 10px;
+            background: var(--primary);
+            animation: progress 1.3s ease-in-out infinite alternate;
+        }
+
+        @keyframes progress {
+            from { transform: translateX(-10%); }
+            to { transform: translateX(200%); }
+        }
+
+        .result-section { display: none; }
+        .result-section.visible { display: block; }
+
+        .transcript {
+            width: 100%;
+            min-height: 110px;
+            padding: 15px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: #f8faff;
+            color: var(--text);
+            font: inherit;
+            line-height: 1.7;
+            resize: vertical;
+        }
+
+        .sign-placeholder {
+            padding: 24px 18px;
+            text-align: center;
+            border: 1px dashed var(--border);
+            border-radius: 12px;
+            background: #fafcff;
+        }
+
+        .sign-placeholder p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .sign-video {
+            display: none;
+            width: 100%;
+            max-width: 560px;
+            max-height: 520px;
+            margin: 16px auto 0;
+            border-radius: 12px;
+            background: #111827;
+        }
+
+        .sign-video.visible { display: block; }
+
+        .subtitle-note {
+            margin: 10px 0 0;
+            color: var(--muted);
+            text-align: center;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .sign-heading { margin-top: 28px; }
+
+        .footer-note {
+            margin: 18px 0 0;
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 22px 12px; }
+            .card { padding: 20px 16px; }
+            .actions .button { width: 100%; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<main class="container">
+
+    <div class="back-button-container">
+        <a href="{{ url_for('learning_methods') }}" class="back-button">
+            <span aria-hidden="true">←</span>
+            Back to Learning Methods
+        </a>
+    </div>
+
+    <header class="header">
+        <div class="header-icon" aria-hidden="true">🤟</div>
+        <h1>Audio to Sign Language</h1>
+        <p class="subtitle">
+            Convert spoken communication into text and view available
+            sign-language demonstrations with captions.
+        </p>
+    </header>
+
+    <section class="card" aria-labelledby="uploadHeading">
+        <h2 class="section-title" id="uploadHeading">Upload your audio</h2>
+        <p class="section-description">
+            Select an audio recording from your device. The maximum file size is 25 MB.
+        </p>
+
+        <div class="upload-area" id="uploadArea">
+            <div class="upload-icon" aria-hidden="true">🎧</div>
+            <div class="upload-title">Drag and drop your audio file here</div>
+            <div class="upload-help">Or select a file from your device</div>
+
+            <input
+                type="file"
+                id="audioFile"
+                name="audio_file"
+                class="file-input"
+                accept=".wav,.mp3,.ogg,.flac,.m4a,audio/*"
+                aria-label="Choose an audio file"
+            >
+
+            <button type="button" class="button" id="chooseFileButton">
+                📁 Choose Audio File
+            </button>
+
+            <div class="file-details" id="fileDetails">
+                <div class="file-icon" aria-hidden="true">🎵</div>
+                <div class="file-info">
+                    <div class="file-name" id="fileName"></div>
+                    <div class="file-size" id="fileSize"></div>
+                </div>
+                <button
+                    type="button"
+                    class="remove-button"
+                    id="removeFileButton"
+                    aria-label="Remove selected audio file"
+                >Remove</button>
+            </div>
+        </div>
+
+        <div class="actions">
+            <button type="button" class="button" id="convertButton" disabled>
+                🤟 Convert to Sign Language
+            </button>
+            <button type="button" class="button button-secondary" id="resetButton">
+                Reset
+            </button>
+        </div>
+
+        <div class="status" id="status" role="status" aria-live="polite">
+            <span class="status-icon" aria-hidden="true">ℹ️</span>
+            <span id="statusText">Please select an audio file to get started.</span>
+        </div>
+
+        <div class="progress-track" id="progressTrack" aria-hidden="true">
+            <div class="progress-bar"></div>
+        </div>
+
+        <p class="footer-note">
+            Available sign demonstrations are matched by recognized words.
+            The current prototype includes the word AVOID.
+        </p>
+    </section>
+
+    <section
+        class="card result-section"
+        id="resultSection"
+        aria-labelledby="resultHeading"
+    >
+        <h2 class="section-title" id="resultHeading">Conversion results</h2>
+        <p class="section-description">
+            Review the recognized speech and its available sign-language visual.
+        </p>
+
+        <label for="transcript"><strong>Recognized text</strong></label>
+        <textarea
+            id="transcript"
+            class="transcript"
+            placeholder="Recognized speech will appear here..."
+            readonly
+        ></textarea>
+
+        <h3 class="sign-heading">Sign language visuals</h3>
+
+        <div class="sign-placeholder" id="signPlaceholder">
+            <p id="signMessage">
+                A matching sign demonstration will appear here after conversion.
+            </p>
+        </div>
+
+        <video
+            id="signVideo"
+            class="sign-video"
+            controls
+            playsinline
+            preload="metadata"
+            aria-label="AVOID sign language demonstration with English subtitles"
+        >
+            <track
+                id="signSubtitles"
+                kind="captions"
+                label="English"
+                srclang="en"
+                src="{{ url_for('static', filename='signs/avoid.vtt') }}"
+                default
+            >
+            Your browser does not support video playback.
+        </video>
+
+        <p class="subtitle-note">
+            To show or hide subtitles, open the video player's captions (CC) menu,
+            if available.
+        </p>
+    </section>
+</main>
+
+<script>
+    const audioFile = document.getElementById("audioFile");
+    const uploadArea = document.getElementById("uploadArea");
+    const chooseFileButton = document.getElementById("chooseFileButton");
+    const removeFileButton = document.getElementById("removeFileButton");
+    const convertButton = document.getElementById("convertButton");
+    const resetButton = document.getElementById("resetButton");
+
+    const fileDetails = document.getElementById("fileDetails");
+    const fileName = document.getElementById("fileName");
+    const fileSize = document.getElementById("fileSize");
+
+    const status = document.getElementById("status");
+    const statusText = document.getElementById("statusText");
+    const progressTrack = document.getElementById("progressTrack");
+
+    const resultSection = document.getElementById("resultSection");
+    const transcript = document.getElementById("transcript");
+    const signMessage = document.getElementById("signMessage");
+    const signVideo = document.getElementById("signVideo");
+
+    const MAX_FILE_SIZE = 25 * 1024 * 1024;
+    const CONVERT_URL = "{{ url_for('audio_to_sign_convert') }}";
+    const AVOID_VIDEO_URL =
+        "{{ url_for('static', filename='signs/avoid.mp4') }}";
+
+    function formatFileSize(bytes) {
+        if (bytes < 1024) return bytes + " bytes";
+        if (bytes < 1024 * 1024) {
+            return (bytes / 1024).toFixed(1) + " KB";
+        }
+        return (bytes / (1024 * 1024)).toFixed(2) + " MB";
+    }
+
+    function setStatus(message, type = "info") {
+        statusText.textContent = message;
+        status.className = "status";
+
+        if (type === "success") status.classList.add("success");
+        if (type === "error") status.classList.add("error");
+
+        const icons = {
+            info: "ℹ️",
+            success: "✅",
+            error: "⚠️"
+        };
+
+        status.querySelector(".status-icon").textContent =
+            icons[type] || icons.info;
+    }
+
+    function clearSignVisual() {
+        signVideo.pause();
+        signVideo.removeAttribute("src");
+        signVideo.load();
+        signVideo.classList.remove("visible");
+        signVideo.onerror = null;
+    }
+
+    function showSignVisual(recognizedText) {
+        clearSignVisual();
+
+        const words = recognizedText
+            .toLocaleLowerCase()
+            .replace(/[^\p{L}\p{N}\s]/gu, " ")
+            .split(/\s+/)
+            .filter(Boolean);
+
+        if (words.includes("avoid")) {
+            signMessage.textContent =
+                'ISL demonstration for "AVOID" is available below.';
+
+            signVideo.onerror = function () {
+                clearSignVisual();
+                signMessage.textContent =
+                    "The AVOID video could not be loaded. Check that " +
+                    "app/static/signs/avoid.mp4 exists.";
+            };
+
+            signVideo.src = AVOID_VIDEO_URL;
+            signVideo.load();
+            signVideo.classList.add("visible");
+            return true;
+        }
+
+        signMessage.textContent =
+            "No matching sign video is available for the recognized words yet.";
+
+        return false;
+    }
+
+    function clearSelectedFile() {
+        audioFile.value = "";
+        fileDetails.classList.remove("visible");
+        fileName.textContent = "";
+        fileSize.textContent = "";
+        convertButton.disabled = true;
+
+        resultSection.classList.remove("visible");
+        transcript.value = "";
+        clearSignVisual();
+
+        signMessage.textContent =
+            "A matching sign demonstration will appear here after conversion.";
+
+        setStatus("Please select an audio file to get started.");
+    }
+
+    function showSelectedFile(file) {
+        if (!file) {
+            clearSelectedFile();
+            return;
+        }
+
+        if (file.size > MAX_FILE_SIZE) {
+            clearSelectedFile();
+            setStatus(
+                "Please choose an audio file no larger than 25 MB.",
+                "error"
+            );
+            return;
+        }
+
+        fileName.textContent = file.name;
+        fileSize.textContent = formatFileSize(file.size);
+        fileDetails.classList.add("visible");
+        convertButton.disabled = false;
+
+        resultSection.classList.remove("visible");
+        transcript.value = "";
+        clearSignVisual();
+
+        signMessage.textContent =
+            "A matching sign demonstration will appear here after conversion.";
+
+        setStatus("Audio file selected. Ready to recognize speech.");
+    }
+
+    chooseFileButton.addEventListener("click", function () {
+        audioFile.click();
+    });
+
+    audioFile.addEventListener("change", function () {
+        showSelectedFile(audioFile.files[0]);
+    });
+
+    removeFileButton.addEventListener("click", clearSelectedFile);
+
+    resetButton.addEventListener("click", function () {
+        clearSelectedFile();
+        progressTrack.classList.remove("visible");
+    });
+
+    convertButton.addEventListener("click", async function () {
+        const file = audioFile.files[0];
+
+        if (!file) {
+            setStatus("Please select an audio file first.", "error");
+            return;
+        }
+
+        if (file.size > MAX_FILE_SIZE) {
+            clearSelectedFile();
+            setStatus(
+                "Please choose an audio file no larger than 25 MB.",
+                "error"
+            );
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append("audio_file", file);
+
+        convertButton.disabled = true;
+        chooseFileButton.disabled = true;
+        removeFileButton.disabled = true;
+        resetButton.disabled = true;
+
+        progressTrack.classList.add("visible");
+        setStatus("Uploading audio and recognizing speech...");
+
+        try {
+            const response = await fetch(CONVERT_URL, {
+                method: "POST",
+                body: formData
+            });
+
+            let data;
+            try {
+                data = await response.json();
+            } catch {
+                throw new Error(
+                    "The server returned an unexpected response. Check Flask."
+                );
+            }
+
+            if (!response.ok || !data.success) {
+                throw new Error(data.message || "Audio processing failed.");
+            }
+
+            transcript.value = data.text || "";
+            resultSection.classList.add("visible");
+
+            if (!transcript.value.trim()) {
+                clearSignVisual();
+                signMessage.textContent =
+                    "No speech was recognized. Try a clearer audio recording.";
+                setStatus("No speech was recognized.", "error");
+                return;
+            }
+
+            const matched = showSignVisual(transcript.value);
+
+            if (matched) {
+                setStatus(
+                    'Speech recognized. A sign video for "AVOID" is available.',
+                    "success"
+                );
+            } else {
+                setStatus(
+                    "Speech recognized, but no matching sign video is available yet.",
+                    "success"
+                );
+            }
+        } catch (error) {
+            setStatus(
+                error.message || "Unable to process audio. Please try again.",
+                "error"
+            );
+        } finally {
+            progressTrack.classList.remove("visible");
+            chooseFileButton.disabled = false;
+            removeFileButton.disabled = false;
+            resetButton.disabled = false;
+            convertButton.disabled = !audioFile.files.length;
+        }
+    });
+
+    ["dragenter", "dragover"].forEach(function (eventName) {
+        uploadArea.addEventListener(eventName, function (event) {
+            event.preventDefault();
+            uploadArea.classList.add("dragover");
+        });
+    });
+
+    ["dragleave", "drop"].forEach(function (eventName) {
+        uploadArea.addEventListener(eventName, function (event) {
+            event.preventDefault();
+            uploadArea.classList.remove("dragover");
+        });
+    });
+
+    uploadArea.addEventListener("drop", function (event) {
+        const files = event.dataTransfer.files;
+
+        if (!files.length) return;
+
+        const file = files[0];
+
+        try {
+            const transfer = new DataTransfer();
+            transfer.items.add(file);
+            audioFile.files = transfer.files;
+            showSelectedFile(file);
+        } catch {
+            setStatus(
+                "Unable to select the dropped file. Please use Choose Audio File.",
+                "error"
+            );
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,543 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Learning - Accessible Learning</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #1f2937;
+            line-height: 1.6;
+        }
+
+        header {
+            background: #111827;
+            color: white;
+            padding: 18px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        nav {
+            display: flex;
+            gap: 22px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #2563eb, #4f46e5);
+            color: white;
+            text-align: center;
+            padding: 80px 20px;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.18);
+            padding: 8px 18px;
+            border-radius: 30px;
+            margin-bottom: 18px;
+            font-weight: bold;
+        }
+
+        .hero h1 {
+            font-size: 46px;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            max-width: 750px;
+            margin: auto;
+            font-size: 19px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1150px;
+            margin: 50px auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .section-title h2 {
+            font-size: 32px;
+            color: #1d4ed8;
+            margin-bottom: 10px;
+        }
+
+        .section-title p {
+            max-width: 700px;
+            margin: auto;
+            color: #4b5563;
+        }
+
+        .lesson-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .lesson-card {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            text-decoration: none;
+            color: inherit;
+            background: white;
+            border-radius: 18px;
+            padding: 28px;
+            min-height: 310px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07);
+            border: 1px solid #e5e7eb;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .lesson-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 14px 35px rgba(0, 0, 0, 0.12);
+        }
+
+        .lesson-card:focus-visible {
+            outline: 3px solid #2563eb;
+            outline-offset: 4px;
+        }
+
+        .lesson-icon {
+            font-size: 48px;
+            margin-bottom: 18px;
+        }
+
+        .lesson-number {
+            display: inline-block;
+            color: #2563eb;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .lesson-card h3 {
+            font-size: 23px;
+            color: #111827;
+            margin-bottom: 12px;
+        }
+
+        .lesson-card p {
+            color: #4b5563;
+            margin-bottom: 20px;
+        }
+
+        .lesson-link {
+            color: #2563eb;
+            font-weight: bold;
+            margin-top: auto;
+        }
+
+        .lesson-tag {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            background: #eef2ff;
+            color: #4338ca;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 14px;
+        }
+
+        .methods-section,
+        .workflow-section,
+        .support-section {
+            margin-top: 65px;
+        }
+
+        .methods-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .method-card {
+            background: white;
+            padding: 25px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 7px 22px rgba(0, 0, 0, 0.06);
+        }
+
+        .method-icon {
+            font-size: 42px;
+            margin-bottom: 12px;
+        }
+
+        .method-card h3 {
+            margin-bottom: 8px;
+            color: #3730a3;
+        }
+
+        .method-card p {
+            color: #4b5563;
+        }
+
+        .workflow-section {
+            background: white;
+            padding: 35px;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07);
+        }
+
+        .workflow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .workflow-box {
+            background: #eef2ff;
+            border: 2px solid #6366f1;
+            border-radius: 14px;
+            padding: 20px 28px;
+            min-width: 150px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .workflow-arrow {
+            font-size: 28px;
+            font-weight: bold;
+            color: #4f46e5;
+        }
+
+        .support-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+        }
+
+        .support-card {
+            background: #eff6ff;
+            padding: 25px;
+            border-radius: 16px;
+            border: 1px solid #bfdbfe;
+        }
+
+        .support-card h3 {
+            color: #1d4ed8;
+            margin-bottom: 10px;
+        }
+
+        .support-card p {
+            color: #4b5563;
+        }
+
+        footer {
+            background: #111827;
+            color: white;
+            text-align: center;
+            padding: 35px 20px;
+            margin-top: 70px;
+        }
+
+        footer p {
+            margin: 5px 0;
+        }
+
+        @media (max-width: 700px) {
+            header {
+                justify-content: center;
+            }
+
+            nav {
+                justify-content: center;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .hero p {
+                font-size: 17px;
+            }
+
+            .workflow-arrow {
+                transform: rotate(90deg);
+            }
+
+            .workflow-section {
+                padding: 25px 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="logo">Accessible Learning</div>
+
+        <nav>
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{ url_for('learn') }}">Learn</a>
+            <a href="{{ url_for('video_learning') }}">Video Learning</a>
+        </nav>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-badge">VIDEO LEARNING</div>
+
+        <h1>Learn Through Videos</h1>
+
+        <p>
+            Explore technology concepts through educational videos,
+            clear explanations and visual demonstrations.
+            Learn at your own pace with accessible lesson content.
+        </p>
+    </section>
+
+    <main class="container">
+
+        <!-- VIDEO LESSONS -->
+        <section>
+            <div class="section-title">
+                <h2>Explore Video Lessons</h2>
+                <p>
+                    Choose a lesson to explore a technology concept
+                    through video and a written explanation.
+                </p>
+            </div>
+
+            <div class="lesson-grid">
+
+                <!-- VIDEO LESSON 01: ARTIFICIAL INTELLIGENCE -->
+                <a href="{{ url_for('ai_video') }}" class="lesson-card">
+                    <div class="lesson-icon">🤖</div>
+                    <span class="lesson-number">VIDEO LESSON 01</span>
+                    <h3>Artificial Intelligence</h3>
+
+                    <span class="lesson-tag">INTRODUCTION TO AI</span>
+
+                    <p>
+                        Discover what Artificial Intelligence is
+                        and how intelligent systems recognize patterns,
+                        understand language and make predictions.
+                    </p>
+
+                    <span class="lesson-link">Watch AI Lesson →</span>
+                </a>
+
+                <!-- VIDEO LESSON 02: MACHINE LEARNING -->
+                <a href="{{ url_for('ml_video') }}" class="lesson-card">
+                    <div class="lesson-icon">🧠</div>
+                    <span class="lesson-number">VIDEO LESSON 02</span>
+                    <h3>Machine Learning</h3>
+
+                    <span class="lesson-tag">INTERACTIVE LESSON</span>
+
+                    <p>
+                        Explore how computers learn patterns from
+                        data and use those patterns to make predictions.
+                        Read the lesson notes and take the quiz.
+                    </p>
+
+                    <span class="lesson-link">Watch ML Lesson →</span>
+                </a>
+
+                <!-- VIDEO LESSON 03: COMPUTER FUNDAMENTALS -->
+                <a href="{{ url_for('computer_fundamentals') }}"
+                   class="lesson-card">
+                    <div class="lesson-icon">💻</div>
+                    <span class="lesson-number">VIDEO LESSON 03</span>
+                    <h3>Computer Fundamentals</h3>
+
+                    <span class="lesson-tag">INTERACTIVE LESSON</span>
+
+                    <p>
+                        Learn about computer hardware, software,
+                        input, processing, output and storage.
+                        Review the lesson notes and test your knowledge.
+                    </p>
+
+                    <span class="lesson-link">
+                        Watch CF Lesson →
+                    </span>
+                </a>
+
+                <!-- VIDEO LESSON 04: WEB DEVELOPMENT -->
+                <a href="{{ url_for('web_development_video') }}"
+                   class="lesson-card">
+                    <div class="lesson-icon">🌐</div>
+                    <span class="lesson-number">VIDEO LESSON 04</span>
+                    <h3>Web Development</h3>
+
+                    <span class="lesson-tag">INTERACTIVE LESSON</span>
+
+                    <p>
+                        Discover how websites work and explore
+                        HTML, CSS, JavaScript and accessible web design.
+                        Review the lesson notes and take the quiz.
+                    </p>
+
+                    <span class="lesson-link">
+                        Watch WD Lesson →
+                    </span>
+                </a>
+
+            </div>
+        </section>
+
+        <!-- VIDEO LEARNING METHODS -->
+        <section class="methods-section">
+            <div class="section-title">
+                <h2>Learn in Different Ways</h2>
+                <p>
+                    Combine video demonstrations with other
+                    learning techniques to understand new concepts.
+                </p>
+            </div>
+
+            <div class="methods-grid">
+                <div class="method-card">
+                    <div class="method-icon">🎥</div>
+                    <h3>Video Demonstrations</h3>
+                    <p>
+                        Explore technology topics through
+                        educational video presentations.
+                    </p>
+                </div>
+
+                <div class="method-card">
+                    <div class="method-icon">📝</div>
+                    <h3>Written Explanations</h3>
+                    <p>
+                        Read lesson summaries alongside videos
+                        to review important concepts.
+                    </p>
+                </div>
+
+                <div class="method-card">
+                    <div class="method-icon">🔍</div>
+                    <h3>Visual Examples</h3>
+                    <p>
+                        Connect ideas with visual demonstrations
+                        and practical examples.
+                    </p>
+                </div>
+
+                <div class="method-card">
+                    <div class="method-icon">🧩</div>
+                    <h3>Practice and Review</h3>
+                    <p>
+                        Review key ideas and practise what
+                        you have learned.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- LEARNING WORKFLOW -->
+        <section class="workflow-section">
+            <div class="section-title">
+                <h2>Your Learning Journey</h2>
+                <p>Follow these steps to get more from each lesson.</p>
+            </div>
+
+            <div class="workflow">
+                <div class="workflow-box">🎥<br>Watch</div>
+                <div class="workflow-arrow" aria-hidden="true">→</div>
+                <div class="workflow-box">🧠<br>Understand</div>
+                <div class="workflow-arrow" aria-hidden="true">→</div>
+                <div class="workflow-box">✍️<br>Review</div>
+                <div class="workflow-arrow" aria-hidden="true">→</div>
+                <div class="workflow-box">📈<br>Improve</div>
+            </div>
+        </section>
+
+        <!-- ACCESSIBILITY SUPPORT -->
+        <section class="support-section">
+            <div class="section-title">
+                <h2>Accessible Learning Support</h2>
+                <p>
+                    Learning materials should support different
+                    ways of understanding and communicating.
+                </p>
+            </div>
+
+            <div class="support-grid">
+                <div class="support-card">
+                    <h3>📝 Written Explanations</h3>
+                    <p>
+                        Readable lesson content helps learners
+                        review information from each video.
+                    </p>
+                </div>
+
+                <div class="support-card">
+                    <h3>🤟 Sign Language Support</h3>
+                    <p>
+                        Sign language learning can provide
+                        another way to access educational content.
+                    </p>
+                </div>
+
+                <div class="support-card">
+                    <h3>👁️ Visual Learning</h3>
+                    <p>
+                        Diagrams, illustrations and demonstrations
+                        can help explain abstract concepts.
+                    </p>
+                </div>
+
+                <div class="support-card">
+                    <h3>🤖 AI Learning Assistance</h3>
+                    <p>
+                        AI-based learning tools can help explain
+                        concepts and support learning activities.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>© 2026 Accessible Learning Platform</p>
+        <p>Learn Without Limits</p>
+    </footer>
+
+</body>
+</html>

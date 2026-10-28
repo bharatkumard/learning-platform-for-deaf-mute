@@ -1,0 +1,965 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign to Text | Accessible Learning</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f3f6fb;
+            color: #243047;
+        }
+
+        header {
+            background: #263d70;
+            color: white;
+            padding: 22px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin-top: 0;
+        }
+
+        main {
+            max-width: 850px;
+            margin: 35px auto;
+            padding: 25px;
+        }
+
+        .panel {
+            background: white;
+            padding: 28px;
+            border-radius: 14px;
+            box-shadow: 0 4px 18px #00000012;
+            text-align: center;
+        }
+
+        .upload-section {
+            margin: 22px 0;
+            padding: 20px;
+            background: #f8faff;
+            border: 1px solid #dce4f2;
+            border-radius: 12px;
+            text-align: left;
+        }
+
+        .upload-section h3 {
+            margin-top: 0;
+            color: #263d70;
+        }
+
+        .upload-section label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input[type="file"] {
+            display: block;
+            width: 100%;
+            margin: 12px 0;
+            padding: 12px;
+            border: 1px solid #ccd4e0;
+            border-radius: 8px;
+            background: white;
+        }
+
+        button,
+        .back-button {
+            display: inline-block;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            background: #3157a4;
+            color: white;
+            font-size: 15px;
+            text-decoration: none;
+            cursor: pointer;
+            margin: 6px;
+        }
+
+        button:hover,
+        .back-button:hover {
+            background: #203e7d;
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        #preview {
+            display: none;
+            max-width: 100%;
+            max-height: 320px;
+            margin: 20px auto;
+            border-radius: 10px;
+        }
+
+        #videoPreview {
+            display: none;
+            width: 100%;
+            max-width: 480px;
+            max-height: 320px;
+            margin: 20px auto;
+            border-radius: 10px;
+            background: #e7ebf2;
+        }
+
+        #camera {
+            display: none;
+            width: 100%;
+            max-width: 480px;
+            max-height: 360px;
+            object-fit: contain;
+            border-radius: 10px;
+            margin: 15px auto;
+            background: #e7ebf2;
+        }
+
+        #result {
+            margin-top: 25px;
+            padding: 18px;
+            background: #eef3ff;
+            border-radius: 10px;
+            overflow-wrap: anywhere;
+            text-align: left;
+        }
+
+        #recognizedText {
+            font-size: 20px;
+            font-weight: bold;
+            white-space: pre-wrap;
+        }
+
+        #statusMessage {
+            min-height: 24px;
+            line-height: 1.5;
+        }
+
+        .note {
+            color: #5d687b;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .error {
+            color: #a32222;
+        }
+
+        .success {
+            color: #205c3b;
+        }
+
+        .hint {
+            color: #5d687b;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .result-label {
+            display: inline-block;
+            margin-bottom: 8px;
+            padding: 5px 9px;
+            border-radius: 6px;
+            background: #dce7ff;
+            color: #263d70;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        @media (max-width: 600px) {
+            main {
+                margin: 15px auto;
+                padding: 12px;
+            }
+
+            .panel {
+                padding: 18px;
+            }
+
+            .upload-section {
+                padding: 14px;
+            }
+
+            button,
+            .back-button {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Sign Language to Text</h1>
+        <p>Upload a sign image or video to recognize it as text</p>
+    </header>
+
+    <main>
+        <section class="panel">
+            <h2>Recognize a Sign</h2>
+
+            <p>
+                Choose an image or video containing an Indian Sign Language
+                hand sign.
+            </p>
+
+            <form
+                id="signForm"
+                action="{{ url_for('sign_to_text') }}"
+                method="POST"
+                enctype="multipart/form-data"
+            >
+                <!-- IMAGE UPLOAD AND CAMERA -->
+                <div class="upload-section">
+                    <h3>Upload an Image</h3>
+
+                    <label for="signImage">Select a sign image</label>
+
+                    <input
+                        type="file"
+                        id="signImage"
+                        name="sign_image"
+                        accept=".png,.jpg,.jpeg,.webp,image/png,image/jpeg,image/webp"
+                    >
+
+                    <img
+                        id="preview"
+                        alt="Preview of the selected hand sign"
+                    >
+
+                    <div>
+                        <button type="button" id="cameraButton">
+                            Open Camera
+                        </button>
+
+                        <button
+                            type="button"
+                            id="captureButton"
+                            style="display:none;"
+                        >
+                            Capture Image
+                        </button>
+                    </div>
+
+                    <video
+                        id="camera"
+                        autoplay
+                        playsinline
+                        muted
+                    ></video>
+
+                    <canvas id="canvas" style="display:none;"></canvas>
+
+                    <p class="hint">
+                        Open the camera and position your hand clearly.
+                        The camera will automatically capture the image
+                        after your hand and surroundings remain still for
+                        3 seconds. If you move, the countdown restarts.
+                        You can also use the Capture Image button.
+                    </p>
+                </div>
+
+                <!-- VIDEO UPLOAD -->
+                <div class="upload-section">
+                    <h3>Upload a Video</h3>
+
+                    <label for="signVideo">
+                        Select a sign-language video
+                    </label>
+
+                    <input
+                        type="file"
+                        id="signVideo"
+                        name="sign_video"
+                        accept=".mp4,.avi,.mov,.mkv,.webm,video/mp4,video/quicktime,video/x-msvideo,video/x-matroska,video/webm"
+                    >
+
+                    <video
+                        id="videoPreview"
+                        controls
+                        playsinline
+                    ></video>
+
+                    <p class="hint">
+                        Supported extensions: MP4, AVI, MOV, MKV, and WEBM.
+                        Maximum video size: 25 MB.
+                    </p>
+                </div>
+
+                <p
+                    id="statusMessage"
+                    role="status"
+                    aria-live="polite"
+                ></p>
+
+                <button type="submit" id="recognizeButton">
+                    Recognize Sign
+                </button>
+            </form>
+
+            <!-- RECOGNITION RESULT -->
+            <div id="result" aria-live="polite">
+                <span class="result-label">Recognition Result</span>
+                <h3>Recognized Text</h3>
+
+                <p id="recognizedText">{% if recognized_text %}{{ recognized_text }}{% else %}Your recognized sign will appear here.{% endif %}</p>
+            </div>
+
+            <a class="back-button" href="{{ url_for('learn') }}">
+                &larr; Back to Learning Methods
+            </a>
+        </section>
+    </main>
+
+    <script>
+        const fileInput = document.getElementById("signImage");
+        const videoInput = document.getElementById("signVideo");
+
+        const preview = document.getElementById("preview");
+        const videoPreview = document.getElementById("videoPreview");
+
+        const camera = document.getElementById("camera");
+        const canvas = document.getElementById("canvas");
+
+        const cameraButton = document.getElementById("cameraButton");
+        const captureButton = document.getElementById("captureButton");
+        const recognizeButton = document.getElementById("recognizeButton");
+
+        const signForm = document.getElementById("signForm");
+        const statusMessage = document.getElementById("statusMessage");
+
+        const MAX_IMAGE_SIZE = 10 * 1024 * 1024;
+        const MAX_VIDEO_SIZE = 25 * 1024 * 1024;
+
+        const HOLD_STILL_MS = 3000;
+        const CHECK_INTERVAL_MS = 200;
+        const MOTION_THRESHOLD = 12;
+        const REQUIRED_STABLE_CHECKS = 8;
+
+        const ALLOWED_IMAGE_TYPES = [
+            "image/png",
+            "image/jpeg",
+            "image/webp"
+        ];
+
+        const ALLOWED_IMAGE_EXTENSIONS = [
+            "png", "jpg", "jpeg", "webp"
+        ];
+
+        const ALLOWED_VIDEO_EXTENSIONS = [
+            "mp4", "avi", "mov", "mkv", "webm"
+        ];
+
+        let cameraStream = null;
+        let previewUrl = null;
+        let videoPreviewUrl = null;
+        let submitting = false;
+
+        let stabilityCheckTimer = null;
+        let stableSince = null;
+        let previousFrame = null;
+        let stableChecks = 0;
+        let captureInProgress = false;
+        let autoCaptureEnabled = false;
+        let cameraSession = 0;
+
+        function showStatus(message, isError = false) {
+            statusMessage.textContent = message;
+            statusMessage.className = isError ? "error" : "success";
+        }
+
+        function getExtension(filename) {
+            const parts = filename.toLowerCase().split(".");
+            return parts.length > 1 ? parts.pop() : "";
+        }
+
+        function isAllowedImage(file) {
+            const extension = getExtension(file.name);
+
+            return (
+                ALLOWED_IMAGE_EXTENSIONS.includes(extension) &&
+                (
+                    ALLOWED_IMAGE_TYPES.includes(file.type) ||
+                    file.type === ""
+                )
+            );
+        }
+
+        function clearImagePreview() {
+            preview.style.display = "none";
+            preview.removeAttribute("src");
+
+            if (previewUrl) {
+                URL.revokeObjectURL(previewUrl);
+                previewUrl = null;
+            }
+        }
+
+        function clearVideoPreview() {
+            videoPreview.pause();
+            videoPreview.style.display = "none";
+            videoPreview.removeAttribute("src");
+            videoPreview.load();
+
+            if (videoPreviewUrl) {
+                URL.revokeObjectURL(videoPreviewUrl);
+                videoPreviewUrl = null;
+            }
+        }
+
+        function displayImagePreview(file) {
+            clearImagePreview();
+
+            previewUrl = URL.createObjectURL(file);
+            preview.src = previewUrl;
+            preview.style.display = "block";
+        }
+
+        function displayVideoPreview(file) {
+            clearVideoPreview();
+
+            videoPreviewUrl = URL.createObjectURL(file);
+            videoPreview.src = videoPreviewUrl;
+            videoPreview.style.display = "block";
+        }
+
+        function stopStabilityDetection() {
+            if (stabilityCheckTimer !== null) {
+                clearInterval(stabilityCheckTimer);
+                stabilityCheckTimer = null;
+            }
+
+            stableSince = null;
+            previousFrame = null;
+            stableChecks = 0;
+        }
+
+        function stopCamera() {
+            cameraSession++;
+            autoCaptureEnabled = false;
+            captureInProgress = false;
+
+            stopStabilityDetection();
+
+            if (cameraStream) {
+                cameraStream.getTracks().forEach(track => track.stop());
+                cameraStream = null;
+            }
+
+            camera.srcObject = null;
+            camera.style.display = "none";
+            captureButton.style.display = "none";
+            cameraButton.style.display = "inline-block";
+        }
+
+        // OPEN CAMERA
+        cameraButton.addEventListener("click", async function () {
+            if (
+                !navigator.mediaDevices ||
+                !navigator.mediaDevices.getUserMedia
+            ) {
+                showStatus(
+                    "Camera is unavailable. Use localhost or HTTPS, " +
+                    "or upload an image instead.",
+                    true
+                );
+                return;
+            }
+
+            stopCamera();
+
+            const sessionAtStart = cameraSession;
+
+            cameraButton.disabled = true;
+            showStatus("Opening camera. Please wait...");
+
+            try {
+                const stream =
+                    await navigator.mediaDevices.getUserMedia({
+                        video: {
+                            facingMode: "user",
+                            width: { ideal: 1280 },
+                            height: { ideal: 720 }
+                        },
+                        audio: false
+                    });
+
+                // If the camera was closed while permission was pending,
+                // release the newly opened stream.
+                if (sessionAtStart !== cameraSession) {
+                    stream.getTracks().forEach(track => track.stop());
+                    return;
+                }
+
+                cameraStream = stream;
+                camera.srcObject = cameraStream;
+                camera.style.display = "block";
+                cameraButton.style.display = "none";
+                captureButton.style.display = "inline-block";
+
+                fileInput.value = "";
+                videoInput.value = "";
+
+                clearImagePreview();
+                clearVideoPreview();
+
+                await camera.play();
+
+                autoCaptureEnabled = true;
+                captureInProgress = false;
+                stableSince = null;
+                previousFrame = null;
+                stableChecks = 0;
+
+                showStatus(
+                    "Camera ready. Position your hand and hold still " +
+                    "for 3 seconds. Movement resets the countdown."
+                );
+
+                startStabilityDetection();
+
+            } catch (error) {
+                stopCamera();
+
+                showStatus(
+                    "Camera access failed. Allow camera permission " +
+                    "or upload an image instead.",
+                    true
+                );
+
+                console.error("Camera error:", error);
+
+            } finally {
+                cameraButton.disabled = false;
+            }
+        });
+
+        // DETECT WHETHER THE CAMERA VIEW IS STABLE
+        function startStabilityDetection() {
+            stopStabilityDetection();
+
+            const checkCanvas = document.createElement("canvas");
+            const checkWidth = 160;
+            const checkHeight = 120;
+
+            checkCanvas.width = checkWidth;
+            checkCanvas.height = checkHeight;
+
+            const context = checkCanvas.getContext("2d", {
+                willReadFrequently: true
+            });
+
+            if (!context) {
+                showStatus(
+                    "Automatic capture is unavailable. Use Capture Image.",
+                    true
+                );
+                return;
+            }
+
+            stabilityCheckTimer = setInterval(function () {
+                if (
+                    !autoCaptureEnabled ||
+                    captureInProgress ||
+                    !cameraStream ||
+                    camera.readyState < HTMLMediaElement.HAVE_CURRENT_DATA ||
+                    camera.videoWidth === 0
+                ) {
+                    return;
+                }
+
+                context.drawImage(
+                    camera,
+                    0,
+                    0,
+                    checkWidth,
+                    checkHeight
+                );
+
+                const currentFrame = context.getImageData(
+                    0,
+                    0,
+                    checkWidth,
+                    checkHeight
+                ).data;
+
+                if (previousFrame === null) {
+                    previousFrame = new Uint8ClampedArray(currentFrame);
+                    return;
+                }
+
+                let difference = 0;
+                let samples = 0;
+
+                // Compare sampled pixel brightness between frames.
+                for (let i = 0; i < currentFrame.length; i += 16) {
+                    const currentBrightness =
+                        (
+                            currentFrame[i] +
+                            currentFrame[i + 1] +
+                            currentFrame[i + 2]
+                        ) / 3;
+
+                    const previousBrightness =
+                        (
+                            previousFrame[i] +
+                            previousFrame[i + 1] +
+                            previousFrame[i + 2]
+                        ) / 3;
+
+                    difference += Math.abs(
+                        currentBrightness - previousBrightness
+                    );
+
+                    samples++;
+                }
+
+                const averageDifference = samples > 0
+                    ? difference / samples
+                    : 0;
+
+                previousFrame = new Uint8ClampedArray(currentFrame);
+
+                if (averageDifference <= MOTION_THRESHOLD) {
+                    stableChecks++;
+
+                    if (stableSince === null) {
+                        stableSince = Date.now();
+                    }
+
+                    const elapsed = Date.now() - stableSince;
+                    const secondsLeft = Math.max(
+                        0,
+                        Math.ceil((HOLD_STILL_MS - elapsed) / 1000)
+                    );
+
+                    if (elapsed < HOLD_STILL_MS) {
+                        showStatus(
+                            `Hold still... capturing in ${secondsLeft} ` +
+                            `second${secondsLeft === 1 ? "" : "s"}.`
+                        );
+                    } else if (
+                        stableChecks >= REQUIRED_STABLE_CHECKS
+                    ) {
+                        showStatus("Stillness detected. Capturing image...");
+                        captureImage();
+                    }
+                } else {
+                    // Movement resets the full 3-second countdown.
+                    stableSince = null;
+                    stableChecks = 0;
+
+                    showStatus(
+                        "Movement detected. Hold still for 3 seconds " +
+                        "to capture automatically."
+                    );
+                }
+            }, CHECK_INTERVAL_MS);
+        }
+
+        // CAPTURE AN IMAGE AND ATTACH IT TO THE FORM
+        function captureImage() {
+            if (
+                captureInProgress ||
+                !cameraStream ||
+                !camera.videoWidth ||
+                !camera.videoHeight
+            ) {
+                return;
+            }
+
+            captureInProgress = true;
+            autoCaptureEnabled = false;
+            stopStabilityDetection();
+
+            const sessionAtCapture = cameraSession;
+
+            canvas.width = camera.videoWidth;
+            canvas.height = camera.videoHeight;
+
+            const context = canvas.getContext("2d");
+
+            if (!context) {
+                captureInProgress = false;
+                autoCaptureEnabled = true;
+                startStabilityDetection();
+
+                showStatus(
+                    "Could not prepare the image. Please try again.",
+                    true
+                );
+                return;
+            }
+
+            context.drawImage(
+                camera,
+                0,
+                0,
+                canvas.width,
+                canvas.height
+            );
+
+            canvas.toBlob(function (blob) {
+                if (sessionAtCapture !== cameraSession) {
+                    return;
+                }
+
+                if (!blob) {
+                    captureInProgress = false;
+                    autoCaptureEnabled = true;
+
+                    showStatus(
+                        "Could not capture the image. Please try again.",
+                        true
+                    );
+
+                    startStabilityDetection();
+                    return;
+                }
+
+                if (blob.size > MAX_IMAGE_SIZE) {
+                    captureInProgress = false;
+                    autoCaptureEnabled = true;
+
+                    showStatus(
+                        "Captured image exceeds the 10 MB limit.",
+                        true
+                    );
+
+                    startStabilityDetection();
+                    return;
+                }
+
+                const capturedFile = new File(
+                    [blob],
+                    "captured-sign.jpg",
+                    { type: "image/jpeg" }
+                );
+
+                const transfer = new DataTransfer();
+                transfer.items.add(capturedFile);
+
+                fileInput.files = transfer.files;
+                videoInput.value = "";
+
+                clearVideoPreview();
+                displayImagePreview(capturedFile);
+
+                // Close the camera after the image has been captured.
+                stopCamera();
+
+                showStatus(
+                    "Image captured successfully! Check the preview, " +
+                    "then click Recognize Sign."
+                );
+            }, "image/jpeg", 0.92);
+        }
+
+        // MANUAL CAPTURE REMAINS AVAILABLE AS A BACKUP
+        captureButton.addEventListener("click", function () {
+            if (!cameraStream || !camera.videoWidth) {
+                showStatus(
+                    "Please wait for the camera to start.",
+                    true
+                );
+                return;
+            }
+
+            captureImage();
+        });
+
+        // IMAGE SELECTION
+        fileInput.addEventListener("change", function () {
+            const file = this.files[0];
+
+            if (!file) {
+                clearImagePreview();
+                return;
+            }
+
+            if (!isAllowedImage(file)) {
+                fileInput.value = "";
+                clearImagePreview();
+
+                showStatus(
+                    "Please select a PNG, JPG, JPEG, or WEBP image.",
+                    true
+                );
+                return;
+            }
+
+            if (file.size > MAX_IMAGE_SIZE) {
+                fileInput.value = "";
+                clearImagePreview();
+
+                showStatus(
+                    "Image must be no larger than 10 MB.",
+                    true
+                );
+                return;
+            }
+
+            videoInput.value = "";
+            stopCamera();
+            clearVideoPreview();
+            displayImagePreview(file);
+
+            showStatus(
+                "Image selected. Click Recognize Sign to continue."
+            );
+        });
+
+        // VIDEO SELECTION
+        videoInput.addEventListener("change", function () {
+            const file = this.files[0];
+
+            if (!file) {
+                clearVideoPreview();
+                return;
+            }
+
+            const extension = getExtension(file.name);
+
+            if (!ALLOWED_VIDEO_EXTENSIONS.includes(extension)) {
+                videoInput.value = "";
+                clearVideoPreview();
+
+                showStatus(
+                    "Please select an MP4, AVI, MOV, MKV, or WEBM video.",
+                    true
+                );
+                return;
+            }
+
+            if (file.size > MAX_VIDEO_SIZE) {
+                videoInput.value = "";
+                clearVideoPreview();
+
+                showStatus(
+                    "Video must be no larger than 25 MB.",
+                    true
+                );
+                return;
+            }
+
+            fileInput.value = "";
+            stopCamera();
+            clearImagePreview();
+            displayVideoPreview(file);
+
+            showStatus(
+                "Video selected. Click Recognize Sign to process it."
+            );
+        });
+
+        // FORM VALIDATION AND SUBMISSION
+        signForm.addEventListener("submit", function (event) {
+            if (submitting) {
+                event.preventDefault();
+                return;
+            }
+
+            const imageFile = fileInput.files[0];
+            const videoFile = videoInput.files[0];
+
+            if (imageFile && videoFile) {
+                event.preventDefault();
+
+                showStatus(
+                    "Please choose either an image or a video, not both.",
+                    true
+                );
+                return;
+            }
+
+            if (!imageFile && !videoFile) {
+                event.preventDefault();
+
+                showStatus(
+                    "Please upload an image, capture one, or upload a video.",
+                    true
+                );
+                return;
+            }
+
+            if (imageFile) {
+                if (!isAllowedImage(imageFile)) {
+                    event.preventDefault();
+
+                    showStatus(
+                        "Choose a supported PNG, JPG, JPEG, or WEBP image.",
+                        true
+                    );
+                    return;
+                }
+
+                if (imageFile.size > MAX_IMAGE_SIZE) {
+                    event.preventDefault();
+
+                    showStatus(
+                        "Image must be no larger than 10 MB.",
+                        true
+                    );
+                    return;
+                }
+            }
+
+            if (videoFile) {
+                const extension = getExtension(videoFile.name);
+
+                if (
+                    !ALLOWED_VIDEO_EXTENSIONS.includes(extension) ||
+                    videoFile.size > MAX_VIDEO_SIZE
+                ) {
+                    event.preventDefault();
+
+                    showStatus(
+                        "Choose a supported video no larger than 25 MB.",
+                        true
+                    );
+                    return;
+                }
+            }
+
+            submitting = true;
+            stopCamera();
+
+            recognizeButton.disabled = true;
+            recognizeButton.textContent = videoFile
+                ? "Processing Video..."
+                : "Processing Image...";
+
+            showStatus(
+                videoFile
+                    ? "Uploading and processing the video. Please wait..."
+                    : "Uploading and recognizing the image. Please wait..."
+            );
+        });
+
+        // RELEASE CAMERA AND PREVIEW RESOURCES
+        window.addEventListener("beforeunload", function () {
+            stopCamera();
+
+            if (previewUrl) {
+                URL.revokeObjectURL(previewUrl);
+            }
+
+            if (videoPreviewUrl) {
+                URL.revokeObjectURL(videoPreviewUrl);
+            }
+        });
+    </script>
+</body>
+</html>

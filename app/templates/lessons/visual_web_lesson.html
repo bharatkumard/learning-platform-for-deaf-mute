@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visual Lesson 04 - Internet Technology</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #1f2937;
+            line-height: 1.6;
+        }
+
+        header {
+            background: #111827;
+            color: white;
+            padding: 18px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 600;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #2563eb, #4f46e5);
+            color: white;
+            text-align: center;
+            padding: 70px 20px;
+        }
+
+        .lesson-number {
+            display: inline-block;
+            background: rgba(255,255,255,0.18);
+            padding: 8px 18px;
+            border-radius: 30px;
+            margin-bottom: 18px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .hero h1 {
+            font-size: 44px;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            max-width: 750px;
+            margin: auto;
+            font-size: 18px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 45px auto;
+        }
+
+        .section {
+            background: white;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 18px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.07);
+        }
+
+        .section h2 {
+            color: #1d4ed8;
+            margin-bottom: 15px;
+            font-size: 28px;
+        }
+
+        .section h3 {
+            color: #3730a3;
+            margin-bottom: 10px;
+        }
+
+        .section p {
+            margin-bottom: 15px;
+        }
+
+        .visual-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+            gap: 18px;
+            margin-top: 25px;
+        }
+
+        .visual-card {
+            background: #eef4ff;
+            padding: 22px;
+            border-radius: 15px;
+            text-align: center;
+            border: 1px solid #dbeafe;
+        }
+
+        .visual-icon {
+            font-size: 42px;
+            margin-bottom: 12px;
+        }
+
+        .visual-card h3 {
+            margin-bottom: 8px;
+        }
+
+        .flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        .flow-box {
+            background: #e0e7ff;
+            border: 2px solid #6366f1;
+            padding: 18px 22px;
+            border-radius: 14px;
+            font-weight: bold;
+            text-align: center;
+            min-width: 140px;
+        }
+
+        .arrow {
+            font-size: 28px;
+            font-weight: bold;
+            color: #4f46e5;
+        }
+
+        .concept-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .concept {
+            padding: 20px;
+            background: #f8fafc;
+            border-left: 5px solid #2563eb;
+            border-radius: 10px;
+        }
+
+        .example {
+            background: #ecfdf5;
+            border-left: 5px solid #10b981;
+            padding: 22px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .safety {
+            background: #fff7ed;
+            border-left: 5px solid #f97316;
+            padding: 22px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .safety ul {
+            margin-left: 25px;
+            margin-top: 10px;
+        }
+
+        .review-box {
+            background: #f0f9ff;
+            border: 2px solid #38bdf8;
+            padding: 25px;
+            border-radius: 15px;
+        }
+
+        .review-box ul {
+            margin-left: 25px;
+            margin-top: 12px;
+        }
+
+        .quiz-question {
+            background: #f8fafc;
+            padding: 22px;
+            border-radius: 14px;
+            margin-bottom: 20px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .quiz-question h3 {
+            color: #111827;
+            margin-bottom: 12px;
+        }
+
+        .option {
+            display: block;
+            padding: 10px;
+            margin: 7px 0;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .option:hover {
+            background: #eef2ff;
+        }
+
+        .option input {
+            margin-right: 10px;
+        }
+
+        .quiz-button {
+            border: none;
+            background: #2563eb;
+            color: white;
+            padding: 14px 25px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        .quiz-button:hover {
+            background: #1d4ed8;
+        }
+
+        .reset-button {
+            background: #6b7280;
+        }
+
+        .reset-button:hover {
+            background: #4b5563;
+        }
+
+        #result {
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 12px;
+            display: none;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .correct-result {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .retry-result {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .back-button {
+            display: inline-block;
+            text-decoration: none;
+            background: #111827;
+            color: white;
+            padding: 14px 24px;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        .back-button:hover {
+            background: #374151;
+        }
+
+        footer {
+            background: #111827;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 50px;
+        }
+
+        @media (max-width: 700px) {
+            .hero h1 {
+                font-size: 34px;
+            }
+
+            header {
+                justify-content: center;
+            }
+
+            nav a {
+                margin: 0 8px;
+            }
+
+            .arrow {
+                transform: rotate(90deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">Accessible Learning</div>
+
+    <nav>
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('learn') }}">Learn</a>
+        <a href="{{ url_for('visual_learning') }}">Visual Learning</a>
+    </nav>
+</header>
+
+
+<section class="hero">
+    <div class="lesson-number">VISUAL LESSON 04</div>
+
+    <h1>Internet Technology</h1>
+
+    <p>
+        Understand how the Internet, websites, browsers, URLs and
+        search engines work through simple visual explanations.
+    </p>
+</section>
+
+
+<main class="container">
+
+    <!-- WHAT IS THE INTERNET -->
+    <section class="section">
+        <h2>🌐 What is the Internet?</h2>
+
+        <p>
+            The Internet is a worldwide network that connects computers,
+            phones, servers and other devices so they can communicate
+            and exchange information.
+        </p>
+
+        <div class="visual-grid">
+
+            <div class="visual-card">
+                <div class="visual-icon">💻</div>
+                <h3>Computer</h3>
+                <p>A device that can connect to the Internet.</p>
+            </div>
+
+            <div class="visual-card">
+                <div class="visual-icon">📡</div>
+                <h3>Network</h3>
+                <p>Connects devices so information can travel.</p>
+            </div>
+
+            <div class="visual-card">
+                <div class="visual-icon">🖥️</div>
+                <h3>Server</h3>
+                <p>Provides information and services to other devices.</p>
+            </div>
+
+            <div class="visual-card">
+                <div class="visual-icon">🌍</div>
+                <h3>Internet</h3>
+                <p>A global network connecting many networks.</p>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- HOW INTERNET WORKS -->
+    <section class="section">
+        <h2>🔄 How the Internet Works</h2>
+
+        <p>
+            When you request a website, your device sends a request
+            through a network. The server receives the request and
+            sends information back to your device.
+        </p>
+
+        <div class="flow">
+
+            <div class="flow-box">
+                📱<br>
+                Your Device
+            </div>
+
+            <div class="arrow">→</div>
+
+            <div class="flow-box">
+                📡<br>
+                Network
+            </div>
+
+            <div class="arrow">→</div>
+
+            <div class="flow-box">
+                🖥️<br>
+                Web Server
+            </div>
+
+            <div class="arrow">→</div>
+
+            <div class="flow-box">
+                📄<br>
+                Website
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- WEB BROWSER -->
+    <section class="section">
+        <h2>🌎 Web Browsers</h2>
+
+        <p>
+            A web browser is software that allows you to open and
+            interact with websites on the Internet.
+        </p>
+
+        <div class="concept-list">
+
+            <div class="concept">
+                <h3>🌐 Browser</h3>
+                <p>
+                    Software used to access websites.
+                </p>
+            </div>
+
+            <div class="concept">
+                <h3>📄 Web Page</h3>
+                <p>
+                    A document displayed inside a browser.
+                </p>
+            </div>
+
+            <div class="concept">
+                <h3>🔗 Link</h3>
+                <p>
+                    A clickable connection to another page or resource.
+                </p>
+            </div>
+
+            <div class="concept">
+                <h3>🔍 Search</h3>
+                <p>
+                    A way to find information available on the web.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- URL -->
+    <section class="section">
+        <h2>🔗 What is a URL?</h2>
+
+        <p>
+            URL stands for <strong>Uniform Resource Locator</strong>.
+            It is the address used to locate a resource on the Internet.
+        </p>
+
+        <div class="example">
+            <h3>Example</h3>
+
+            <p>
+                A website address can tell your browser where to find
+                a particular web resource.
+            </p>
+
+            <div class="flow">
+
+                <div class="flow-box">
+                    🔒<br>
+                    Protocol
+                </div>
+
+                <div class="arrow">+</div>
+
+                <div class="flow-box">
+                    🌐<br>
+                    Domain
+                </div>
+
+                <div class="arrow">+</div>
+
+                <div class="flow-box">
+                    📁<br>
+                    Path
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- SEARCH ENGINES -->
+    <section class="section">
+        <h2>🔍 Search Engines</h2>
+
+        <p>
+            Search engines help users find information on the web.
+            They process search queries and display relevant results.
+        </p>
+
+        <div class="flow">
+
+            <div class="flow-box">
+                ⌨️<br>
+                Search Query
+            </div>
+
+            <div class="arrow">→</div>
+
+            <div class="flow-box">
+                🔎<br>
+                Search Engine
+            </div>
+
+            <div class="arrow">→</div>
+
+            <div class="flow-box">
+                📋<br>
+                Search Results
+            </div>
+
+            <div class="arrow">→</div>
+
+            <div class="flow-box">
+                📖<br>
+                Information
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- WEBSITE -->
+    <section class="section">
+        <h2>🖥️ What is a Website?</h2>
+
+        <p>
+            A website is a collection of related web pages that can
+            be accessed through the Internet.
+        </p>
+
+        <div class="visual-grid">
+
+            <div class="visual-card">
+                <div class="visual-icon">🏠</div>
+                <h3>Home Page</h3>
+                <p>
+                    The main page of a website.
+                </p>
+            </div>
+
+            <div class="visual-card">
+                <div class="visual-icon">📄</div>
+                <h3>Web Pages</h3>
+                <p>
+                    Individual pages containing information.
+                </p>
+            </div>
+
+            <div class="visual-card">
+                <div class="visual-icon">🔗</div>
+                <h3>Navigation</h3>
+                <p>
+                    Helps users move between pages.
+                </p>
+            </div>
+
+            <div class="visual-card">
+                <div class="visual-icon">📝</div>
+                <h3>Content</h3>
+                <p>
+                    Text, images, videos and other information.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- REAL WORLD EXAMPLE -->
+    <section class="section">
+        <h2>📱 Real-World Example</h2>
+
+        <p>
+            Imagine that you want to learn about artificial intelligence
+            using a search engine.
+        </p>
+
+        <div class="flow">
+
+            <div class="flow-box">
+                📱<br>
+                Open Browser
+            </div>
+
+            <div class="arrow">→</div>
+
+            <div class="flow-box">
+                ⌨️<br>
+                Enter Search
+            </div>
+
+            <div class="arrow">→</div>
+
+            <div class="flow-box">
+                🔎<br>
+                Search
+            </div>
+
+            <div class="arrow">→</div>
+
+            <div class="flow-box">
+                📚<br>
+                Read Results
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- INTERNET SAFETY -->
+    <section class="section">
+        <h2>🛡️ Basic Internet Safety</h2>
+
+        <p>
+            Using the Internet safely is important when learning,
+            communicating and sharing information online.
+        </p>
+
+        <div class="safety">
+
+            <h3>Remember These Basic Rules:</h3>
+
+            <ul>
+                <li>Keep passwords private.</li>
+                <li>Be careful when sharing personal information.</li>
+                <li>Use trusted websites when possible.</li>
+                <li>Do not click suspicious links.</li>
+                <li>Tell a trusted adult if something online makes you uncomfortable or unsafe.</li>
+            </ul>
+
+        </div>
+    </section>
+
+
+    <!-- QUICK REVIEW -->
+    <section class="section">
+        <h2>🧠 Quick Review</h2>
+
+        <div class="review-box">
+
+            <ul>
+                <li>The Internet connects computers and other devices.</li>
+                <li>A web browser is used to access websites.</li>
+                <li>A URL is an address for an Internet resource.</li>
+                <li>Search engines help users find information online.</li>
+                <li>Internet safety helps protect users and their information.</li>
+            </ul>
+
+        </div>
+    </section>
+
+
+    <!-- QUIZ -->
+    <section class="section">
+
+        <h2>🎯 Visual Lesson 04 Quiz</h2>
+
+        <p>
+            Answer all five questions and check your understanding.
+        </p>
+
+
+        <!-- QUESTION 1 -->
+        <div class="quiz-question">
+
+            <h3>1. What is the Internet?</h3>
+
+            <label class="option">
+                <input type="radio" name="q1" value="A">
+                A. A worldwide network connecting devices
+            </label>
+
+            <label class="option">
+                <input type="radio" name="q1" value="B">
+                B. Only one computer
+            </label>
+
+            <label class="option">
+                <input type="radio" name="q1" value="C">
+                C. A type of keyboard
+            </label>
+
+        </div>
+
+
+        <!-- QUESTION 2 -->
+        <div class="quiz-question">
+
+            <h3>2. What is a web browser used for?</h3>
+
+            <label class="option">
+                <input type="radio" name="q2" value="A">
+                A. Accessing websites
+            </label>
+
+            <label class="option">
+                <input type="radio" name="q2" value="B">
+                B. Printing electricity
+            </label>
+
+            <label class="option">
+                <input type="radio" name="q2" value="C">
+                C. Connecting a keyboard to a chair
+            </label>
+
+        </div>
+
+
+        <!-- QUESTION 3 -->
+        <div class="quiz-question">
+
+            <h3>3. What does URL stand for?</h3>
+
+            <label class="option">
+                <input type="radio" name="q3" value="A">
+                A. Uniform Resource Locator
+            </label>
+
+            <label class="option">
+                <input type="radio" name="q3" value="B">
+                B. Universal Reading Language
+            </label>
+
+            <label class="option">
+                <input type="radio" name="q3" value="C">
+                C. User Radio Link
+            </label>
+
+        </div>
+
+
+        <!-- QUESTION 4 -->
+        <div class="quiz-question">
+
+            <h3>4. What helps users find information on the web?</h3>
+
+            <label class="option">
+                <input type="radio" name="q4" value="A">
+                A. Search engines
+            </label>
+
+            <label class="option">
+                <input type="radio" name="q4" value="B">
+                B. Computer speakers
+            </label>
+
+            <label class="option">
+                <input type="radio" name="q4" value="C">
+                C. A mouse pad
+            </label>
+
+        </div>
+
+
+        <!-- QUESTION 5 -->
+        <div class="quiz-question">
+
+            <h3>5. Which is a good Internet safety practice?</h3>
+
+            <label class="option">
+                <input type="radio" name="q5" value="A">
+                A. Keep passwords private
+            </label>
+
+            <label class="option">
+                <input type="radio" name="q5" value="B">
+                B. Share every personal detail online
+            </label>
+
+            <label class="option">
+                <input type="radio" name="q5" value="C">
+                C. Click every unknown link
+            </label>
+
+        </div>
+
+
+        <button class="quiz-button" onclick="checkQuiz()">
+            Check Quiz
+        </button>
+
+        <button class="quiz-button reset-button" onclick="resetQuiz()">
+            Try Again
+        </button>
+
+
+        <div id="result"></div>
+
+    </section>
+
+
+    <!-- BACK BUTTON -->
+    <section class="section" style="text-align: center;">
+
+        <a
+            href="{{ url_for('visual_learning') }}"
+            class="back-button"
+        >
+            ← Back to Visual Lessons
+        </a>
+
+    </section>
+
+</main>
+
+
+<footer>
+    <p>© 2026 Accessible Learning Platform</p>
+    <p>Learn Without Limits</p>
+</footer>
+
+
+<script>
+
+    function checkQuiz() {
+
+        const answers = {
+            q1: "A",
+            q2: "A",
+            q3: "A",
+            q4: "A",
+            q5: "A"
+        };
+
+        let score = 0;
+        let unanswered = 0;
+
+        for (let question in answers) {
+
+            const selected = document.querySelector(
+                'input[name="' + question + '"]:checked'
+            );
+
+            if (!selected) {
+                unanswered++;
+            } else if (selected.value === answers[question]) {
+                score++;
+            }
+        }
+
+        const result = document.getElementById("result");
+
+        result.style.display = "block";
+
+        if (unanswered > 0) {
+
+            result.className = "retry-result";
+
+            result.innerHTML =
+                "Please answer all 5 questions before checking your quiz.";
+
+            return;
+        }
+
+        if (score === 5) {
+
+            result.className = "correct-result";
+
+            result.innerHTML =
+                "🎉 Excellent! You scored 5/5. You understand the basics of Internet Technology.";
+
+        } else {
+
+            result.className = "retry-result";
+
+            result.innerHTML =
+                "You scored " + score + "/5. Review the lesson and try again.";
+
+        }
+
+        window.scrollTo({
+            top: document.body.scrollHeight,
+            behavior: "smooth"
+        });
+    }
+
+
+    function resetQuiz() {
+
+        const questions = document.querySelectorAll(
+            'input[type="radio"]'
+        );
+
+        questions.forEach(function(question) {
+            question.checked = false;
+        });
+
+        const result = document.getElementById("result");
+
+        result.style.display = "none";
+        result.innerHTML = "";
+        result.className = "";
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    }
+
+</script>
+
+</body>
+</html>

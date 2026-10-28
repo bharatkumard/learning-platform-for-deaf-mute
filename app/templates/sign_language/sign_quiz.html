@@ -1,0 +1,313 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISL Image Quiz</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 25px 15px;
+            font-family: Arial, sans-serif;
+            background: #f3f6fb;
+            color: #263247;
+        }
+
+        .quiz-card {
+            max-width: 650px;
+            margin: 25px auto;
+            padding: 28px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            text-align: center;
+        }
+
+        h1 {
+            color: #243b64;
+        }
+
+        #question-number {
+            color: #547fc1;
+            font-weight: bold;
+        }
+
+        #question-image {
+            display: block;
+            width: 100%;
+            max-width: 380px;
+            height: 300px;
+            object-fit: contain;
+            margin: 20px auto;
+            border-radius: 10px;
+            background: #f8faff;
+        }
+
+        .choices {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .choice-button,
+        .next-button,
+        .restart-button {
+            padding: 14px;
+            border: none;
+            border-radius: 9px;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .choice-button {
+            background: #dceaff;
+            color: #243b64;
+        }
+
+        .choice-button:hover:not(:disabled) {
+            background: #bdd5ff;
+        }
+
+        .choice-button:disabled {
+            cursor: default;
+            opacity: 0.7;
+        }
+
+        #feedback {
+            min-height: 28px;
+            margin: 22px 0 12px;
+            font-weight: bold;
+        }
+
+        .next-button,
+        .restart-button {
+            background: #345c96;
+            color: white;
+        }
+
+        .next-button:hover,
+        .restart-button:hover {
+            background: #243b64;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 24px;
+            color: #345c96;
+        }
+
+        @media (max-width: 480px) {
+            .quiz-card {
+                padding: 18px;
+            }
+
+            #question-image {
+                height: 240px;
+            }
+
+            .choices {
+                gap: 8px;
+            }
+
+            .choice-button {
+                padding: 12px 5px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main class="quiz-card">
+        <h1>🤟 ISL Image Quiz</h1>
+
+        <p id="question-number">Question 1 of 5</p>
+
+        <h2>Which letter does this hand sign represent?</h2>
+
+        <img
+            id="question-image"
+            src="{{ url_for('static', filename='images/question_1.png') }}"
+            alt="Hand sign for the current quiz question"
+        >
+
+        <div class="choices" id="choices"></div>
+
+        <p id="feedback" aria-live="polite"></p>
+
+        <button
+            type="button"
+            class="next-button"
+            id="next-button"
+            hidden>
+            Next Question →
+        </button>
+
+        <p id="score-display"></p>
+
+        <a
+            class="back-link"
+            href="{{ url_for('sign_language') }}">
+            Back to Sign Language
+        </a>
+    </main>
+
+    <script>
+        // Answer keys are set only for the two signs you verified.
+        const questions = [
+            {
+                image: "images/question_1.png",
+                choices: ["V", "B", "A"],
+                answer: "A"
+            },
+            {
+                image: "images/question_2.png",
+                choices: ["B", "E", "D"],
+                answer: "E"
+            },
+            {
+                image: "images/question_3.png",
+                choices: ["D", "T", "E"],
+                answer: "T"
+            },
+            {
+                image: "images/question_4.png",
+                choices: ["S", "W", "V"],
+                answer: "V"
+            },
+            {
+                image: "images/question_5.png",
+                choices: ["X", "Z", "W"],
+                answer: "X"
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let answered = false;
+        let verifiedQuestionsAnswered = 0;
+
+        const questionNumber =
+            document.getElementById("question-number");
+        const questionImage =
+            document.getElementById("question-image");
+        const choicesContainer =
+            document.getElementById("choices");
+        const feedback =
+            document.getElementById("feedback");
+        const nextButton =
+            document.getElementById("next-button");
+        const scoreDisplay =
+            document.getElementById("score-display");
+
+        function showQuestion() {
+            const question = questions[currentQuestion];
+
+            answered = false;
+            questionImage.hidden = false;
+
+            questionNumber.textContent =
+                `Question ${currentQuestion + 1} of ${questions.length}`;
+
+            questionImage.src =
+                "{{ url_for('static', filename='') }}" +
+                question.image;
+
+            questionImage.alt =
+                `ISL quiz sign for question ${currentQuestion + 1}`;
+
+            feedback.textContent = "";
+            scoreDisplay.textContent = "";
+            nextButton.hidden = true;
+            choicesContainer.innerHTML = "";
+
+            question.choices.forEach(choice => {
+                const button = document.createElement("button");
+
+                button.type = "button";
+                button.className = "choice-button";
+                button.textContent = choice;
+
+                button.addEventListener("click", () => {
+                    checkAnswer(choice);
+                });
+
+                choicesContainer.appendChild(button);
+            });
+        }
+
+        function checkAnswer(selectedChoice) {
+            if (answered) return;
+
+            answered = true;
+
+            const question = questions[currentQuestion];
+
+            if (question.answer === null) {
+                feedback.textContent =
+                    "This sign has not been verified yet, so this question will not affect your score.";
+                feedback.style.color = "#805500";
+            } else {
+                verifiedQuestionsAnswered++;
+
+                if (selectedChoice === question.answer) {
+                    score++;
+
+                    feedback.textContent = "Correct!";
+                    feedback.style.color = "#187443";
+                } else {
+                    feedback.textContent =
+                        `Not quite. The correct answer is ${question.answer}.`;
+                    feedback.style.color = "#a12b2b";
+                }
+            }
+
+            document.querySelectorAll(".choice-button").forEach(button => {
+                button.disabled = true;
+            });
+
+            nextButton.textContent =
+                currentQuestion === questions.length - 1
+                    ? "Finish Quiz"
+                    : "Next Question →";
+
+            nextButton.hidden = false;
+        }
+
+        nextButton.addEventListener("click", () => {
+            if (!answered) return;
+
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                showQuestion();
+            } else {
+                showResults();
+            }
+        });
+
+        function showResults() {
+            questionNumber.textContent = "Quiz completed!";
+
+            questionImage.hidden = true;
+            choicesContainer.innerHTML = "";
+            nextButton.hidden = true;
+
+            feedback.textContent =
+                "You have completed the ISL image quiz!";
+            feedback.style.color = "#243b64";
+
+            scoreDisplay.textContent =
+                `Your score: ${score} / ${verifiedQuestionsAnswered} verified questions answered.`;
+        }
+
+        showQuestion();
+    </script>
+</body>
+</html>

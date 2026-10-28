@@ -1,0 +1,19 @@
+# Python virtual environment
+venv/
+.venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Secrets
+.env
+
+# Node dependencies
+node_modules/
+
+# Build output
+dist/
+
+users.db
+database/*.db

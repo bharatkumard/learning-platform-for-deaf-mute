@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Internet and Web Technology - AI-Powered Accessible Learning</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <header class="navbar">
+
+        <div class="logo">
+            AI-Powered Learning
+        </div>
+
+        <nav>
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{ url_for('learn') }}">Learn</a>
+            <a href="{{ url_for('text_lessons') }}">Text Lessons</a>
+            <a href="/#convert">Convert</a>
+            <a href="/#practice">Practice</a>
+        </nav>
+
+        {% if session.get('user_id') %}
+
+            <span class="welcome-user">
+                Welcome, {{ session.get('user_name') }}
+            </span>
+
+            <a href="{{ url_for('profile') }}" class="profile-btn">
+                Profile
+            </a>
+
+            <a href="{{ url_for('logout') }}" class="logout-btn">
+                Logout
+            </a>
+
+        {% else %}
+
+            <a href="{{ url_for('register') }}" class="create-account-btn">
+                Create Account
+            </a>
+
+            <a href="{{ url_for('login') }}" class="login-btn">
+                Login
+            </a>
+
+        {% endif %}
+
+    </header>
+
+
+    <section class="learn-hero">
+
+        <div>
+
+            <span class="tag">LESSON 04</span>
+
+            <h1>
+                Internet and<br>
+                Web Technology
+            </h1>
+
+            <p>
+                Learn the basics of the internet,
+                websites, web pages and web technologies.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <section class="section">
+
+        <div class="section-title">
+
+            <span>WEB BASICS</span>
+
+            <h2>What is the Internet?</h2>
+
+            <p>
+                The internet is a global network that connects
+                computers and devices around the world.
+            </p>
+
+        </div>
+
+
+        <div class="lesson-content">
+
+            <h2>Definition</h2>
+
+            <p>
+                The Internet is a worldwide network of interconnected
+                computers and devices that communicate and exchange
+                information using standard communication protocols.
+            </p>
+
+
+            <h2>Simple Explanation</h2>
+
+            <p>
+                In simple words, the internet allows people and
+                devices to communicate, share information and access
+                online services from different locations.
+            </p>
+
+
+            <h2>What is the Web?</h2>
+
+            <p>
+                The World Wide Web, commonly called the Web, is a
+                collection of interconnected websites and web pages
+                that can be accessed through the internet.
+            </p>
+
+
+            <h2>Basic Web Technologies</h2>
+
+            <div class="feature-grid">
+
+                <div class="feature-card">
+
+                    <div class="icon">🏗️</div>
+
+                    <h3>HTML</h3>
+
+                    <p>
+                        HTML is used to create the structure
+                        and content of a web page.
+                    </p>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <div class="icon">🎨</div>
+
+                    <h3>CSS</h3>
+
+                    <p>
+                        CSS is used to control the appearance,
+                        layout and design of web pages.
+                    </p>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <div class="icon">⚙️</div>
+
+                    <h3>JavaScript</h3>
+
+                    <p>
+                        JavaScript adds interaction and dynamic
+                        behaviour to websites.
+                    </p>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <div class="icon">🌐</div>
+
+                    <h3>Web Browser</h3>
+
+                    <p>
+                        A browser allows users to access and
+                        interact with websites.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <h2>How a Website Works</h2>
+
+            <div class="workflow-container">
+
+                <div class="workflow-step">
+
+                    <div class="step-number">01</div>
+
+                    <h3>User</h3>
+
+                    <p>
+                        The user enters a website address
+                        or searches for information.
+                    </p>
+
+                </div>
+
+
+                <div class="arrow">→</div>
+
+
+                <div class="workflow-step">
+
+                    <div class="step-number">02</div>
+
+                    <h3>Browser</h3>
+
+                    <p>
+                        The browser sends a request
+                        to the web server.
+                    </p>
+
+                </div>
+
+
+                <div class="arrow">→</div>
+
+
+                <div class="workflow-step">
+
+                    <div class="step-number">03</div>
+
+                    <h3>Server</h3>
+
+                    <p>
+                        The server processes the request
+                        and sends the required data.
+                    </p>
+
+                </div>
+
+
+                <div class="arrow">→</div>
+
+
+                <div class="workflow-step">
+
+                    <div class="step-number">04</div>
+
+                    <h3>Web Page</h3>
+
+                    <p>
+                        The browser displays the website
+                        to the user.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <h2>Examples of Web Services</h2>
+
+            <ul>
+
+                <li>Online education platforms</li>
+
+                <li>Search engines</li>
+
+                <li>Social media platforms</li>
+
+                <li>Online banking</li>
+
+                <li>E-commerce websites</li>
+
+                <li>Video streaming services</li>
+
+            </ul>
+
+
+            <h2>Applications of Internet Technology</h2>
+
+            <div class="feature-grid">
+
+                <div class="feature-card">
+
+                    <h3>Education</h3>
+
+                    <p>
+                        Students can access online courses,
+                        digital books and learning resources.
+                    </p>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <h3>Communication</h3>
+
+                    <p>
+                        People can communicate using email,
+                        messaging and video conferencing.
+                    </p>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <h3>Business</h3>
+
+                    <p>
+                        Businesses use websites and online
+                        services to reach customers.
+                    </p>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <h3>Entertainment</h3>
+
+                    <p>
+                        Users can access videos, music,
+                        games and other digital content.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <h2>Key Points</h2>
+
+            <div class="feature-grid">
+
+                <div class="feature-card">
+
+                    <h3>01</h3>
+
+                    <p>
+                        The internet connects computers
+                        and devices around the world.
+                    </p>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <h3>02</h3>
+
+                    <p>
+                        The Web is a collection of websites
+                        and web pages.
+                    </p>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <h3>03</h3>
+
+                    <p>
+                        HTML, CSS and JavaScript are important
+                        web technologies.
+                    </p>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <h3>04</h3>
+
+                    <p>
+                        Web technologies support education,
+                        communication, business and entertainment.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <h2>Real-World Example</h2>
+
+            <p>
+                When a student opens an online learning website,
+                the browser sends a request to the website's server.
+                The server sends the required web page and the
+                browser displays the learning content to the student.
+            </p>
+
+
+            <h2>Quick Review</h2>
+
+            <div class="feature-grid">
+
+                <div class="feature-card">
+
+                    <h3>What is HTML?</h3>
+
+                    <p>
+                        HTML creates the structure of a web page.
+                    </p>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <h3>What is CSS?</h3>
+
+                    <p>
+                        CSS controls the design and appearance
+                        of a web page.
+                    </p>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <h3>What is JavaScript?</h3>
+
+                    <p>
+                        JavaScript adds interaction and
+                        dynamic behaviour to websites.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- NEXT STEP -->
+
+            <div style="text-align: center; margin-top: 40px;">
+
+                <a href="{{ url_for('web_quiz') }}"
+                   class="quiz-btn">
+
+                    📝 Take Web Development Quiz →
+
+                </a>
+
+                <a href="{{ url_for('text_lessons') }}"
+                   class="primary-btn">
+
+                    ← Back to Lessons
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <footer>
+
+        <h3>
+            AI-Powered Accessible Learning
+        </h3>
+
+        <p>
+            Learning App for Deaf and Mute Students
+        </p>
+
+        <p>
+            © 2026 AI-Powered Accessible Learning
+        </p>
+
+    </footer>
+
+</body>
+
+</html>

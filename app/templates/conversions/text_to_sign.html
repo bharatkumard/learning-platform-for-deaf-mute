@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text to Indian Sign Language</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f3f7fd;
+            color: #1e293b;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 35px auto;
+            padding: 28px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 5px 24px rgba(31, 65, 114, 0.09);
+        }
+
+        h1, h2 {
+            color: #193b78;
+        }
+
+        h1 {
+            margin: 0 0 10px;
+            font-size: 30px;
+        }
+
+        h2 {
+            margin-top: 0;
+            font-size: 21px;
+        }
+
+        .back-button {
+            display: inline-block;
+            padding: 11px 17px;
+            margin-bottom: 22px;
+            border: none;
+            border-radius: 8px;
+            background: #475569;
+            color: white;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: bold;
+            transition: background 0.2s ease;
+        }
+
+        .back-button:hover {
+            background: #334155;
+        }
+
+        .header {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e2eaf5;
+        }
+
+        .subtitle, .note {
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        label {
+            display: block;
+            margin: 20px 0 10px;
+            font-weight: bold;
+            color: #334155;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 125px;
+            padding: 15px;
+            border: 1px solid #cbd9ec;
+            border-radius: 10px;
+            font: inherit;
+            font-size: 16px;
+            resize: vertical;
+        }
+
+        textarea:focus {
+            outline: 2px solid #3b82f6;
+            outline-offset: 2px;
+        }
+
+        button, select {
+            font: inherit;
+            border-radius: 8px;
+        }
+
+        button {
+            padding: 11px 17px;
+            margin: 12px 8px 0 0;
+            border: 1px solid #cbd9ec;
+            background: white;
+            color: #23477f;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #edf5ff;
+        }
+
+        .primary-button {
+            background: #1877e8;
+            color: white;
+            border-color: #1877e8;
+        }
+
+        .primary-button:hover {
+            background: #155fc0;
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px;
+            margin-top: 20px;
+            padding: 15px;
+            background: #f7faff;
+            border: 1px solid #e1eafa;
+            border-radius: 10px;
+        }
+
+        .controls label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 0;
+            font-size: 14px;
+            font-weight: normal;
+        }
+
+        .controls select,
+        .player-speed select {
+            padding: 7px;
+            border: 1px solid #cbd9ec;
+            background: white;
+            color: #334155;
+        }
+
+        .output {
+            margin-top: 28px;
+            padding: 20px;
+            background: #f8fbff;
+            border: 1px solid #d8e6fa;
+            border-radius: 12px;
+        }
+
+        #status {
+            color: #52647c;
+            line-height: 1.6;
+        }
+
+        #wordOutput {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .word-card {
+            min-width: 0;
+            overflow: hidden;
+            border: 1px solid #d6e5fa;
+            border-radius: 10px;
+            background: white;
+        }
+
+        .word-title {
+            padding: 12px 8px;
+            background: #e9f3ff;
+            color: #193b78;
+            text-align: center;
+            font-size: 17px;
+            font-weight: bold;
+            overflow-wrap: anywhere;
+        }
+
+        .letters {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 7px;
+            padding: 14px 8px;
+        }
+
+        .letter-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-width: 72px;
+            min-height: 92px;
+            padding: 8px;
+            border-radius: 8px;
+            background: #f5f8fd;
+        }
+
+        .sign-image {
+            display: block;
+            width: 65px;
+            height: 65px;
+            object-fit: contain;
+        }
+
+        .letter-caption {
+            margin-top: 5px;
+            color: #64748b;
+            font-size: 12px;
+        }
+
+        .image-error {
+            width: 65px;
+            height: 65px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #b91c1c;
+            font-size: 12px;
+            text-align: center;
+        }
+
+        .fixed-width .letter-card {
+            width: 82px;
+        }
+
+        .hide-letters .letter-caption {
+            display: none;
+        }
+
+        .sign-player {
+            margin-top: 28px;
+            padding: 22px;
+            background: white;
+            border: 1px solid #d8e6fa;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .player-screen {
+            max-width: 360px;
+            margin: 18px auto;
+            padding: 18px;
+            background: #f5f8fd;
+            border-radius: 12px;
+        }
+
+        #playerSign {
+            display: block;
+            width: 220px;
+            height: 220px;
+            max-width: 100%;
+            margin: 0 auto;
+            object-fit: contain;
+        }
+
+        #playerLetter {
+            margin: 10px 0 5px;
+            color: #193b78;
+            font-size: 28px;
+        }
+
+        #playerPosition {
+            margin: 0;
+            color: #64748b;
+        }
+
+        .player-progress {
+            max-width: 420px;
+            margin: 16px auto;
+        }
+
+        #playerProgress {
+            width: 100%;
+            height: 12px;
+        }
+
+        .player-controls {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 12px 0 18px;
+        }
+
+        .player-controls button {
+            margin: 0;
+        }
+
+        .player-speed {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .player-speed label {
+            margin: 0;
+        }
+
+        .chart-container {
+            margin-top: 28px;
+        }
+
+        .chart-image {
+            display: block;
+            width: 100%;
+            height: auto;
+            margin-top: 15px;
+            border: 1px solid #dbe5f1;
+            border-radius: 10px;
+        }
+
+        .note {
+            font-size: 13px;
+        }
+
+        [hidden] {
+            display: none !important;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                margin: 15px 10px;
+                padding: 18px;
+            }
+
+            h1 {
+                font-size: 25px;
+            }
+
+            #wordOutput {
+                grid-template-columns: 1fr;
+            }
+
+            .controls {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            #playerSign {
+                width: 190px;
+                height: 190px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main class="container">
+
+        <!-- Back to Learning Methods button -->
+        <a href="/learn" class="back-button">
+            &#8592; Back to Learning Methods
+        </a>
+
+        <header class="header">
+            <h1>Text to Indian Sign Language</h1>
+            <p class="subtitle">
+                Convert text into alphabet hand-sign images and play the
+                converted letters automatically.
+            </p>
+        </header>
+
+        <form id="textForm">
+            <label for="inputText">Enter your text</label>
+
+            <textarea
+                id="inputText"
+                name="text"
+                maxlength="2000"
+                placeholder="Example: HELLO HOW ARE YOU"
+                required
+            ></textarea>
+
+            <button class="primary-button" id="convertButton" type="submit">
+                Convert to Sign Language
+            </button>
+
+            <button id="clearButton" type="button">Clear</button>
+        </form>
+
+        <div class="controls">
+            <button id="chartButton" type="button">
+                Show Alphabet Chart
+            </button>
+
+            <label>
+                <input id="showLetters" type="checkbox">
+                Show English Letters
+            </label>
+
+            <label>
+                Sign Layout
+                <select id="signLayout">
+                    <option value="flexible">Flexible Width</option>
+                    <option value="fixed">Fixed Width</option>
+                </select>
+            </label>
+
+            <label>
+                Font Size
+                <select id="fontSize">
+                    <option value="small">Small</option>
+                    <option value="medium" selected>Medium</option>
+                    <option value="large">Large</option>
+                </select>
+            </label>
+        </div>
+
+        <section class="output" aria-live="polite">
+            <h2>Method 1: Converted Signs</h2>
+
+            <p id="status">
+                Enter text and click Convert to display the hand signs.
+            </p>
+
+            <div id="wordOutput"></div>
+
+            <p class="note">
+                This method displays alphabet fingerspelling images.
+                It does not translate complete sentences into ISL grammar.
+            </p>
+        </section>
+
+        <section class="sign-player">
+            <h2>Method 2: Automatic Sign Player</h2>
+            <p class="note">
+                Play the converted sentence one alphabet sign at a time.
+            </p>
+
+            <div class="player-screen">
+                <img
+                    id="playerSign"
+                    src="{{ url_for('static', filename='signs/alphabet/A.png') }}"
+                    alt="Alphabet sign preview"
+                >
+
+                <h3 id="playerLetter">Ready</h3>
+                <p id="playerPosition">Convert text first, then press Play.</p>
+            </div>
+
+            <div class="player-progress">
+                <progress id="playerProgress" value="0" max="100"></progress>
+            </div>
+
+            <div class="player-controls">
+                <button id="playSigns" type="button">▶ Play</button>
+                <button id="pauseSigns" type="button">⏸ Pause</button>
+                <button id="stopSigns" type="button">⏹ Stop</button>
+            </div>
+
+            <div class="player-speed">
+                <label for="playSpeed">Playback speed:</label>
+                <select id="playSpeed">
+                    <option value="1500">Slow</option>
+                    <option value="1000" selected>Normal</option>
+                    <option value="500">Fast</option>
+                </select>
+            </div>
+        </section>
+
+        <section class="chart-container" id="chartSection" hidden>
+            <h2>ISL Alphabet Reference Chart</h2>
+
+            <img
+                class="chart-image"
+                src="{{ url_for('static', filename='alphabet/alphabet_chart.png') }}"
+                alt="ISL alphabet reference chart"
+                onerror="this.hidden = true; document.getElementById('chartError').hidden = false;"
+            >
+
+            <p id="chartError" class="note" hidden>
+                Chart not found. Check that the file exists at
+                app/static/alphabet/alphabet_chart.png.
+            </p>
+        </section>
+    </main>
+
+    <script>
+        const form = document.getElementById("textForm");
+        const inputText = document.getElementById("inputText");
+        const status = document.getElementById("status");
+        const wordOutput = document.getElementById("wordOutput");
+        const convertButton = document.getElementById("convertButton");
+        const clearButton = document.getElementById("clearButton");
+        const chartButton = document.getElementById("chartButton");
+        const chartSection = document.getElementById("chartSection");
+        const showLetters = document.getElementById("showLetters");
+        const signLayout = document.getElementById("signLayout");
+        const fontSize = document.getElementById("fontSize");
+
+        const playerSign = document.getElementById("playerSign");
+        const playerLetter = document.getElementById("playerLetter");
+        const playerPosition = document.getElementById("playerPosition");
+        const playerProgress = document.getElementById("playerProgress");
+        const playSignsButton = document.getElementById("playSigns");
+        const pauseSignsButton = document.getElementById("pauseSigns");
+        const stopSignsButton = document.getElementById("stopSigns");
+        const playSpeed = document.getElementById("playSpeed");
+
+        let playerCharacters = [];
+        let playerIndex = 0;
+        let playerTimer = null;
+        let playerPlaying = false;
+
+        function stopPlayerTimer() {
+            if (playerTimer !== null) {
+                clearTimeout(playerTimer);
+                playerTimer = null;
+            }
+        }
+
+        function preparePlayer(text) {
+            stopPlayerTimer();
+            playerPlaying = false;
+
+            playerCharacters = text
+                .toLocaleUpperCase()
+                .split("")
+                .filter(character => /^[A-Z ]$/.test(character));
+
+            playerIndex = 0;
+            playerProgress.value = 0;
+            playerSign.style.visibility = "visible";
+
+            if (playerCharacters.length > 0) {
+                showPlayerCharacter();
+
+                playerPosition.textContent =
+                    `${playerCharacters.length} letters and spaces ready to play`;
+            } else {
+                playerLetter.textContent = "No letters";
+                playerPosition.textContent =
+                    "No A–Z letters were found in the converted text.";
+            }
+        }
+
+        function showPlayerCharacter() {
+            if (
+                !playerCharacters.length ||
+                playerIndex >= playerCharacters.length
+            ) {
+                return;
+            }
+
+            const character = playerCharacters[playerIndex];
+
+            if (character === " ") {
+                playerSign.style.visibility = "hidden";
+                playerLetter.textContent = "Word break";
+            } else {
+                playerSign.style.visibility = "visible";
+                playerSign.src =
+                    `/static/signs/alphabet/${character}.png`;
+                playerSign.alt = `Hand sign for letter ${character}`;
+                playerLetter.textContent = character;
+            }
+
+            playerProgress.value =
+                ((playerIndex + 1) / playerCharacters.length) * 100;
+
+            playerPosition.textContent =
+                `Character ${playerIndex + 1} of ${playerCharacters.length}`;
+        }
+
+        function playNextCharacter() {
+            if (!playerPlaying || !playerCharacters.length) {
+                return;
+            }
+
+            showPlayerCharacter();
+
+            if (playerIndex >= playerCharacters.length - 1) {
+                playerPlaying = false;
+                playerTimer = null;
+                playerPosition.textContent = "Playback completed";
+                return;
+            }
+
+            const currentCharacter = playerCharacters[playerIndex];
+            const delay = currentCharacter === " "
+                ? 450
+                : Number(playSpeed.value);
+
+            playerIndex++;
+            playerTimer = setTimeout(playNextCharacter, delay);
+        }
+
+        function startPlayer() {
+            if (!playerCharacters.length) {
+                playerPosition.textContent =
+                    "Enter text and click Convert first.";
+                return;
+            }
+
+            if (playerPlaying) {
+                return;
+            }
+
+            if (playerIndex >= playerCharacters.length) {
+                playerIndex = 0;
+            }
+
+            stopPlayerTimer();
+            playerPlaying = true;
+            playNextCharacter();
+        }
+
+        playSignsButton.addEventListener("click", startPlayer);
+
+        pauseSignsButton.addEventListener("click", function () {
+            if (!playerPlaying) {
+                return;
+            }
+
+            playerPlaying = false;
+            stopPlayerTimer();
+
+            playerPosition.textContent =
+                `Paused at character ${Math.min(
+                    playerIndex + 1,
+                    playerCharacters.length
+                )} of ${playerCharacters.length}`;
+        });
+
+        stopSignsButton.addEventListener("click", function () {
+            playerPlaying = false;
+            stopPlayerTimer();
+            playerIndex = 0;
+            playerProgress.value = 0;
+            playerSign.style.visibility = "visible";
+
+            if (playerCharacters.length) {
+                showPlayerCharacter();
+                playerPosition.textContent =
+                    "Stopped. Press Play to start again.";
+            } else {
+                playerLetter.textContent = "Ready";
+                playerPosition.textContent =
+                    "Convert text first, then press Play.";
+            }
+        });
+
+        playSpeed.addEventListener("change", function () {
+            if (playerPlaying) {
+                stopPlayerTimer();
+                playerPlaying = false;
+                startPlayer();
+            }
+        });
+
+        function createLetterCard(character) {
+            const card = document.createElement("div");
+            card.className = "letter-card";
+
+            const image = document.createElement("img");
+            image.className = "sign-image";
+            image.src = `/static/signs/alphabet/${character}.png`;
+            image.alt = `Hand sign for letter ${character}`;
+            image.loading = "lazy";
+
+            image.addEventListener("error", function () {
+                image.remove();
+
+                const message = document.createElement("span");
+                message.className = "image-error";
+                message.textContent = `Missing ${character}.png`;
+
+                card.prepend(message);
+            }, { once: true });
+
+            const caption = document.createElement("span");
+            caption.className = "letter-caption";
+            caption.textContent = character;
+
+            card.append(image, caption);
+            return card;
+        }
+
+        function displayWords(text) {
+            wordOutput.replaceChildren();
+
+            const words = text.trim().split(/\s+/).filter(Boolean);
+
+            for (const word of words) {
+                const wordCard = document.createElement("article");
+                wordCard.className = "word-card";
+
+                const title = document.createElement("div");
+                title.className = "word-title";
+                title.textContent = word.toLocaleUpperCase();
+
+                const letters = document.createElement("div");
+                letters.className = "letters";
+
+                for (const character of word.toLocaleUpperCase()) {
+                    if (/^[A-Z]$/.test(character)) {
+                        letters.appendChild(createLetterCard(character));
+                    } else {
+                        const symbol = document.createElement("span");
+                        symbol.className = "letter-caption";
+                        symbol.textContent = character;
+                        letters.appendChild(symbol);
+                    }
+                }
+
+                wordCard.append(title, letters);
+                wordOutput.appendChild(wordCard);
+            }
+
+            updateDisplaySettings();
+        }
+
+        function updateDisplaySettings() {
+            wordOutput.classList.toggle(
+                "fixed-width",
+                signLayout.value === "fixed"
+            );
+
+            wordOutput.classList.toggle(
+                "hide-letters",
+                !showLetters.checked
+            );
+
+            wordOutput.querySelectorAll(".sign-image").forEach(image => {
+                const size = {
+                    small: 45,
+                    medium: 65,
+                    large: 85
+                }[fontSize.value];
+
+                image.style.width = `${size}px`;
+                image.style.height = `${size}px`;
+            });
+
+            wordOutput.querySelectorAll(".letter-caption").forEach(caption => {
+                caption.style.fontSize = {
+                    small: "11px",
+                    medium: "12px",
+                    large: "15px"
+                }[fontSize.value];
+            });
+        }
+
+        form.addEventListener("submit", async function (event) {
+            event.preventDefault();
+
+            const text = inputText.value.trim();
+
+            if (!text) {
+                status.textContent = "Please enter some text first.";
+                inputText.focus();
+                return;
+            }
+
+            convertButton.disabled = true;
+            convertButton.textContent = "Processing...";
+            status.textContent = "Converting text...";
+            wordOutput.replaceChildren();
+
+            stopPlayerTimer();
+            playerPlaying = false;
+            playerCharacters = [];
+            playerIndex = 0;
+            playerProgress.value = 0;
+            playerLetter.textContent = "Ready";
+            playerPosition.textContent = "Waiting for conversion...";
+
+            try {
+                const response = await fetch("/text-to-sign/convert", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
+                    body: JSON.stringify({ text: text })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(
+                        data.error || "The conversion request failed."
+                    );
+                }
+
+                if (typeof data.text !== "string") {
+                    throw new Error(
+                        "The server response does not contain converted text."
+                    );
+                }
+
+                displayWords(data.text);
+                preparePlayer(data.text);
+
+                status.textContent =
+                    "Text processed. Hand-sign images are shown for available letters.";
+
+            } catch (error) {
+                status.textContent =
+                    "Unable to process the text: " + error.message;
+            } finally {
+                convertButton.disabled = false;
+                convertButton.textContent = "Convert to Sign Language";
+            }
+        });
+
+        clearButton.addEventListener("click", function () {
+            inputText.value = "";
+            wordOutput.replaceChildren();
+
+            preparePlayer("");
+            playerLetter.textContent = "Ready";
+            playerPosition.textContent =
+                "Convert text first, then press Play.";
+
+            status.textContent =
+                "Enter text and click Convert to display the hand signs.";
+
+            inputText.focus();
+        });
+
+        chartButton.addEventListener("click", function () {
+            chartSection.hidden = !chartSection.hidden;
+
+            chartButton.textContent = chartSection.hidden
+                ? "Show Alphabet Chart"
+                : "Hide Alphabet Chart";
+        });
+
+        showLetters.addEventListener("change", updateDisplaySettings);
+        signLayout.addEventListener("change", updateDisplaySettings);
+        fontSize.addEventListener("change", updateDisplaySettings);
+    </script>
+</body>
+</html>

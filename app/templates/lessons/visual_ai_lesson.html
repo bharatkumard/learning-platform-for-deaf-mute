@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Artificial Intelligence - Visual Lesson 01</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #222;
+            line-height: 1.6;
+        }
+
+        header {
+            background: #ffffff;
+            padding: 18px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+            color: #2563eb;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            margin-left: 22px;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            color: #2563eb;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            color: white;
+            text-align: center;
+            padding: 70px 20px;
+        }
+
+        .lesson-number {
+            font-size: 14px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+            opacity: 0.9;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            max-width: 750px;
+            margin: auto;
+            font-size: 18px;
+        }
+
+        section {
+            max-width: 1100px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .section-title h2 {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .section-title p {
+            color: #666;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.07);
+            text-align: center;
+        }
+
+        .feature-card .icon {
+            font-size: 40px;
+            margin-bottom: 12px;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            color: #666;
+            font-size: 15px;
+        }
+
+        .convert-section {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.07);
+        }
+
+        .workflow {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .workflow-box {
+            background: #eef2ff;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            min-width: 150px;
+            font-weight: bold;
+        }
+
+        .arrow {
+            font-size: 25px;
+            color: #2563eb;
+        }
+
+        .ai-visual-flow {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .ai-flow-box {
+            background: white;
+            border: 2px solid #dbeafe;
+            border-radius: 15px;
+            padding: 25px;
+            width: 170px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
+        }
+
+        .ai-flow-box .icon {
+            font-size: 35px;
+            margin-bottom: 8px;
+        }
+
+        .ai-flow-arrow {
+            font-size: 25px;
+            color: #2563eb;
+        }
+
+        .example-box {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.07);
+        }
+
+        .example-step {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 18px;
+            margin: 12px 0;
+            background: #f8fafc;
+            border-radius: 12px;
+        }
+
+        .example-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #2563eb;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .review-box {
+            background: #eef2ff;
+            border-radius: 20px;
+            padding: 35px;
+        }
+
+        .review-box ul {
+            padding-left: 25px;
+        }
+
+        .review-box li {
+            margin: 10px 0;
+        }
+
+        /* QUIZ */
+
+        .quiz-section {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.07);
+        }
+
+        .quiz-question {
+            background: #f8fafc;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .quiz-question h3 {
+            margin-bottom: 18px;
+            color: #1f2937;
+        }
+
+        .quiz-option {
+            display: block;
+            background: white;
+            border: 1px solid #d1d5db;
+            border-radius: 10px;
+            padding: 12px 15px;
+            margin: 10px 0;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .quiz-option:hover {
+            background: #eff6ff;
+            border-color: #2563eb;
+        }
+
+        .quiz-option input {
+            margin-right: 10px;
+        }
+
+        .quiz-button {
+            display: block;
+            margin: 30px auto 15px;
+            padding: 14px 30px;
+            border: none;
+            border-radius: 10px;
+            background: #2563eb;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .quiz-button:hover {
+            background: #1d4ed8;
+        }
+
+        .retry-button {
+            background: #7c3aed;
+        }
+
+        .quiz-result {
+            text-align: center;
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 12px;
+            display: none;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .feedback {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 8px;
+            display: none;
+            font-size: 14px;
+        }
+
+        .correct-feedback {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .incorrect-feedback {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .back-button {
+            display: block;
+            width: fit-content;
+            margin: 40px auto;
+            padding: 14px 25px;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        footer {
+            background: #111827;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 60px;
+        }
+
+        @media (max-width: 850px) {
+            .feature-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav a {
+                margin: 0 7px;
+            }
+
+            .hero h1 {
+                font-size: 38px;
+            }
+        }
+
+        @media (max-width: 550px) {
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .quiz-section {
+                padding: 20px;
+            }
+
+            .workflow,
+            .ai-visual-flow {
+                flex-direction: column;
+            }
+
+            .ai-flow-arrow,
+            .arrow {
+                transform: rotate(90deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">Accessible Learning</div>
+
+    <nav>
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('learn') }}">Learn</a>
+        <a href="{{ url_for('visual_learning') }}">Visual Learning</a>
+    </nav>
+</header>
+
+
+<!-- HERO -->
+
+<div class="hero">
+    <div class="lesson-number">VISUAL LESSON 01</div>
+
+    <h1>Artificial Intelligence</h1>
+
+    <p>
+        Learn the basic idea of Artificial Intelligence through
+        simple visual explanations, examples, and an interactive quiz.
+    </p>
+</div>
+
+
+<!-- WHAT IS AI -->
+
+<section>
+
+    <div class="section-title">
+        <h2>What is Artificial Intelligence?</h2>
+
+        <p>
+            Artificial Intelligence allows computers and machines
+            to perform tasks that involve aspects of human intelligence.
+        </p>
+    </div>
+
+    <div class="feature-grid">
+
+        <div class="feature-card">
+            <div class="icon">👁️</div>
+            <h3>Perceive</h3>
+            <p>
+                AI can process information such as images,
+                text, audio, and other data.
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <div class="icon">🧠</div>
+            <h3>Process</h3>
+            <p>
+                AI systems analyze information and look for
+                useful patterns.
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <div class="icon">💡</div>
+            <h3>Decide</h3>
+            <p>
+                AI can use the information it processes to
+                make predictions or decisions.
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <div class="icon">⚡</div>
+            <h3>Act</h3>
+            <p>
+                AI can produce an output or perform an action
+                based on its result.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- AI WORKFLOW -->
+
+<section>
+
+    <div class="section-title">
+        <h2>AI Workflow</h2>
+
+        <p>
+            A simple way to understand how an AI system works.
+        </p>
+    </div>
+
+    <div class="convert-section">
+
+        <div class="workflow">
+
+            <div class="workflow-box">
+                📥<br>
+                Input
+            </div>
+
+            <div class="arrow">→</div>
+
+            <div class="workflow-box">
+                🧠<br>
+                AI Processing
+            </div>
+
+            <div class="arrow">→</div>
+
+            <div class="workflow-box">
+                💡<br>
+                Prediction
+            </div>
+
+            <div class="arrow">→</div>
+
+            <div class="workflow-box">
+                ✅<br>
+                Output
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- VISUAL EXPLANATION -->
+
+<section>
+
+    <div class="section-title">
+        <h2>Visual Explanation</h2>
+
+        <p>
+            Follow the information as it moves through an AI system.
+        </p>
+    </div>
+
+    <div class="ai-visual-flow">
+
+        <div class="ai-flow-box">
+            <div class="icon">📊</div>
+            <h3>Data</h3>
+            <p>Information is provided to the system.</p>
+        </div>
+
+        <div class="ai-flow-arrow">→</div>
+
+        <div class="ai-flow-box">
+            <div class="icon">🧠</div>
+            <h3>AI System</h3>
+            <p>The system processes the information.</p>
+        </div>
+
+        <div class="ai-flow-arrow">→</div>
+
+        <div class="ai-flow-box">
+            <div class="icon">🔍</div>
+            <h3>Analysis</h3>
+            <p>The system looks for patterns.</p>
+        </div>
+
+        <div class="ai-flow-arrow">→</div>
+
+        <div class="ai-flow-box">
+            <div class="icon">💡</div>
+            <h3>Prediction</h3>
+            <p>The system produces a result.</p>
+        </div>
+
+        <div class="ai-flow-arrow">→</div>
+
+        <div class="ai-flow-box">
+            <div class="icon">✅</div>
+            <h3>Output</h3>
+            <p>The result is presented to the user.</p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- KEY CONCEPTS -->
+
+<section>
+
+    <div class="section-title">
+        <h2>Key Concepts</h2>
+
+        <p>
+            Important ideas to remember from this lesson.
+        </p>
+    </div>
+
+    <div class="feature-grid">
+
+        <div class="feature-card">
+            <div class="icon">🤖</div>
+            <h3>Artificial Intelligence</h3>
+            <p>
+                Technology that enables machines to perform
+                tasks involving aspects of human intelligence.
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <div class="icon">🧠</div>
+            <h3>Machine Learning</h3>
+            <p>
+                A field of AI where systems learn patterns
+                from data.
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <div class="icon">📊</div>
+            <h3>Data</h3>
+            <p>
+                Information that can be used by an AI system
+                for analysis and learning.
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <div class="icon">⚙️</div>
+            <h3>Algorithm</h3>
+            <p>
+                A set of steps or rules used to solve a problem
+                or process information.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- AI APPLICATIONS -->
+
+<section>
+
+    <div class="section-title">
+        <h2>AI Applications</h2>
+
+        <p>
+            Artificial Intelligence is used in many different areas.
+        </p>
+    </div>
+
+    <div class="feature-grid">
+
+        <div class="feature-card">
+            <div class="icon">🚗</div>
+            <h3>Smart Vehicles</h3>
+            <p>
+                AI can help vehicles understand their environment
+                and support driving-related tasks.
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <div class="icon">🏥</div>
+            <h3>Healthcare</h3>
+            <p>
+                AI can support healthcare professionals by
+                analyzing information and patterns.
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <div class="icon">🎬</div>
+            <h3>Recommendations</h3>
+            <p>
+                AI can analyze activity and suggest content
+                that may be relevant to users.
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <div class="icon">🗣️</div>
+            <h3>Voice Assistants</h3>
+            <p>
+                AI can process spoken language and respond
+                to user requests.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- REAL WORLD EXAMPLE -->
+
+<section>
+
+    <div class="section-title">
+        <h2>Real-World Example: Recommendation System</h2>
+
+        <p>
+            One simple example of AI is a system that recommends content.
+        </p>
+    </div>
+
+    <div class="example-box">
+
+        <div class="example-step">
+            <div class="example-number">1</div>
+
+            <div>
+                <h3>User Activity</h3>
+                <p>
+                    The system receives information about the user's activity.
+                </p>
+            </div>
+        </div>
+
+        <div class="example-step">
+            <div class="example-number">2</div>
+
+            <div>
+                <h3>Data Analysis</h3>
+                <p>
+                    The AI system analyzes patterns in the available information.
+                </p>
+            </div>
+        </div>
+
+        <div class="example-step">
+            <div class="example-number">3</div>
+
+            <div>
+                <h3>Recommendation</h3>
+                <p>
+                    The system produces a recommendation based on its analysis.
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- QUICK REVIEW -->
+
+<section>
+
+    <div class="section-title">
+        <h2>Quick Review</h2>
+    </div>
+
+    <div class="review-box">
+
+        <ul>
+            <li>AI enables machines to perform tasks involving aspects of human intelligence.</li>
+            <li>AI systems can process different types of data.</li>
+            <li>Machine Learning is a field of Artificial Intelligence.</li>
+            <li>AI systems can analyze information and produce predictions or outputs.</li>
+            <li>AI is used in areas such as recommendations, healthcare, vehicles, and voice assistants.</li>
+        </ul>
+
+    </div>
+
+</section>
+
+
+<!-- INTERACTIVE QUIZ -->
+
+<section>
+
+    <div class="section-title">
+
+        <h2>Interactive Quiz</h2>
+
+        <p>
+            Test what you learned in Visual Lesson 01.
+        </p>
+
+    </div>
+
+
+    <div class="quiz-section">
+
+        <!-- QUESTION 1 -->
+
+        <div class="quiz-question">
+
+            <h3>1. What is Artificial Intelligence mainly designed to enable computers or machines to do?</h3>
+
+            <label class="quiz-option">
+                <input type="radio" name="q1" value="A">
+                Perform tasks that involve aspects of human intelligence
+            </label>
+
+            <label class="quiz-option">
+                <input type="radio" name="q1" value="B">
+                Only store large amounts of data
+            </label>
+
+            <label class="quiz-option">
+                <input type="radio" name="q1" value="C">
+                Only connect computers to the internet
+            </label>
+
+            <label class="quiz-option">
+                <input type="radio" name="q1" value="D">
+                Replace every type of human activity
+            </label>
+
+            <div id="feedback1" class="feedback"></div>
+
+        </div>
+
+
+        <!-- QUESTION 2 -->
+
+        <div class="quiz-question">
+
+            <h3>2. In the basic AI workflow, which stage comes after AI Processing?</h3>
+
+            <label class="quiz-option">
+                <input type="radio" name="q2" value="A">
+                Prediction
+            </label>
+
+            <label class="quiz-option">
+                <input type="radio" name="q2" value="B">
+                Data Collection
+            </label>
+
+            <label class="quiz-option">
+                <input type="radio" name="q2" value="C">
+                Input
+            </label>
+
+            <label class="quiz-option">
+                <input type="radio" name="q2" value="D">
+                Data Storage
+            </label>
+
+            <div id="feedback2" class="feedback"></div>
+
+        </div>
+
+
+        <!-- QUESTION 3 -->
+
+        <div class="quiz-question">
+
+            <h3>3. Which of these can be types of information used by AI?</h3>
+
+            <label class="quiz-option">
+                <input type="checkbox" name="q3" value="A">
+                Images
+            </label>
+
+            <label class="quiz-option">
+                <input type="checkbox" name="q3" value="B">
+                Audio
+            </label>
+
+            <label class="quiz-option">
+                <input type="checkbox" name="q3" value="C">
+                Text
+            </label>
+
+            <label class="quiz-option">
+                <input type="checkbox" name="q3" value="D">
+                A prediction with no information or input
+            </label>
+
+            <div id="feedback3" class="feedback"></div>
+
+        </div>
+
+
+        <!-- QUESTION 4 -->
+
+        <div class="quiz-question">
+
+            <h3>4. Machine Learning is a field of Artificial Intelligence that can learn patterns from data.</h3>
+
+            <label class="quiz-option">
+                <input type="radio" name="q4" value="A">
+                True
+            </label>
+
+            <label class="quiz-option">
+                <input type="radio" name="q4" value="B">
+                False
+            </label>
+
+            <div id="feedback4" class="feedback"></div>
+
+        </div>
+
+
+        <!-- QUESTION 5 -->
+
+        <div class="quiz-question">
+
+            <h3>5. Which is an example of an AI application?</h3>
+
+            <label class="quiz-option">
+                <input type="radio" name="q5" value="A">
+                A recommendation system suggesting content
+            </label>
+
+            <label class="quiz-option">
+                <input type="radio" name="q5" value="B">
+                A simple notebook with no digital processing
+            </label>
+
+            <label class="quiz-option">
+                <input type="radio" name="q5" value="C">
+                A printed ruler
+            </label>
+
+            <label class="quiz-option">
+                <input type="radio" name="q5" value="D">
+                An empty storage box
+            </label>
+
+            <div id="feedback5" class="feedback"></div>
+
+        </div>
+
+
+        <button class="quiz-button" onclick="checkQuiz()">
+            Check Answers
+        </button>
+
+
+        <div id="quizResult" class="quiz-result" aria-live="polite"></div>
+
+
+        <button
+            id="retryButton"
+            class="quiz-button retry-button"
+            onclick="resetQuiz()"
+            style="display: none;"
+        >
+            Try Again
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- BACK BUTTON -->
+
+<a href="{{ url_for('visual_learning') }}" class="back-button">
+    ← Back to Visual Lessons
+</a>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    <p>
+        AI-Powered Accessible Learning App
+    </p>
+
+    <p>
+        Learn • Understand • Practice • Grow
+    </p>
+
+</footer>
+
+
+<script>
+
+function checkQuiz() {
+
+    let score = 0;
+
+    const correctAnswers = {
+        q1: ["A"],
+        q2: ["A"],
+        q3: ["A", "B", "C"],
+        q4: ["A"],
+        q5: ["A"]
+    };
+
+
+    // Question 1
+
+    const q1 = document.querySelector('input[name="q1"]:checked');
+
+    const feedback1 = document.getElementById("feedback1");
+
+    if (!q1) {
+
+        feedback1.textContent = "Please select an answer.";
+
+        feedback1.className = "feedback incorrect-feedback";
+
+        feedback1.style.display = "block";
+
+    } else {
+
+        if (q1.value === "A") {
+
+            score++;
+
+            feedback1.textContent =
+                "Correct! AI enables machines to perform tasks involving aspects of human intelligence.";
+
+            feedback1.className = "feedback correct-feedback";
+
+        } else {
+
+            feedback1.textContent =
+                "Not quite. AI is designed to help machines perform tasks involving aspects of human intelligence.";
+
+            feedback1.className = "feedback incorrect-feedback";
+
+        }
+
+        feedback1.style.display = "block";
+    }
+
+
+    // Question 2
+
+    const q2 = document.querySelector('input[name="q2"]:checked');
+
+    const feedback2 = document.getElementById("feedback2");
+
+    if (!q2) {
+
+        feedback2.textContent = "Please select an answer.";
+
+        feedback2.className = "feedback incorrect-feedback";
+
+        feedback2.style.display = "block";
+
+    } else {
+
+        if (q2.value === "A") {
+
+            score++;
+
+            feedback2.textContent =
+                "Correct! In this simplified workflow, Prediction follows AI Processing.";
+
+            feedback2.className = "feedback correct-feedback";
+
+        } else {
+
+            feedback2.textContent =
+                "Not quite. The simplified workflow is Input → AI Processing → Prediction → Output.";
+
+            feedback2.className = "feedback incorrect-feedback";
+
+        }
+
+        feedback2.style.display = "block";
+    }
+
+
+    // Question 3
+
+    const q3 = Array.from(
+        document.querySelectorAll('input[name="q3"]:checked')
+    ).map(input => input.value);
+
+    const feedback3 = document.getElementById("feedback3");
+
+    const correctQ3 = ["A", "B", "C"];
+
+    const q3Correct =
+        q3.length === correctQ3.length &&
+        q3.every(value => correctQ3.includes(value));
+
+    if (q3.length === 0) {
+
+        feedback3.textContent = "Please select at least one answer.";
+
+        feedback3.className = "feedback incorrect-feedback";
+
+    } else if (q3Correct) {
+
+        score++;
+
+        feedback3.textContent =
+            "Correct! Images, audio, and text can all be processed by AI systems.";
+
+        feedback3.className = "feedback correct-feedback";
+
+    } else {
+
+        feedback3.textContent =
+            "Not quite. Images, audio, and text are examples of information AI systems can process.";
+
+        feedback3.className = "feedback incorrect-feedback";
+    }
+
+    feedback3.style.display = "block";
+
+
+    // Question 4
+
+    const q4 = document.querySelector('input[name="q4"]:checked');
+
+    const feedback4 = document.getElementById("feedback4");
+
+    if (!q4) {
+
+        feedback4.textContent = "Please select an answer.";
+
+        feedback4.className = "feedback incorrect-feedback";
+
+        feedback4.style.display = "block";
+
+    } else {
+
+        if (q4.value === "A") {
+
+            score++;
+
+            feedback4.textContent =
+                "Correct! Machine Learning is a field of AI that learns patterns from data.";
+
+            feedback4.className = "feedback correct-feedback";
+
+        } else {
+
+            feedback4.textContent =
+                "Not quite. Machine Learning is a field of AI that can learn patterns from data.";
+
+            feedback4.className = "feedback incorrect-feedback";
+        }
+
+        feedback4.style.display = "block";
+    }
+
+
+    // Question 5
+
+    const q5 = document.querySelector('input[name="q5"]:checked');
+
+    const feedback5 = document.getElementById("feedback5");
+
+    if (!q5) {
+
+        feedback5.textContent = "Please select an answer.";
+
+        feedback5.className = "feedback incorrect-feedback";
+
+        feedback5.style.display = "block";
+
+    } else {
+
+        if (q5.value === "A") {
+
+            score++;
+
+            feedback5.textContent =
+                "Correct! Recommendation systems are a common example of AI applications.";
+
+            feedback5.className = "feedback correct-feedback";
+
+        } else {
+
+            feedback5.textContent =
+                "Not quite. A recommendation system can analyze information and provide suggestions.";
+
+            feedback5.className = "feedback incorrect-feedback";
+        }
+
+        feedback5.style.display = "block";
+    }
+
+
+    // Show result
+
+    const result = document.getElementById("quizResult");
+
+    result.style.display = "block";
+
+    result.textContent =
+        "You scored " + score + " out of 5.";
+
+    if (score === 5) {
+
+        result.style.background = "#dcfce7";
+        result.style.color = "#166534";
+
+    } else if (score >= 3) {
+
+        result.style.background = "#fef3c7";
+        result.style.color = "#92400e";
+
+    } else {
+
+        result.style.background = "#fee2e2";
+        result.style.color = "#991b1b";
+    }
+
+
+    // Show retry button
+
+    document.getElementById("retryButton").style.display = "block";
+
+}
+
+
+function resetQuiz() {
+
+    // Clear radio buttons and checkboxes
+
+    document.querySelectorAll(
+        'input[type="radio"], input[type="checkbox"]'
+    ).forEach(input => {
+
+        input.checked = false;
+
+    });
+
+
+    // Hide feedback
+
+    document.querySelectorAll(".feedback").forEach(feedback => {
+
+        feedback.style.display = "none";
+        feedback.textContent = "";
+
+    });
+
+
+    // Hide result
+
+    const result = document.getElementById("quizResult");
+
+    result.style.display = "none";
+    result.textContent = "";
+
+
+    // Hide retry button
+
+    document.getElementById("retryButton").style.display = "none";
+
+}
+
+</script>
+
+</body>
+</html>

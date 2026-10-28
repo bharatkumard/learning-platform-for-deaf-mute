@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Machine Learning Quiz Result</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #222;
+        }
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        nav {
+            background: white;
+            padding: 18px 50px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+            color: #2563eb;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: #2563eb;
+        }
+
+        /* =========================
+           ACCOUNT BUTTONS
+        ========================= */
+
+        .welcome-user {
+            font-weight: bold;
+            color: #2563eb;
+        }
+
+        .profile-btn {
+            padding: 8px 15px;
+            background: #2563eb;
+            color: white !important;
+            border-radius: 7px;
+        }
+
+        .logout-btn {
+            padding: 8px 15px;
+            background: #ef4444;
+            color: white !important;
+            border-radius: 7px;
+        }
+
+        .login-btn {
+            padding: 8px 15px;
+            background: #2563eb;
+            color: white !important;
+            border-radius: 7px;
+        }
+
+        .create-account-btn {
+            padding: 8px 15px;
+            background: #16a34a;
+            color: white !important;
+            border-radius: 7px;
+        }
+
+        /* =========================
+           RESULT
+        ========================= */
+
+        .result-container {
+            max-width: 700px;
+            margin: 70px auto;
+            padding: 20px;
+        }
+
+        .result-card {
+            background: white;
+            border-radius: 18px;
+            padding: 45px 35px;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .result-icon {
+            font-size: 55px;
+            margin-bottom: 15px;
+        }
+
+        .result-card h1 {
+            font-size: 32px;
+            margin-bottom: 12px;
+            color: #1e3a8a;
+        }
+
+        .result-card p {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        /* =========================
+           SCORE
+        ========================= */
+
+        .score-box {
+            margin: 30px auto;
+            padding: 25px;
+            background: #eff6ff;
+            border-radius: 15px;
+            max-width: 400px;
+        }
+
+        .score {
+            font-size: 48px;
+            font-weight: bold;
+            color: #2563eb;
+        }
+
+        .score-text {
+            margin-top: 8px;
+            font-size: 18px;
+            color: #555;
+        }
+
+        /* =========================
+           BUTTONS
+        ========================= */
+
+        .button-group {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 13px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .retry-btn {
+            background: #2563eb;
+            color: white;
+        }
+
+        .retry-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .lesson-btn {
+            background: #e5e7eb;
+            color: #222;
+        }
+
+        .lesson-btn:hover {
+            background: #d1d5db;
+        }
+
+        .back-btn {
+            background: #16a34a;
+            color: white;
+        }
+
+        .back-btn:hover {
+            background: #15803d;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- =========================
+         NAVBAR
+    ========================= -->
+
+    <nav>
+
+        <div class="logo">
+            Accessible Learning
+        </div>
+
+        <div class="nav-links">
+
+            <a href="{{ url_for('home') }}">
+                Home
+            </a>
+
+            <a href="{{ url_for('learn') }}">
+                Learn
+            </a>
+
+            {% if session.get("user_id") %}
+
+                <span class="welcome-user">
+                    Welcome, {{ session.get("user_name") }}
+                </span>
+
+                <a href="{{ url_for('profile') }}" class="profile-btn">
+                    Profile
+                </a>
+
+                <a href="{{ url_for('logout') }}" class="logout-btn">
+                    Logout
+                </a>
+
+            {% else %}
+
+                <a href="{{ url_for('register') }}" class="create-account-btn">
+                    Create Account
+                </a>
+
+                <a href="{{ url_for('login') }}" class="login-btn">
+                    Login
+                </a>
+
+            {% endif %}
+
+        </div>
+
+    </nav>
+
+
+    <!-- =========================
+         RESULT CONTENT
+    ========================= -->
+
+    <div class="result-container">
+
+        <div class="result-card">
+
+            <div class="result-icon">
+                🎉
+            </div>
+
+            <h1>
+                Machine Learning Quiz Completed!
+            </h1>
+
+            <p>
+                You have completed the Machine Learning quiz.
+            </p>
+
+
+            <!-- SCORE -->
+
+            <div class="score-box">
+
+                <div class="score">
+                    {{ score }} / {{ total }}
+                </div>
+
+                <div class="score-text">
+                    Your Quiz Score
+                </div>
+
+            </div>
+
+
+            <!-- RESULT MESSAGE -->
+
+            {% if score == total %}
+
+                <p>
+                    Excellent! You answered all the questions correctly.
+                </p>
+
+            {% elif score >= 3 %}
+
+                <p>
+                    Good work! You have a good understanding of the
+                    Machine Learning lesson.
+                </p>
+
+            {% else %}
+
+                <p>
+                    Keep learning and try the quiz again to improve
+                    your score.
+                </p>
+
+            {% endif %}
+
+
+            <!-- BUTTONS -->
+
+            <div class="button-group">
+
+                <a
+                    href="{{ url_for('ml_quiz') }}"
+                    class="btn retry-btn"
+                >
+                    🔄 Try Again
+                </a>
+
+                <a
+                    href="{{ url_for('ml_lesson') }}"
+                    class="btn lesson-btn"
+                >
+                    📖 Back to ML Lesson
+                </a>
+
+                <a
+                    href="{{ url_for('text_lessons') }}"
+                    class="btn back-btn"
+                >
+                    📚 Text Lessons
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

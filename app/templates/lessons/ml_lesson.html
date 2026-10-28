@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Machine Learning Basics - AI-Powered Accessible Learning
+    </title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <style>
+
+        /* =========================
+           ACCOUNT BUTTONS
+        ========================= */
+
+        .welcome-user {
+            font-weight: bold;
+            color: #2563eb;
+            margin-right: 10px;
+        }
+
+        .profile-btn {
+            padding: 8px 15px;
+            background: #2563eb;
+            color: white !important;
+            border-radius: 7px;
+            text-decoration: none;
+            margin-right: 8px;
+        }
+
+        .logout-btn {
+            padding: 8px 15px;
+            background: #ef4444;
+            color: white !important;
+            border-radius: 7px;
+            text-decoration: none;
+        }
+
+        .login-btn {
+            padding: 8px 15px;
+            background: #2563eb;
+            color: white !important;
+            border-radius: 7px;
+            text-decoration: none;
+        }
+
+        .create-account-btn {
+            padding: 8px 15px;
+            background: #16a34a;
+            color: white !important;
+            border-radius: 7px;
+            text-decoration: none;
+        }
+
+        /* =========================
+           QUIZ BUTTON
+        ========================= */
+
+        .quiz-btn {
+            display: inline-block;
+            margin: 10px;
+            padding: 13px 24px;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .quiz-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .primary-btn {
+            display: inline-block;
+            margin: 10px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+<header class="navbar">
+
+    <div class="logo">
+        AI-Powered Learning
+    </div>
+
+
+    <nav>
+
+        <a href="{{ url_for('home') }}">
+            Home
+        </a>
+
+        <a href="{{ url_for('learn') }}">
+            Learn
+        </a>
+
+        <a href="{{ url_for('text_lessons') }}">
+            Text Lessons
+        </a>
+
+        <a href="/#convert">
+            Convert
+        </a>
+
+        <a href="/#practice">
+            Practice
+        </a>
+
+    </nav>
+
+
+    <!-- ACCOUNT CONTROLS -->
+
+    {% if session.get("user_id") %}
+
+        <span class="welcome-user">
+            Welcome, {{ session.get("user_name") }}
+        </span>
+
+        <a href="{{ url_for('profile') }}"
+           class="profile-btn">
+            Profile
+        </a>
+
+        <a href="{{ url_for('logout') }}"
+           class="logout-btn">
+            Logout
+        </a>
+
+    {% else %}
+
+        <a href="{{ url_for('register') }}"
+           class="create-account-btn">
+            Create Account
+        </a>
+
+        <a href="{{ url_for('login') }}"
+           class="login-btn">
+            Login
+        </a>
+
+    {% endif %}
+
+
+</header>
+
+
+<!-- =========================
+     LESSON HERO
+========================= -->
+
+<section class="learn-hero">
+
+    <div>
+
+        <span class="tag">
+            LESSON 02
+        </span>
+
+        <h1>
+            Machine Learning<br>
+            Basics
+        </h1>
+
+        <p>
+            Understand the fundamentals of machine learning,
+            its types and real-world applications.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     LESSON CONTENT
+========================= -->
+
+<section class="section">
+
+    <div class="section-title">
+
+        <span>
+            LESSON CONTENT
+        </span>
+
+        <h2>
+            What is Machine Learning?
+        </h2>
+
+    </div>
+
+
+    <div class="lesson-content">
+
+        <h3>
+            Definition
+        </h3>
+
+        <p>
+            Machine Learning is a branch of Artificial Intelligence
+            that allows computers to learn from data and improve
+            their performance without being explicitly programmed
+            for every task.
+        </p>
+
+
+        <h3>
+            Simple Explanation
+        </h3>
+
+        <p>
+            Instead of giving a computer every instruction,
+            we provide data and allow the computer to identify
+            patterns and make predictions or decisions.
+        </p>
+
+
+        <h3>
+            Types of Machine Learning
+        </h3>
+
+        <ul>
+
+            <li>
+                <strong>Supervised Learning:</strong>
+                The system learns from labelled data.
+            </li>
+
+            <li>
+                <strong>Unsupervised Learning:</strong>
+                The system finds patterns in data without labels.
+            </li>
+
+            <li>
+                <strong>Reinforcement Learning:</strong>
+                The system learns through rewards and penalties.
+            </li>
+
+        </ul>
+
+
+        <h3>
+            Examples of Machine Learning
+        </h3>
+
+        <ul>
+
+            <li>
+                Email spam detection
+            </li>
+
+            <li>
+                Movie and video recommendations
+            </li>
+
+            <li>
+                Fraud detection
+            </li>
+
+            <li>
+                Image recognition
+            </li>
+
+            <li>
+                Voice recognition
+            </li>
+
+        </ul>
+
+
+        <h3>
+            Applications of Machine Learning
+        </h3>
+
+        <p>
+            Machine Learning is widely used in healthcare,
+            banking, education, transportation, agriculture,
+            cybersecurity and entertainment.
+        </p>
+
+
+        <h3>
+            Key Points
+        </h3>
+
+        <ul>
+
+            <li>
+                Machine Learning is a part of Artificial Intelligence.
+            </li>
+
+            <li>
+                It learns patterns from data.
+            </li>
+
+            <li>
+                It can make predictions and decisions.
+            </li>
+
+            <li>
+                It improves its performance using experience and data.
+            </li>
+
+        </ul>
+
+
+        <div class="lesson-example">
+
+            <h3>
+                Real-World Example
+            </h3>
+
+            <p>
+                Consider an email system that identifies spam.
+                By learning from previously classified emails,
+                a Machine Learning model can identify patterns
+                and predict whether a new email is likely to be spam.
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     QUICK REVIEW
+========================= -->
+
+<section class="section">
+
+    <div class="section-title">
+
+        <span>
+            QUICK REVIEW
+        </span>
+
+        <h2>
+            Remember These
+        </h2>
+
+    </div>
+
+
+    <div class="lesson-grid">
+
+
+        <div class="lesson-card">
+
+            <span class="lesson-number">
+                01
+            </span>
+
+            <h3>
+                Supervised Learning
+            </h3>
+
+            <p>
+                Learns from labelled training data.
+            </p>
+
+        </div>
+
+
+        <div class="lesson-card">
+
+            <span class="lesson-number">
+                02
+            </span>
+
+            <h3>
+                Unsupervised Learning
+            </h3>
+
+            <p>
+                Finds hidden patterns in unlabeled data.
+            </p>
+
+        </div>
+
+
+        <div class="lesson-card">
+
+            <span class="lesson-number">
+                03
+            </span>
+
+            <h3>
+                Reinforcement Learning
+            </h3>
+
+            <p>
+                Learns through rewards and penalties.
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     NEXT STEP
+========================= -->
+
+<section class="section">
+
+    <div class="section-title">
+
+        <span>
+            NEXT STEP
+        </span>
+
+        <h2>
+            Continue Learning
+        </h2>
+
+        <p>
+            Test your Machine Learning knowledge or explore more lessons.
+        </p>
+
+    </div>
+
+
+    <div style="text-align: center;">
+
+        <!-- ML QUIZ BUTTON -->
+
+        <a href="{{ url_for('ml_quiz') }}"
+           class="quiz-btn">
+            📝 Take ML Quiz →
+        </a>
+
+
+        <!-- BACK TO LESSONS -->
+
+        <a href="{{ url_for('text_lessons') }}"
+           class="primary-btn">
+            Back to Lessons
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+    <h3>
+        AI-Powered Accessible Learning
+    </h3>
+
+    <p>
+        Learning App for Deaf and Mute Students
+    </p>
+
+    <p>
+        © 2026 AI-Powered Accessible Learning
+    </p>
+
+</footer>
+
+
+</body>
+
+</html>

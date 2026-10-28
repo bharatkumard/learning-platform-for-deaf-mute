@@ -1,0 +1,470 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Development | Accessible Learning</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fc;
+            color: #243047;
+            line-height: 1.7;
+        }
+
+        nav {
+            background: #172554;
+            color: white;
+            padding: 16px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        nav strong {
+            font-size: 20px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 15px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .hero {
+            padding: 42px 20px;
+            text-align: center;
+            color: white;
+            background: linear-gradient(135deg, #2563eb, #0891b2);
+        }
+
+        .hero h1 {
+            margin: 0 0 10px;
+            font-size: clamp(28px, 5vw, 40px);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 28px auto;
+            padding: 0 18px;
+        }
+
+        .card {
+            background: white;
+            padding: 24px;
+            margin-bottom: 22px;
+            border-radius: 14px;
+            box-shadow: 0 5px 18px #17255412;
+        }
+
+        h2 {
+            color: #1d4ed8;
+            margin-top: 0;
+        }
+
+        .video-box {
+            background: #111827;
+            padding: 10px;
+            border-radius: 12px;
+        }
+
+        video {
+            display: block;
+            width: 100%;
+            max-height: 480px;
+            border-radius: 8px;
+        }
+
+        .video-note {
+            margin-top: 16px;
+            padding: 16px;
+            background: #eff6ff;
+            border-left: 4px solid #2563eb;
+            border-radius: 8px;
+        }
+
+        .concept-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+        }
+
+        .concept {
+            padding: 18px;
+            background: #eff6ff;
+            border-radius: 10px;
+            border-left: 4px solid #2563eb;
+        }
+
+        .concept h3 {
+            margin-top: 0;
+            color: #1d4ed8;
+        }
+
+        .question {
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            padding: 16px;
+            margin: 18px 0;
+        }
+
+        .question label {
+            display: block;
+            margin: 10px 0;
+            cursor: pointer;
+        }
+
+        button, .back-link {
+            display: inline-block;
+            border: none;
+            border-radius: 8px;
+            background: #2563eb;
+            color: white;
+            padding: 12px 20px;
+            font-size: 16px;
+            text-decoration: none;
+            cursor: pointer;
+            margin: 5px 5px 5px 0;
+        }
+
+        button:hover, .back-link:hover {
+            background: #1d4ed8;
+        }
+
+        #result {
+            margin-top: 18px;
+            font-weight: bold;
+        }
+
+        footer {
+            text-align: center;
+            padding: 22px;
+            color: #64748b;
+        }
+
+        @media (max-width: 600px) {
+            nav {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            nav a {
+                margin: 0 12px 0 0;
+            }
+
+            .card {
+                padding: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav>
+    <strong>Accessible Learning</strong>
+    <div>
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('learn') }}">Learn</a>
+        <a href="{{ url_for('video_learning') }}">Video Learning</a>
+        <a href="{{ url_for('visual_learning') }}">Visual Learning</a>
+    </div>
+</nav>
+
+<header class="hero">
+    <h1>Web Development</h1>
+    <p>Learn how websites are created using HTML, CSS and JavaScript.</p>
+</header>
+
+<main class="container">
+
+    <!-- WEB DEVELOPMENT VIDEO -->
+    <section class="card">
+        <h2>🎬 Web Development Video</h2>
+
+        <p>
+            Watch the Web Development lesson and learn the basics
+            of building websites. Review the written explanations
+            and test your understanding with the quiz below.
+        </p>
+
+        <div class="video-box">
+            <video controls preload="metadata"
+                   aria-label="Web Development lesson video">
+                <source
+                    src="{{ url_for('static', filename='videos/web-development.mp4') }}"
+                    type="video/mp4">
+
+                <track
+                    src="{{ url_for('static', filename='videos/web-development.vtt') }}"
+                    kind="subtitles"
+                    srclang="en"
+                    label="English"
+                    default>
+
+                Your browser does not support HTML video.
+            </video>
+        </div>
+
+        <div class="video-note">
+            <strong>Key Learning Outcome:</strong>
+            Understand how websites are created using HTML, CSS
+            and JavaScript, how web browsers display pages, and
+            how accessible design helps more people use websites.
+        </div>
+    </section>
+
+    <!-- INTRODUCTION -->
+    <section class="card">
+        <h2>📘 What Is Web Development?</h2>
+
+        <p>
+            Web development is the process of creating and maintaining
+            websites and web applications. Websites can be used for
+            education, communication, shopping, entertainment and many
+            other activities.
+        </p>
+
+        <div class="concept-grid">
+            <div class="concept">
+                <h3>🌐 Frontend</h3>
+                <p>
+                    The part of a website that users see and interact
+                    with, including text, images, buttons and menus.
+                </p>
+            </div>
+
+            <div class="concept">
+                <h3>⚙️ Backend</h3>
+                <p>
+                    The part that handles requests, processes information
+                    and communicates with databases or other services.
+                </p>
+            </div>
+
+            <div class="concept">
+                <h3>🗄️ Database</h3>
+                <p>
+                    A place where website information, such as user
+                    accounts or learning records, can be stored and managed.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- HTML CSS JAVASCRIPT -->
+    <section class="card">
+        <h2>🧩 The Three Main Web Technologies</h2>
+
+        <div class="concept-grid">
+            <div class="concept">
+                <h3>🧱 HTML</h3>
+                <p>
+                    HTML provides the structure of a webpage. It organises
+                    headings, paragraphs, images, links, forms and other
+                    page elements.
+                </p>
+            </div>
+
+            <div class="concept">
+                <h3>🎨 CSS</h3>
+                <p>
+                    CSS controls the appearance of a webpage, including
+                    colours, fonts, spacing, borders and page layout.
+                </p>
+            </div>
+
+            <div class="concept">
+                <h3>💡 JavaScript</h3>
+                <p>
+                    JavaScript adds interactive behaviour, such as
+                    responding to button clicks, validating forms
+                    and updating webpage content.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- HOW WEBSITES WORK -->
+    <section class="card">
+        <h2>🔄 How Does a Website Work?</h2>
+
+        <p>
+            A website uses a browser and, in many cases, a web server
+            to deliver content to users.
+        </p>
+
+        <ol>
+            <li>
+                <strong>Request:</strong>
+                A user enters a website address or clicks a link.
+            </li>
+            <li>
+                <strong>Server response:</strong>
+                The browser requests the webpage and receives the
+                required files from a server.
+            </li>
+            <li>
+                <strong>Rendering:</strong>
+                The browser interprets HTML, CSS and JavaScript
+                to display the page.
+            </li>
+            <li>
+                <strong>Interaction:</strong>
+                The user reads content, clicks buttons, follows links
+                or fills in forms.
+            </li>
+        </ol>
+    </section>
+
+    <!-- ACCESSIBILITY -->
+    <section class="card">
+        <h2>♿ Accessible Web Design</h2>
+
+        <p>
+            Accessible web design helps people with different abilities
+            use websites. Accessibility should be considered while
+            building the website, not only after it is completed.
+        </p>
+
+        <ul>
+            <li>Use clear headings and simple, understandable language.</li>
+            <li>Add meaningful alternative text to informative images.</li>
+            <li>Provide captions and transcripts for video content.</li>
+            <li>Make links, forms and buttons usable with a keyboard.</li>
+            <li>Use readable text and sufficient colour contrast.</li>
+            <li>Provide clear labels and instructions for form fields.</li>
+        </ul>
+    </section>
+
+    <!-- QUIZ -->
+    <section class="card" id="quiz">
+        <h2>📝 Test Your Knowledge</h2>
+        <p>Answer all five questions and submit your answers.</p>
+
+        <form id="quizForm">
+
+            <div class="question">
+                <p>1. What is the main purpose of HTML?</p>
+                <label><input type="radio" name="q1" value="a" required>
+                    To structure webpage content</label>
+                <label><input type="radio" name="q1" value="b">
+                    To store all website data</label>
+                <label><input type="radio" name="q1" value="c">
+                    To control computer hardware</label>
+            </div>
+
+            <div class="question">
+                <p>2. Which technology is mainly used to style a webpage?</p>
+                <label><input type="radio" name="q2" value="a" required>
+                    HTML</label>
+                <label><input type="radio" name="q2" value="b">
+                    CSS</label>
+                <label><input type="radio" name="q2" value="c">
+                    SQL</label>
+            </div>
+
+            <div class="question">
+                <p>3. Which technology can add interactive behaviour to a webpage?</p>
+                <label><input type="radio" name="q3" value="a" required>
+                    JavaScript</label>
+                <label><input type="radio" name="q3" value="b">
+                    CSS alone</label>
+                <label><input type="radio" name="q3" value="c">
+                    An image file</label>
+            </div>
+
+            <div class="question">
+                <p>4. What is the frontend of a website?</p>
+                <label><input type="radio" name="q4" value="a" required>
+                    The part users see and interact with</label>
+                <label><input type="radio" name="q4" value="b">
+                    Only the website database</label>
+                <label><input type="radio" name="q4" value="c">
+                    The computer's operating system</label>
+            </div>
+
+            <div class="question">
+                <p>5. Which feature helps deaf and hard-of-hearing users access videos?</p>
+                <label><input type="radio" name="q5" value="a" required>
+                    Captions or subtitles</label>
+                <label><input type="radio" name="q5" value="b">
+                    Decorative borders</label>
+                <label><input type="radio" name="q5" value="c">
+                    Smaller headings</label>
+            </div>
+
+            <button type="submit">Submit Quiz</button>
+            <button type="button" id="retryButton">Try Again</button>
+        </form>
+
+        <div id="result" role="status" aria-live="polite"></div>
+    </section>
+
+    <a class="back-link" href="{{ url_for('video_learning') }}">
+        ← Back to Video Learning
+    </a>
+
+</main>
+
+<footer>
+    Accessible Learning App · Learn at your own pace
+</footer>
+
+<script>
+    const quizForm = document.getElementById("quizForm");
+    const result = document.getElementById("result");
+
+    const answers = {
+        q1: "a",
+        q2: "b",
+        q3: "a",
+        q4: "a",
+        q5: "a"
+    };
+
+    quizForm.addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        const formData = new FormData(quizForm);
+        let score = 0;
+
+        for (const question in answers) {
+            if (formData.get(question) === answers[question]) {
+                score++;
+            }
+        }
+
+        result.textContent =
+            "Your score: " + score + " out of 5. " +
+            (score === 5
+                ? "Excellent work! You answered every question correctly."
+                : "Review the lesson and try again.");
+
+        result.scrollIntoView({
+            behavior: "smooth",
+            block: "nearest"
+        });
+    });
+
+    document.getElementById("retryButton").addEventListener("click", function() {
+        quizForm.reset();
+        result.textContent = "";
+    });
+</script>
+
+</body>
+</html>

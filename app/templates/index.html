@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        AI-Powered Accessible Learning App for Deaf and Mute Students
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+
+    <style>
+
+        /* =====================================================
+           ACCOUNT CONTROLS
+        ====================================================== */
+
+        .account-controls {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            margin-left: 20px;
+        }
+
+
+        .welcome-user {
+
+            color: #374151;
+
+            font-weight: 600;
+
+            white-space: nowrap;
+        }
+
+
+        .profile-btn {
+
+            display: inline-block;
+
+            padding: 9px 16px;
+
+            border-radius: 8px;
+
+            background: #2563eb;
+
+            color: white !important;
+
+            text-decoration: none;
+
+            font-weight: 600;
+
+            transition: 0.2s ease;
+        }
+
+
+        .profile-btn:hover {
+
+            background: #dbeafe;
+
+            color: #1d4ed8;
+        }
+
+
+        .logout-btn {
+
+            display: inline-block;
+
+            padding: 9px 16px;
+
+            border-radius: 8px;
+
+            background: #ef4444;
+
+            color: white;
+
+            text-decoration: none;
+
+            font-weight: 600;
+
+            transition: 0.2s ease;
+        }
+
+
+        .logout-btn:hover {
+
+            background: #dc2626;
+        }
+
+
+        .create-account-btn {
+
+            display: inline-block;
+
+            padding: 9px 16px;
+
+            border-radius: 8px;
+
+            background:  #2563eb;
+
+            color: white !important;
+
+            text-decoration: none;
+
+            font-weight: 600;
+
+            margin-right: 8px;
+
+            transition: 0.2s ease;
+        }
+
+
+        .create-account-btn:hover {
+
+            background: #dbeafe;
+
+            color: #1d4ed8;
+        }
+
+
+        /* =====================================================
+           MOBILE ACCOUNT CONTROLS
+        ====================================================== */
+
+        @media (max-width: 900px) {
+
+            .account-controls {
+
+                margin-left: 10px;
+
+                gap: 6px;
+
+                flex-wrap: wrap;
+
+                justify-content: flex-end;
+            }
+
+
+            .welcome-user {
+
+                font-size: 14px;
+            }
+
+
+            .profile-btn,
+            .logout-btn,
+            .create-account-btn {
+
+                padding: 8px 12px;
+
+                font-size: 14px;
+            }
+
+        }
+
+
+        @media (max-width: 700px) {
+
+            .account-controls {
+
+                width: 100%;
+
+                margin-left: 0;
+
+                margin-top: 10px;
+
+                justify-content: center;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         NAVIGATION BAR
+    ====================================================== -->
+
+    <header class="navbar">
+
+
+        <div class="logo">
+            AI-Powered Learning
+        </div>
+
+
+        <nav>
+
+            <a href="{{ url_for('home') }}">
+                Home
+            </a>
+
+            <a href="{{ url_for('learn') }}">
+                Learn
+            </a>
+
+            <a href="#convert">
+                Convert
+            </a>
+
+            <a href="#practice">
+                Practice
+            </a>
+
+            <a href="#about">
+                About
+            </a>
+
+        </nav>
+
+
+        <!-- =================================================
+             ACCOUNT CONTROLS
+        ================================================== -->
+
+        <div class="account-controls">
+
+
+            {% if session.get("user_id") %}
+
+                <!-- Logged-in user -->
+
+                <span class="welcome-user">
+
+                    Welcome,
+                    {{ session.get("user_name") }}
+
+                </span>
+
+
+                <!-- PROFILE BUTTON -->
+
+                <a
+                    href="{{ url_for('profile') }}"
+                    class="profile-btn"
+                >
+                    Profile
+                </a>
+
+
+                <!-- LOGOUT BUTTON -->
+
+                <a
+                    href="{{ url_for('logout') }}"
+                    class="logout-btn"
+                >
+                    Logout
+                </a>
+
+
+            {% else %}
+
+                <!-- Logged-out user -->
+
+                <a
+                    href="{{ url_for('register') }}"
+                    class="create-account-btn"
+                >
+                    Create Account
+                </a>
+
+
+                <a
+                    href="{{ url_for('login') }}"
+                    class="login-btn"
+                >
+                    Login
+                </a>
+
+
+            {% endif %}
+
+
+        </div>
+
+
+    </header>
+
+
+
+    <!-- =====================================================
+         HERO SECTION
+    ====================================================== -->
+
+    <section class="hero">
+
+
+        <div class="hero-content">
+
+
+            <span class="tag">
+                MULTI-MODAL LEARNING PLATFORM
+            </span>
+
+
+            <h1>
+
+                Learn Without<br>
+
+                <span>
+                    Limits
+                </span>
+
+            </h1>
+
+
+            <p>
+
+                An accessible learning platform that brings together
+                text, visuals, audio, sign language and AI-powered
+                learning tools in one place.
+
+            </p>
+
+
+            <div class="hero-buttons">
+
+
+                <a
+                    href="{{ url_for('learn') }}"
+                    class="primary-btn"
+                >
+                    Start Learning
+                </a>
+
+
+                <a
+                    href="#convert"
+                    class="secondary-btn"
+                >
+                    Explore Features
+                </a>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <div class="hero-card">
+
+
+            <div class="circle">
+                🤟
+            </div>
+
+
+            <h3>
+                Learn Your Way
+            </h3>
+
+
+            <p>
+                Choose the learning method that works best for you.
+            </p>
+
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =====================================================
+         LEARNING METHODS
+    ====================================================== -->
+
+    <section
+        class="section"
+        id="learn"
+    >
+
+
+        <div class="section-title">
+
+
+            <span>
+                LEARNING METHODS
+            </span>
+
+
+            <h2>
+                Multiple Ways to Learn
+            </h2>
+
+
+            <p>
+                Access educational content through different learning formats.
+            </p>
+
+
+        </div>
+
+
+
+        <div class="feature-grid">
+
+
+            <div class="feature-card">
+
+
+                <div class="icon">
+                    📖
+                </div>
+
+
+                <h3>
+                    Text Learning
+                </h3>
+
+
+                <p>
+
+                    Learn through structured lessons, notes,
+                    definitions and examples.
+
+                </p>
+
+
+            </div>
+
+
+
+            <div class="feature-card">
+
+
+                <div class="icon">
+                    🎨
+                </div>
+
+
+                <h3>
+                    Visual Learning
+                </h3>
+
+
+                <p>
+
+                    Understand concepts using images,
+                    diagrams, animations and videos.
+
+                </p>
+
+
+            </div>
+
+
+
+            <div class="feature-card">
+
+
+                <div class="icon">
+                    🤟
+                </div>
+
+
+                <h3>
+                    Sign Language
+                </h3>
+
+
+                <p>
+
+                    Learn and understand concepts using
+                    sign language resources.
+
+                </p>
+
+
+            </div>
+
+
+
+            <div class="feature-card">
+
+
+                <div class="icon">
+                    🎥
+                </div>
+
+
+                <h3>
+                    Video Learning
+                </h3>
+
+
+                <p>
+
+                    Learn through educational videos,
+                    animations and visual demonstrations.
+
+                </p>
+
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =====================================================
+         AI CONVERSION SECTION
+    ====================================================== -->
+
+    <section
+        class="convert-section"
+        id="convert"
+    >
+
+
+        <div class="section-title">
+
+
+            <span>
+                AI-POWERED CONVERSION
+            </span>
+
+
+            <h2>
+                Connect Different Forms of Communication
+            </h2>
+
+
+            <p>
+                Convert information between speech, text and sign language.
+            </p>
+
+
+        </div>
+
+
+
+        <div class="conversion-grid">
+
+
+            <div class="conversion-card">
+
+
+                <div class="conversion-icon">
+                    🎤
+                </div>
+
+
+                <h3>
+                    Audio → Text
+                </h3>
+
+
+                <p>
+                    Convert speech into readable text and captions.
+                </p>
+
+
+            </div>
+
+
+
+            <div class="conversion-card">
+
+
+                <div class="conversion-icon">
+                    🎤 → 🤟
+                </div>
+
+
+                <h3>
+                    Audio → Sign
+                </h3>
+
+
+                <p>
+                    Convert spoken content into a sign-language representation.
+                </p>
+
+
+            </div>
+
+
+
+            <div class="conversion-card">
+
+
+                <div class="conversion-icon">
+                    📝 → 🤟
+                </div>
+
+
+                <h3>
+                    Text → Sign
+                </h3>
+
+
+                <p>
+                    Represent text using sign-language videos or animations.
+                </p>
+
+
+            </div>
+
+
+
+            <div class="conversion-card">
+
+
+                <div class="conversion-icon">
+                    🤟 → 📝
+                </div>
+
+
+                <h3>
+                    Sign → Text
+                </h3>
+
+
+                <p>
+                    Use camera-based recognition to convert signs into text.
+                </p>
+
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =====================================================
+         WORKFLOW SECTION
+    ====================================================== -->
+
+    <section
+        class="workflow"
+        id="practice"
+    >
+
+
+        <div class="section-title">
+
+
+            <span>
+                HOW IT WORKS
+            </span>
+
+
+            <h2>
+                One Platform. Multiple Possibilities.
+            </h2>
+
+
+        </div>
+
+
+
+        <div class="workflow-container">
+
+
+            <div class="workflow-step">
+
+
+                <div class="step-number">
+                    01
+                </div>
+
+
+                <h3>
+                    Learn
+                </h3>
+
+
+                <p>
+                    Choose text, visual, video or sign-based content.
+                </p>
+
+
+            </div>
+
+
+
+            <div class="arrow">
+                →
+            </div>
+
+
+
+            <div class="workflow-step">
+
+
+                <div class="step-number">
+                    02
+                </div>
+
+
+                <h3>
+                    Convert
+                </h3>
+
+
+                <p>
+                    Convert information between different formats.
+                </p>
+
+
+            </div>
+
+
+
+            <div class="arrow">
+                →
+            </div>
+
+
+
+            <div class="workflow-step">
+
+
+                <div class="step-number">
+                    03
+                </div>
+
+
+                <h3>
+                    Practice
+                </h3>
+
+
+                <p>
+                    Test your understanding through interactive activities.
+                </p>
+
+
+            </div>
+
+
+
+            <div class="arrow">
+                →
+            </div>
+
+
+
+            <div class="workflow-step">
+
+
+                <div class="step-number">
+                    04
+                </div>
+
+
+                <h3>
+                    Track
+                </h3>
+
+
+                <p>
+                    Monitor learning progress and improve over time.
+                </p>
+
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =====================================================
+         ABOUT SECTION
+    ====================================================== -->
+
+    <section
+        class="about-section"
+        id="about"
+    >
+
+
+        <div>
+
+
+            <span>
+                OUR GOAL
+            </span>
+
+
+            <h2>
+                Making Learning More Accessible
+            </h2>
+
+
+        </div>
+
+
+
+        <p>
+
+            AI-Powered Accessible Learning App aims to reduce
+            communication barriers by providing multiple ways
+            to access, understand and share educational
+            information through accessible technologies.
+
+        </p>
+
+
+    </section>
+
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer>
+
+
+        <h3>
+            AI-Powered Accessible Learning
+        </h3>
+
+
+        <p>
+            Learning App for Deaf and Mute Students
+        </p>
+
+
+        <p>
+            © 2026 AI-Powered Accessible Learning. All rights reserved.
+        </p>
+
+
+    </footer>
+
+
+</body>
+
+</html>

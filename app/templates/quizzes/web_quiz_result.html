@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Web Development Quiz Result - Accessible Learning</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #1f2937;
+            line-height: 1.6;
+        }
+
+        .navbar {
+            background: white;
+            border-bottom: 1px solid #eee;
+            padding: 18px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+            color: #111827;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #374151;
+            font-size: 15px;
+        }
+
+        .nav-links a:hover {
+            color: #2563eb;
+        }
+
+        .login-btn {
+            background: #2563eb;
+            color: white !important;
+            padding: 9px 18px;
+            border-radius: 8px;
+        }
+
+        .welcome-user {
+            color: #2563eb;
+            font-weight: bold;
+        }
+
+        .profile-btn,
+        .logout-btn,
+        .create-account-btn {
+            color: white !important;
+            padding: 9px 15px;
+            border-radius: 8px;
+            text-decoration: none;
+        }
+
+        .profile-btn {
+            background: #2563eb;
+        }
+
+        .logout-btn {
+            background: #ef4444;
+        }
+
+        .create-account-btn {
+            background: #16a34a;
+        }
+
+        .result-container {
+            max-width: 750px;
+            margin: 70px auto;
+            padding: 20px;
+        }
+
+        .result-card {
+            background: white;
+            padding: 45px 35px;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            text-align: center;
+        }
+
+        .result-icon {
+            font-size: 60px;
+            margin-bottom: 15px;
+        }
+
+        .result-card h1 {
+            font-size: 34px;
+            color: #111827;
+            margin-bottom: 15px;
+        }
+
+        .score {
+            font-size: 30px;
+            font-weight: bold;
+            color: #2563eb;
+            margin: 25px 0;
+        }
+
+        .message {
+            font-size: 18px;
+            color: #4b5563;
+            margin-bottom: 30px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .primary-btn {
+            background: #2563eb;
+            color: white;
+        }
+
+        .primary-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .secondary-btn {
+            background: #e5e7eb;
+            color: #1f2937;
+        }
+
+        .secondary-btn:hover {
+            background: #d1d5db;
+        }
+
+        @media (max-width: 900px) {
+            .navbar {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .result-container {
+                margin: 35px auto;
+                padding: 15px;
+            }
+
+            .result-card {
+                padding: 30px 20px;
+            }
+
+            .result-card h1 {
+                font-size: 28px;
+            }
+
+            .score {
+                font-size: 26px;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="navbar">
+
+    <div class="logo">
+        Accessible Learning
+    </div>
+
+    <nav class="nav-links">
+
+        <a href="{{ url_for('home') }}">Home</a>
+
+        <a href="{{ url_for('learn') }}">Learn</a>
+
+        <a href="{{ url_for('text_lessons') }}">Text Lessons</a>
+
+        <a href="{{ url_for('visual_learning') }}">
+            Visual Learning
+        </a>
+
+        {% if session.get('user_id') %}
+
+            <span class="welcome-user">
+                Welcome, {{ session.get('user_name') }}
+            </span>
+
+            <a href="{{ url_for('profile') }}" class="profile-btn">
+                Profile
+            </a>
+
+            <a href="{{ url_for('logout') }}" class="logout-btn">
+                Logout
+            </a>
+
+        {% else %}
+
+            <a href="{{ url_for('register') }}" class="create-account-btn">
+                Create Account
+            </a>
+
+            <a href="{{ url_for('login') }}" class="login-btn">
+                Login
+            </a>
+
+        {% endif %}
+
+    </nav>
+
+</header>
+
+
+<main class="result-container">
+
+    <div class="result-card">
+
+        <div class="result-icon">
+            🌐
+        </div>
+
+        <h1>
+            Web Development Quiz Result
+        </h1>
+
+        <div class="score">
+            Your Score: {{ score }} / {{ total }}
+        </div>
+
+
+        {% if score == total %}
+
+            <p class="message">
+                Excellent! You answered all the questions correctly.
+            </p>
+
+        {% elif score >= 3 %}
+
+            <p class="message">
+                Good work! You have a good understanding of web development basics.
+            </p>
+
+        {% else %}
+
+            <p class="message">
+                Keep learning! You can review the lesson and try the quiz again.
+            </p>
+
+        {% endif %}
+
+
+        <div class="buttons">
+
+            <a href="{{ url_for('web_quiz') }}"
+               class="btn primary-btn">
+                Try Again
+            </a>
+
+            <a href="{{ url_for('web_lesson') }}"
+               class="btn secondary-btn">
+                Back to Web Lesson
+            </a>
+
+            <a href="{{ url_for('text_lessons') }}"
+               class="btn secondary-btn">
+                Text Lessons
+            </a>
+
+        </div>
+
+    </div>
+
+</main>
+
+</body>
+</html>

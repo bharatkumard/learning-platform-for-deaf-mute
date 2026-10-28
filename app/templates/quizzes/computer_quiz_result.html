@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Computer Quiz Result - AI-Powered Accessible Learning</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <style>
+        .result-container {
+            max-width: 700px;
+            margin: 70px auto;
+            padding: 20px;
+        }
+
+        .result-card {
+            background: white;
+            padding: 45px;
+            border-radius: 18px;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .result-card h1 {
+            margin-bottom: 15px;
+        }
+
+        .score {
+            font-size: 48px;
+            font-weight: bold;
+            margin: 25px 0;
+        }
+
+        .result-message {
+            font-size: 20px;
+            margin-bottom: 30px;
+        }
+
+        .result-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .result-btn {
+            display: inline-block;
+            padding: 13px 22px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            background: #2563eb;
+            color: white;
+        }
+
+        .result-btn:hover {
+            background: #1d4ed8;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar">
+
+    <div class="nav-left">
+        <a href="{{ url_for('home') }}" class="logo">
+            AI Accessible Learning
+        </a>
+
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('learn') }}">Learn</a>
+        <a href="{{ url_for('text_lessons') }}">Text Lessons</a>
+        <a href="#">Convert</a>
+        <a href="#">Practice</a>
+    </div>
+
+    <div class="nav-right">
+
+        {% if session.get('user_id') %}
+
+            <span class="welcome-user">
+                Welcome, {{ session.get('user_name') }}
+            </span>
+
+            <a href="{{ url_for('profile') }}"
+               class="profile-btn">
+                Profile
+            </a>
+
+            <a href="{{ url_for('logout') }}"
+               class="logout-btn">
+                Logout
+            </a>
+
+        {% else %}
+
+            <a href="{{ url_for('register') }}"
+               class="create-account-btn">
+                Create Account
+            </a>
+
+            <a href="{{ url_for('login') }}"
+               class="profile-btn">
+                Login
+            </a>
+
+        {% endif %}
+
+    </div>
+
+</nav>
+
+
+<!-- ================= RESULT ================= -->
+
+<main class="result-container">
+
+    <div class="result-card">
+
+        <h1>💻 Computer Quiz Result</h1>
+
+        <p>You have completed the Computer Fundamentals Quiz.</p>
+
+        <div class="score">
+            {{ score }} / {{ total }}
+        </div>
+
+        {% if score == total %}
+
+            <div class="result-message">
+                🎉 Excellent! You got all the answers correct.
+            </div>
+
+        {% elif score >= 3 %}
+
+            <div class="result-message">
+                👍 Good work! Keep learning and improving.
+            </div>
+
+        {% else %}
+
+            <div class="result-message">
+                📚 Keep learning! You can try the quiz again.
+            </div>
+
+        {% endif %}
+
+
+        <div class="result-buttons">
+
+            <a href="{{ url_for('computer_quiz') }}"
+               class="result-btn">
+                🔄 Try Again
+            </a>
+
+            <a href="{{ url_for('computer_lesson') }}"
+               class="result-btn">
+                📖 Back to Computer Lesson
+            </a>
+
+            <a href="{{ url_for('text_lessons') }}"
+               class="result-btn">
+                📚 Text Lessons
+            </a>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="footer">
+
+    <p>
+        © 2026 AI-Powered Accessible Learning App
+    </p>
+
+    <p>
+        Accessible Education • Visual Learning • Inclusive Technology
+    </p>
+
+</footer>
+
+</body>
+</html>

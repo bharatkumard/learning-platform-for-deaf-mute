@@ -1,0 +1,328 @@
+﻿WEBVTT
+
+00:00:00.100 --> 00:00:02.480
+The web is something we
+interact with every single day,
+
+00:00:02.579 --> 00:00:05.920
+but have you ever stopped to think about
+what actually goes on behind the scenes?
+
+00:00:05.969 --> 00:00:08.400
+Imagine waking up in the
+morning, grabbing your phone,
+
+00:00:08.525 --> 00:00:10.080
+and opening your favorite website.
+
+00:00:10.230 --> 00:00:13.280
+Maybe it's YouTube, Instagram,
+or your go-to news site.
+
+00:00:13.380 --> 00:00:16.960
+It loads almost instantly, displaying all
+the content right where you expect it.
+
+00:00:17.010 --> 00:00:18.010
+But how does that happen?
+
+00:00:18.150 --> 00:00:20.240
+What's making everything work so smoothly?
+
+00:00:20.315 --> 00:00:23.360
+Today, we're breaking it all
+down in the simplest way possible,
+
+00:00:23.510 --> 00:00:25.040
+so that by the end of this video,
+
+00:00:25.165 --> 00:00:27.680
+you'll have a clear understanding
+of what web development is
+
+00:00:27.780 --> 00:00:29.200
+and how websites come to life.
+
+00:00:29.350 --> 00:00:32.720
+Web development is the process
+of building and maintaining websites.
+
+00:00:32.819 --> 00:00:34.640
+It's what makes the internet function,
+
+00:00:34.739 --> 00:00:37.360
+from the way a page looks
+to how it processes data,
+
+00:00:37.509 --> 00:00:39.600
+and responds to user interactions.
+
+00:00:39.699 --> 00:00:41.200
+Think of a website like a restaurant.
+
+00:00:41.300 --> 00:00:44.000
+The front end is everything
+you see as a customer.
+
+00:00:44.124 --> 00:00:46.800
+The menu, the tables, the ambience,
+
+00:00:46.949 --> 00:00:48.400
+the back end is like the kitchen,
+
+00:00:48.499 --> 00:00:51.360
+where chefs and staff work behind
+the scenes to prepare your food
+
+00:00:51.459 --> 00:00:53.680
+and make sure everything
+is running efficiently,
+
+00:00:53.779 --> 00:00:55.520
+and then we have
+full stack development,
+
+00:00:55.669 --> 00:00:57.520
+which is like being the
+owner of the restaurant
+
+00:00:57.521 --> 00:01:00.800
+who manages both the customer
+experience and the kitchen operations.
+
+00:01:00.949 --> 00:01:04.400
+Front end development is all about
+what users see and interact with.
+
+00:01:04.449 --> 00:01:09.680
+It involves three key technologies, HTML,
+which structures the content of a web page,
+
+00:01:09.779 --> 00:01:12.631
+CSS, which styles it
+with colors, fonts, and
+
+00:01:12.731 --> 00:01:15.200
+layouts, and JavaScript,
+which makes it interactive.
+
+00:01:15.349 --> 00:01:18.800
+For example, when you hover
+over a button and it changes color,
+
+00:01:18.949 --> 00:01:20.480
+that's JavaScript in action.
+
+00:01:20.579 --> 00:01:23.760
+The front end is crucial because
+it affects the user experience.
+
+00:01:23.909 --> 00:01:28.560
+If a website is slow, hard to navigate or
+looks outdated, users won't stick around.
+
+00:01:28.709 --> 00:01:30.560
+Next time you visit a site like Netflix,
+
+00:01:30.561 --> 00:01:32.800
+pay attention to how
+smooth everything looks,
+
+00:01:32.899 --> 00:01:34.960
+the hover effects, the
+scrolling animations,
+
+00:01:34.961 --> 00:01:37.920
+the clean layout, that's all
+thanks to front end development.
+
+00:01:38.069 --> 00:01:40.189
+But what about everything
+happening behind the scenes?
+
+00:01:40.229 --> 00:01:42.160
+That's where back end development comes in,
+
+00:01:42.259 --> 00:01:44.640
+the back end is responsible
+for processing requests,
+
+00:01:44.689 --> 00:01:47.920
+storing and managing data, and
+making sure everything works properly.
+
+00:01:48.019 --> 00:01:50.000
+When you log into Facebook, for example,
+
+00:01:50.124 --> 00:01:53.040
+the back end checks your username
+and password against a database,
+
+00:01:53.164 --> 00:01:55.760
+retrieves your profile
+information and loads your feed.
+
+00:01:55.909 --> 00:01:58.320
+It's the invisible engine that
+keeps everything running.
+
+00:01:58.369 --> 00:02:02.054
+Back end development uses programming
+languages like Python, PHP, Node.
+
+00:02:02.079 --> 00:02:05.886
+js, and frameworks
+like Dejango, or Express.
+
+00:02:05.986 --> 00:02:08.240
+js to build the logic
+behind a website.
+
+00:02:08.390 --> 00:02:10.880
+It also relies on databases
+to store information,
+
+00:02:10.980 --> 00:02:13.200
+such as user accounts, posts, and comments.
+
+00:02:13.350 --> 00:02:14.880
+Think of the back end like a brain.
+
+00:02:14.980 --> 00:02:18.880
+It processes all the inputs and sends
+back the right responses almost instantly.
+
+00:02:18.930 --> 00:02:22.000
+Now, if someone knows how to build
+both the front end and the back end,
+
+00:02:22.100 --> 00:02:24.000
+they're called a full stack developer.
+
+00:02:24.100 --> 00:02:28.080
+These developers can create entire websites
+or applications from start to finish.
+
+00:02:28.230 --> 00:02:30.000
+They understand how
+both parts work together
+
+00:02:30.125 --> 00:02:32.199
+and can switch between
+designing a user-friendly
+
+00:02:32.249 --> 00:02:34.400
+interface and coding
+the logic that powers it.
+
+00:02:34.550 --> 00:02:36.640
+Full stack developers are highly valued,
+
+00:02:36.740 --> 00:02:38.880
+especially in startups
+and small businesses,
+
+00:02:38.955 --> 00:02:40.782
+because they can handle
+the entire development
+
+00:02:40.783 --> 00:02:42.880
+process without needing
+separate specialists.
+
+00:02:43.030 --> 00:02:44.880
+Imagine a full stack developer like a chef
+
+00:02:45.030 --> 00:02:46.640
+who not only cooks the food,
+
+00:02:46.765 --> 00:02:49.280
+but also designs the
+restaurant and manages the staff.
+
+00:02:49.430 --> 00:02:52.320
+They ensure that everything
+works seamlessly from start to finish.
+
+00:02:52.520 --> 00:02:54.480
+So how exactly does a website work?
+
+00:02:54.580 --> 00:02:58.480
+Let's say you type google.com
+into your browser and press enter.
+
+00:02:58.630 --> 00:03:00.880
+Your browser sends a
+request to Google Server,
+
+00:03:00.980 --> 00:03:04.000
+which processes the request,
+fetches the necessary data,
+
+00:03:04.100 --> 00:03:05.760
+and sends it back to your device.
+
+00:03:05.860 --> 00:03:09.760
+Thus, your browser then takes this data
+and displays it as the Google homepage.
+
+00:03:09.885 --> 00:03:13.829
+This process happens in milliseconds, and
+it's the result of a combination of front
+
+00:03:13.853 --> 00:03:16.012
+end and back end
+development working together.
+
+00:03:16.200 --> 00:03:18.000
+Think of it like ordering food online.
+
+00:03:18.100 --> 00:03:20.080
+You browse the menu, place an order,
+
+00:03:20.230 --> 00:03:22.720
+and wait for the restaurant to
+prepare and deliver your food.
+
+00:03:22.770 --> 00:03:24.640
+Website's function in the same way.
+
+00:03:24.740 --> 00:03:27.093
+You request information,
+the server processes
+
+00:03:27.168 --> 00:03:29.200
+it, and the result is
+displayed on your screen.
+
+00:03:29.300 --> 00:03:31.120
+Now that you know what web development is,
+
+00:03:31.270 --> 00:03:32.880
+which part excites you the most?
+
+00:03:32.980 --> 00:03:35.920
+Are you more into designing
+beautiful and interactive websites,
+
+00:03:36.070 --> 00:03:38.640
+or do you love the idea of
+working behind the scenes,
+
+00:03:38.690 --> 00:03:41.600
+managing data, and making
+everything function smoothly?
+
+00:03:41.750 --> 00:03:43.360
+Drop a comment below and let me know.
+
+00:03:43.510 --> 00:03:46.560
+And if this video helped you understand
+web development a little better,
+
+00:03:46.710 --> 00:03:49.440
+don't forget to like and subscribe
+for more tech breakdowns.
+
+00:03:49.441 --> 00:03:50.480
+See you in the next one.

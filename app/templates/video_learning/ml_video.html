@@ -1,0 +1,487 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Machine Learning Video Lesson</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fc;
+            color: #243047;
+            line-height: 1.6;
+        }
+
+        nav {
+            background: #172554;
+            padding: 16px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        nav strong {
+            color: white;
+            font-size: 20px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 16px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .hero {
+            padding: 40px 20px;
+            text-align: center;
+            color: white;
+            background: linear-gradient(135deg, #4338ca, #0891b2);
+        }
+
+        .hero h1 {
+            margin: 0 0 10px;
+            font-size: clamp(28px, 5vw, 40px);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 28px auto;
+            padding: 0 18px;
+        }
+
+        .card {
+            background: white;
+            padding: 24px;
+            margin-bottom: 22px;
+            border-radius: 14px;
+            box-shadow: 0 5px 18px #17255412;
+        }
+
+        h2 {
+            color: #3730a3;
+            margin-top: 0;
+        }
+
+        .video-description {
+            margin-bottom: 18px;
+            color: #4b5563;
+            line-height: 1.7;
+        }
+
+        .video-box {
+            background: #111827;
+            padding: 10px;
+            border-radius: 12px;
+        }
+
+        video {
+            display: block;
+            width: 100%;
+            max-height: 480px;
+            border-radius: 8px;
+        }
+
+        .learning-outcome {
+            margin-top: 20px;
+            padding: 18px;
+            background: #eef2ff;
+            border-left: 4px solid #4f46e5;
+            border-radius: 8px;
+        }
+
+        .learning-outcome h3 {
+            color: #3730a3;
+            margin: 0 0 8px;
+        }
+
+        .learning-outcome p {
+            margin: 0;
+            line-height: 1.7;
+        }
+
+        .question {
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            padding: 16px;
+            margin: 18px 0;
+        }
+
+        .question p {
+            font-weight: bold;
+        }
+
+        .question label {
+            display: block;
+            margin: 10px 0;
+            cursor: pointer;
+        }
+
+        input[type="radio"] {
+            margin-right: 8px;
+        }
+
+        button,
+        .back-link {
+            display: inline-block;
+            border: none;
+            border-radius: 8px;
+            background: #4338ca;
+            color: white;
+            padding: 12px 20px;
+            font-size: 16px;
+            text-decoration: none;
+            cursor: pointer;
+            margin: 5px 5px 5px 0;
+        }
+
+        button:hover,
+        .back-link:hover {
+            background: #312e81;
+        }
+
+        #result {
+            margin-top: 18px;
+            font-weight: bold;
+        }
+
+        footer {
+            text-align: center;
+            padding: 22px;
+            color: #64748b;
+        }
+
+        @media (max-width: 600px) {
+            nav {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            nav a {
+                margin: 0 12px 0 0;
+            }
+
+            .card {
+                padding: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav>
+    <strong>Accessible Learning</strong>
+
+    <div>
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('learn') }}">Learn</a>
+        <a href="{{ url_for('video_learning') }}">Video Learning</a>
+        <a href="{{ url_for('visual_learning') }}">Visual Learning</a>
+    </div>
+</nav>
+
+<header class="hero">
+    <h1>Machine Learning</h1>
+    <p>Discover how computers learn patterns from data.</p>
+</header>
+
+<main class="container">
+
+    <!-- MACHINE LEARNING VIDEO -->
+
+    <section class="card">
+        <h2>🎬 Machine Learning Video Lesson</h2>
+
+        <p class="video-description">
+            Explore the fundamentals of Machine Learning through this
+            video lesson. Learn how computers identify patterns in data
+            and use them to make predictions.
+        </p>
+
+        <div class="video-box">
+            <video controls preload="metadata"
+                   aria-label="Machine Learning introduction video">
+                <source
+                    src="{{ url_for('static', filename='videos/machine-learning-introduction.mp4') }}"
+                    type="video/mp4">
+
+                <track
+                    src="{{ url_for('static', filename='videos/ml-subtitles.vtt') }}"
+                    kind="subtitles"
+                    srclang="en"
+                    label="English"
+                    default>
+
+                Your browser does not support HTML video.
+            </video>
+        </div>
+
+        <div class="learning-outcome">
+            <h3>Key Learning Outcome</h3>
+            <p>
+                Understand the basic concepts of Machine Learning,
+                its working process, and its applications in everyday life.
+            </p>
+        </div>
+    </section>
+
+    <!-- INTRODUCTION -->
+
+    <section class="card">
+        <h2>📘 What Is Machine Learning?</h2>
+
+        <p>
+            Machine Learning (ML) is a branch of Artificial Intelligence
+            that enables computers to learn patterns from data and use
+            those patterns to make predictions or decisions.
+        </p>
+
+        <p>
+            Instead of writing a separate rule for every possible case,
+            developers train a model using examples.
+        </p>
+    </section>
+
+    <!-- WORKING PROCESS -->
+
+    <section class="card">
+        <h2>⚙️ How Does Machine Learning Work?</h2>
+
+        <ol>
+            <li><strong>Collect data:</strong> Gather useful examples.</li>
+            <li><strong>Prepare data:</strong> Organize and clean the information.</li>
+            <li><strong>Train a model:</strong> Let an algorithm find patterns.</li>
+            <li><strong>Evaluate:</strong> Check how well the model performs.</li>
+            <li><strong>Make predictions:</strong> Use the trained model on new data.</li>
+        </ol>
+    </section>
+
+    <!-- TYPES OF ML -->
+
+    <section class="card">
+        <h2>🧠 Main Types of Machine Learning</h2>
+
+        <h3>1. Supervised Learning</h3>
+        <p>
+            The model learns from examples that include the correct answers.
+            Example: predicting house prices using previous house sales.
+        </p>
+
+        <h3>2. Unsupervised Learning</h3>
+        <p>
+            The model looks for patterns in data without supplied answer labels.
+            Example: grouping customers by similar shopping habits.
+        </p>
+
+        <h3>3. Reinforcement Learning</h3>
+        <p>
+            An agent learns by interacting with an environment and receiving
+            rewards or penalties. Example: training a program to play a game.
+        </p>
+    </section>
+
+    <!-- APPLICATIONS -->
+
+    <section class="card">
+        <h2>🌍 Real-World Applications</h2>
+
+        <ul>
+            <li>Filtering unwanted email messages.</li>
+            <li>Suggesting movies, music, or educational resources.</li>
+            <li>Recognizing objects in images.</li>
+            <li>Helping detect unusual patterns in transactions.</li>
+            <li>Supporting speech recognition and accessibility tools.</li>
+        </ul>
+    </section>
+
+    <!-- ACCESSIBILITY -->
+
+    <section class="card">
+        <h2>♿ Accessible Learning</h2>
+
+        <p>
+            Video lessons should include accurate captions and transcripts
+            whenever available. Written explanations and visual examples
+            provide additional ways for learners to understand the material.
+        </p>
+    </section>
+
+    <!-- INTERACTIVE QUIZ -->
+
+    <section class="card" id="quiz">
+        <h2>📝 Test Your Knowledge</h2>
+
+        <p>Answer all five questions to check your understanding.</p>
+
+        <form id="quizForm">
+
+            <div class="question">
+                <p>1. What is the main purpose of Machine Learning?</p>
+
+                <label>
+                    <input type="radio" name="q1" value="a" required>
+                    To learn patterns from data
+                </label>
+
+                <label>
+                    <input type="radio" name="q1" value="b">
+                    To replace every computer program
+                </label>
+
+                <label>
+                    <input type="radio" name="q1" value="c">
+                    To store files only
+                </label>
+            </div>
+
+            <div class="question">
+                <p>2. Which type learns from examples with known answers?</p>
+
+                <label>
+                    <input type="radio" name="q2" value="a" required>
+                    Unsupervised learning
+                </label>
+
+                <label>
+                    <input type="radio" name="q2" value="b">
+                    Supervised learning
+                </label>
+
+                <label>
+                    <input type="radio" name="q2" value="c">
+                    Reinforcement learning
+                </label>
+            </div>
+
+            <div class="question">
+                <p>3. What is the purpose of evaluating a model?</p>
+
+                <label>
+                    <input type="radio" name="q3" value="a" required>
+                    To change the computer's appearance
+                </label>
+
+                <label>
+                    <input type="radio" name="q3" value="b">
+                    To delete the training data
+                </label>
+
+                <label>
+                    <input type="radio" name="q3" value="c">
+                    To check how well the model performs
+                </label>
+            </div>
+
+            <div class="question">
+                <p>4. Which example best describes unsupervised learning?</p>
+
+                <label>
+                    <input type="radio" name="q4" value="a" required>
+                    Grouping similar items without answer labels
+                </label>
+
+                <label>
+                    <input type="radio" name="q4" value="b">
+                    Learning from a dataset with correct answers
+                </label>
+
+                <label>
+                    <input type="radio" name="q4" value="c">
+                    Following a fixed list of instructions only
+                </label>
+            </div>
+
+            <div class="question">
+                <p>5. What guides an agent in reinforcement learning?</p>
+
+                <label>
+                    <input type="radio" name="q5" value="a" required>
+                    File names alone
+                </label>
+
+                <label>
+                    <input type="radio" name="q5" value="b">
+                    Rewards or penalties from interaction
+                </label>
+
+                <label>
+                    <input type="radio" name="q5" value="c">
+                    Screen brightness
+                </label>
+            </div>
+
+            <button type="submit">Submit Quiz</button>
+            <button type="button" id="retryButton">Try Again</button>
+
+        </form>
+
+        <div id="result" role="status" aria-live="polite"></div>
+    </section>
+
+    <a class="back-link" href="{{ url_for('video_learning') }}">
+        ← Back to Video Learning
+    </a>
+
+</main>
+
+<footer>
+    Accessible Learning App · Learn at your own pace
+</footer>
+
+<script>
+    const quizForm = document.getElementById("quizForm");
+    const result = document.getElementById("result");
+
+    const answers = {
+        q1: "a",
+        q2: "b",
+        q3: "c",
+        q4: "a",
+        q5: "b"
+    };
+
+    quizForm.addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        const formData = new FormData(quizForm);
+        let score = 0;
+
+        for (const question in answers) {
+            if (formData.get(question) === answers[question]) {
+                score++;
+            }
+        }
+
+        result.textContent =
+            "Your score: " + score + " out of 5. " +
+            (score === 5
+                ? "Excellent work! You answered every question correctly."
+                : "Review the lesson notes and try again.");
+
+        result.scrollIntoView({
+            behavior: "smooth",
+            block: "nearest"
+        });
+    });
+
+    document.getElementById("retryButton").addEventListener("click", function() {
+        quizForm.reset();
+        result.textContent = "";
+    });
+</script>
+
+</body>
+</html>

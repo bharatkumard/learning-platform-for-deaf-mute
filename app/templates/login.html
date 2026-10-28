@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Login - Accessible Learning</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            font-family: Arial, sans-serif;
+
+            min-height: 100vh;
+
+            background: linear-gradient(
+                135deg,
+                #2563eb,
+                #4f46e5
+            );
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 20px;
+        }
+
+
+        .login-container {
+
+            width: 100%;
+
+            max-width: 430px;
+        }
+
+
+        .login-card {
+
+            background: white;
+
+            padding: 40px;
+
+            border-radius: 20px;
+
+            box-shadow:
+                0 20px 45px rgba(0, 0, 0, 0.18);
+        }
+
+
+        .logo {
+
+            text-align: center;
+
+            font-size: 30px;
+
+            margin-bottom: 8px;
+
+            color: #1d4ed8;
+
+            font-weight: bold;
+        }
+
+
+        .subtitle {
+
+            text-align: center;
+
+            color: #6b7280;
+
+            margin-bottom: 30px;
+        }
+
+
+        .login-card h2 {
+
+            text-align: center;
+
+            color: #111827;
+
+            margin-bottom: 25px;
+        }
+
+
+        .form-group {
+
+            margin-bottom: 20px;
+        }
+
+
+        .form-group label {
+
+            display: block;
+
+            margin-bottom: 8px;
+
+            font-weight: bold;
+
+            color: #374151;
+        }
+
+
+        .form-group input {
+
+            width: 100%;
+
+            padding: 13px 14px;
+
+            border: 1px solid #d1d5db;
+
+            border-radius: 10px;
+
+            font-size: 16px;
+
+            outline: none;
+        }
+
+
+        .form-group input:focus {
+
+            border-color: #2563eb;
+
+            box-shadow:
+                0 0 0 3px rgba(37, 99, 235, 0.12);
+        }
+
+
+        .login-button {
+
+            width: 100%;
+
+            border: none;
+
+            background: #2563eb;
+
+            color: white;
+
+            padding: 14px;
+
+            border-radius: 10px;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            margin-top: 5px;
+
+            transition: background 0.2s ease;
+        }
+
+
+        .login-button:hover {
+
+            background: #1d4ed8;
+        }
+
+
+        .login-button:active {
+
+            transform: translateY(1px);
+        }
+
+
+        .links {
+
+            text-align: center;
+
+            margin-top: 25px;
+
+            color: #374151;
+        }
+
+
+        .links a {
+
+            color: #2563eb;
+
+            text-decoration: none;
+
+            font-weight: 600;
+        }
+
+
+        .links a:hover {
+
+            text-decoration: underline;
+        }
+
+
+        .back-home {
+
+            display: block;
+
+            text-align: center;
+
+            margin-top: 18px;
+
+            color: #6b7280;
+
+            text-decoration: none;
+        }
+
+
+        .back-home:hover {
+
+            color: #111827;
+        }
+
+
+        .accessibility-note {
+
+            margin-top: 25px;
+
+            padding: 15px;
+
+            background: #eff6ff;
+
+            border-radius: 10px;
+
+            color: #374151;
+
+            font-size: 14px;
+
+            text-align: center;
+
+            line-height: 1.5;
+        }
+
+
+        @media (max-width: 500px) {
+
+            .login-card {
+
+                padding: 28px 22px;
+            }
+
+
+            .logo {
+
+                font-size: 26px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <div class="login-container">
+
+
+        <div class="login-card">
+
+
+            <div class="logo">
+                ♿ Accessible Learning
+            </div>
+
+
+            <p class="subtitle">
+                Learn Without Limits
+            </p>
+
+
+            <h2>
+                Login
+            </h2>
+
+
+            <!-- Login Form -->
+
+            <form
+                action="{{ url_for('login') }}"
+                method="POST"
+            >
+
+
+                <div class="form-group">
+
+                    <label for="email">
+                        Email
+                    </label>
+
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Enter your email"
+                        autocomplete="email"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="password">
+                        Password
+                    </label>
+
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Enter your password"
+                        autocomplete="current-password"
+                        required
+                    >
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="login-button"
+                >
+                    Login
+                </button>
+
+
+            </form>
+
+
+            <div class="links">
+
+                <p>
+
+                    Don't have an account?
+
+                    <a href="{{ url_for('register') }}">
+                        Create Account
+                    </a>
+
+                </p>
+
+            </div>
+
+
+            <a
+                href="{{ url_for('home') }}"
+                class="back-home"
+            >
+                ← Back to Home
+            </a>
+
+
+            <div class="accessibility-note">
+
+                This platform is designed to support
+                accessible and inclusive learning.
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</body>
+
+</html>

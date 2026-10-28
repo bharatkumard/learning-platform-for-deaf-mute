@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Introduction to Artificial Intelligence</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <style>
+        .account-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-left: 20px;
+        }
+
+        .welcome-user {
+            font-weight: bold;
+            color: #2563eb;
+            margin-right: 10px;
+        }
+
+        .profile-btn,
+        .create-account-btn {
+            display: inline-block;
+            padding: 9px 16px;
+            border-radius: 8px;
+            background:  #2563eb;
+            color: white !important;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .profile-btn:hover,
+        .create-account-btn:hover {
+            background: #dbeafe;
+        }
+
+        .logout-btn {
+            display: inline-block;
+            padding: 9px 16px;
+            border-radius: 8px;
+            background: #ef4444;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .logout-btn:hover {
+            background: #dc2626;
+        }
+
+        .login-btn {
+            display: inline-block;
+            padding: 9px 16px;
+            border-radius: 8px;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .login-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .quiz-btn {
+            display: inline-block;
+            padding: 14px 28px;
+            margin: 10px;
+            border-radius: 8px;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            transition: 0.2s ease;
+        }
+
+        .quiz-btn:hover {
+            background: #1d4ed8;
+            transform: translateY(-2px);
+        }
+
+        .back-btn {
+            display: inline-block;
+            padding: 14px 28px;
+            margin: 10px;
+            border-radius: 8px;
+            background: #eff6ff;
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .back-btn:hover {
+            background: #dbeafe;
+        }
+    </style>
+
+</head>
+
+<body>
+
+
+<header class="navbar">
+
+    <div class="logo">
+        AI-Powered Learning
+    </div>
+
+
+    <nav>
+
+        <a href="{{ url_for('home') }}">
+            Home
+        </a>
+
+        <a href="{{ url_for('learn') }}">
+            Learn
+        </a>
+
+        <a href="{{ url_for('text_lessons') }}">
+            Text Lessons
+        </a>
+
+        <a href="{{ url_for('home') }}#convert">
+            Convert
+        </a>
+
+        <a href="{{ url_for('home') }}#practice">
+            Practice
+        </a>
+
+    </nav>
+
+
+    <!-- ACCOUNT CONTROLS -->
+
+    <div class="account-controls">
+
+        {% if session.get("user_id") %}
+
+            <span class="welcome-user">
+                Welcome, {{ session.get("user_name") }}
+            </span>
+
+            <a href="{{ url_for('profile') }}"
+               class="profile-btn">
+                Profile
+            </a>
+
+            <a href="{{ url_for('logout') }}"
+               class="logout-btn">
+                Logout
+            </a>
+
+        {% else %}
+
+            <a href="{{ url_for('register') }}"
+               class="create-account-btn">
+                Create Account
+            </a>
+
+            <a href="{{ url_for('login') }}"
+               class="login-btn">
+                Login
+            </a>
+
+        {% endif %}
+
+    </div>
+
+</header>
+
+
+<!-- LESSON HERO -->
+
+<section class="learn-hero">
+
+    <div>
+
+        <span class="tag">
+            LESSON 01
+        </span>
+
+        <h1>
+            Introduction to<br>
+            Artificial Intelligence
+        </h1>
+
+        <p>
+            Learn the basic concepts of Artificial Intelligence,
+            its applications and real-world examples.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- LESSON CONTENT -->
+
+<section class="section">
+
+    <div class="section-title">
+
+        <span>
+            LESSON CONTENT
+        </span>
+
+        <h2>
+            What is Artificial Intelligence?
+        </h2>
+
+    </div>
+
+
+    <div class="lesson-content">
+
+
+        <h3>
+            Definition
+        </h3>
+
+        <p>
+            Artificial Intelligence, commonly called AI, is a
+            branch of computer science that enables machines
+            to perform tasks that normally require human
+            intelligence.
+        </p>
+
+
+        <h3>
+            Simple Explanation
+        </h3>
+
+        <p>
+            AI allows computers to learn from information,
+            recognize patterns, understand language, solve
+            problems and make decisions.
+        </p>
+
+
+        <h3>
+            Examples of AI
+        </h3>
+
+        <ul>
+
+            <li>
+                Voice assistants such as Siri and Google Assistant
+            </li>
+
+            <li>
+                Face recognition systems
+            </li>
+
+            <li>
+                Recommendation systems on YouTube and Netflix
+            </li>
+
+            <li>
+                Self-driving vehicle technologies
+            </li>
+
+            <li>
+                AI chatbots
+            </li>
+
+        </ul>
+
+
+        <h3>
+            Applications of AI
+        </h3>
+
+        <p>
+            Artificial Intelligence is used in many areas
+            including education, healthcare, transportation,
+            banking, agriculture and entertainment.
+        </p>
+
+
+        <h3>
+            Key Points
+        </h3>
+
+        <ul>
+
+            <li>
+                AI enables machines to perform intelligent tasks.
+            </li>
+
+            <li>
+                AI can learn from data.
+            </li>
+
+            <li>
+                AI can recognize patterns and make predictions.
+            </li>
+
+            <li>
+                AI is used in many real-world applications.
+            </li>
+
+        </ul>
+
+
+        <div class="lesson-example">
+
+            <h3>
+                Real-World Example
+            </h3>
+
+            <p>
+                When YouTube recommends videos based on the
+                videos you have previously watched, AI analyzes
+                your viewing patterns and suggests content that
+                may be relevant to you.
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- QUICK REVIEW -->
+
+<section class="section">
+
+    <div class="section-title">
+
+        <span>
+            QUICK REVIEW
+        </span>
+
+        <h2>
+            Remember These
+        </h2>
+
+    </div>
+
+
+    <div class="lesson-grid">
+
+
+        <div class="lesson-card">
+
+            <span class="lesson-number">
+                01
+            </span>
+
+            <h3>
+                AI
+            </h3>
+
+            <p>
+                Technology that enables machines to perform
+                tasks requiring human-like intelligence.
+            </p>
+
+        </div>
+
+
+        <div class="lesson-card">
+
+            <span class="lesson-number">
+                02
+            </span>
+
+            <h3>
+                Learning
+            </h3>
+
+            <p>
+                AI systems can learn patterns from data
+                and improve their performance.
+            </p>
+
+        </div>
+
+
+        <div class="lesson-card">
+
+            <span class="lesson-number">
+                03
+            </span>
+
+            <h3>
+                Applications
+            </h3>
+
+            <p>
+                AI is used in healthcare, education,
+                banking, transportation and many other fields.
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- NEXT STEP -->
+
+<section class="section">
+
+    <div class="section-title">
+
+        <span>
+            NEXT STEP
+        </span>
+
+        <h2>
+            Test Your Knowledge
+        </h2>
+
+        <p>
+            Complete the AI quiz to check your understanding
+            of this lesson.
+        </p>
+
+    </div>
+
+
+    <div style="text-align: center;">
+
+        <a href="{{ url_for('ai_quiz') }}"
+           class="quiz-btn">
+            📝 Take AI Quiz →
+        </a>
+
+        <a href="{{ url_for('text_lessons') }}"
+           class="back-btn">
+            Back to Lessons
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    <h3>
+        AI-Powered Accessible Learning
+    </h3>
+
+    <p>
+        Learning App for Deaf and Mute Students
+    </p>
+
+    <p>
+        © 2026 AI-Powered Accessible Learning
+    </p>
+
+</footer>
+
+
+</body>
+
+</html>

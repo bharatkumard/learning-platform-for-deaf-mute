@@ -1,0 +1,600 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio to Text | Accessible Learning</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            background: #f5f8fc;
+            color: #172b45;
+            font-family: Arial, "Noto Sans Tamil", sans-serif;
+        }
+
+        .page {
+            max-width: 850px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .panel {
+            background: white;
+            border: 1px solid #e0e6ef;
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 24px;
+            box-shadow: 0 8px 25px rgba(30, 50, 80, 0.05);
+        }
+
+        h1, h2 { margin-top: 0; }
+
+        h2 { font-size: 22px; }
+
+        .intro {
+            color: #60758f;
+            line-height: 1.7;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin: 18px 0 8px;
+        }
+
+        select, textarea, input[type="file"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font: inherit;
+            background: white;
+        }
+
+        textarea {
+            min-height: 180px;
+            resize: vertical;
+            line-height: 1.7;
+            overflow-wrap: anywhere;
+        }
+
+        input[type="file"] { background: #f8fafc; }
+
+        .buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 18px 0;
+        }
+
+        button, .back-link {
+            display: inline-block;
+            padding: 12px 18px;
+            border: 0;
+            border-radius: 8px;
+            background: #2563eb;
+            color: white;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        button:hover, .back-link:hover { background: #1d4ed8; }
+
+        button:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+        }
+
+        .secondary { background: #475569; }
+        .secondary:hover { background: #334155; }
+
+        .pdf-button { background: #b91c1c; }
+        .pdf-button:hover { background: #991b1b; }
+
+        .status {
+            min-height: 24px;
+            color: #475569;
+            line-height: 1.6;
+            overflow-wrap: anywhere;
+        }
+
+        .hint {
+            color: #64748b;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .divider {
+            border: 0;
+            border-top: 1px solid #e2e8f0;
+            margin: 24px 0;
+        }
+
+        @media (max-width: 550px) {
+            .page { margin: 15px auto; padding: 12px; }
+            .panel { padding: 20px; }
+            button, .back-link { max-width: 100%; }
+        }
+    </style>
+</head>
+
+<body>
+<main class="page">
+    <section class="panel">
+        <h1>🎤 Audio → Text</h1>
+
+        <p class="intro">
+            Speak into your microphone or upload an audio recording.
+            Select the correct language before starting.
+        </p>
+
+        <!-- LIVE MICROPHONE TRANSCRIPTION -->
+        <h2>🎙 Speak into Microphone</h2>
+
+        <label for="language">Speech language</label>
+        <select id="language">
+            <option value="en-IN">English (India)</option>
+            <option value="ta-IN">Tamil</option>
+            <option value="hi-IN">Hindi</option>
+            <option value="en-US">English (United States)</option>
+        </select>
+
+        <div class="buttons">
+            <button id="startBtn" type="button">Start Speaking</button>
+            <button id="stopBtn" type="button" class="secondary" disabled>
+                Stop
+            </button>
+            <button id="clearBtn" type="button" class="secondary">
+                Clear
+            </button>
+        </div>
+
+        <p id="status" class="status" role="status" aria-live="polite">
+            Select a language and press Start Speaking.
+        </p>
+
+        <label for="transcript">Recognized text</label>
+        <textarea id="transcript"
+                  lang="ta"
+                  placeholder="Recognized speech will appear here..."
+                  spellcheck="true"></textarea>
+
+        <div class="buttons">
+            <button id="copyBtn" type="button">Copy Text</button>
+            <button id="downloadLivePdfBtn" type="button" class="pdf-button">
+                Download Speech Text as PDF
+            </button>
+        </div>
+
+        <hr class="divider">
+
+        <!-- UPLOAD AUDIO FILE -->
+        <h2>📁 Upload Audio File → Text</h2>
+
+        <p class="intro">
+            Choose a recording and select the language actually spoken in it.
+        </p>
+
+        <form id="audioUploadForm"
+              method="POST"
+              enctype="multipart/form-data">
+
+            <label for="audioFile">Choose an audio file</label>
+            <input
+                type="file"
+                id="audioFile"
+                name="audio_file"
+                accept=".wav,.mp3,.ogg,.flac,.m4a,audio/*"
+                required
+            >
+
+            <p class="hint">
+                Supported formats: WAV, MP3, OGG, FLAC and M4A.
+                Maximum file size: 25 MB.
+            </p>
+
+            <label for="fileLanguage">Audio language</label>
+            <select id="fileLanguage" name="language" required>
+                <option value="en-IN">English (India)</option>
+                <option value="ta-IN">Tamil</option>
+                <option value="hi-IN">Hindi</option>
+                <option value="en-US">English (United States)</option>
+            </select>
+
+            <div class="buttons">
+                <button type="submit" id="convertFileBtn">
+                    Convert Audio to Text
+                </button>
+                <button type="button" id="clearFileBtn" class="secondary">
+                    Clear File Text
+                </button>
+            </div>
+        </form>
+
+        <p id="fileStatus" class="status" role="status" aria-live="polite">
+            Choose a recording to get started.
+        </p>
+
+        <label for="fileTranscript">Converted file text</label>
+        <textarea
+            id="fileTranscript"
+            lang="ta"
+            placeholder="Converted text will appear here..."
+            spellcheck="true"
+        ></textarea>
+
+        <div class="buttons">
+            <button type="button" id="copyFileTextBtn">
+                Copy Converted Text
+            </button>
+            <button type="button" id="downloadFilePdfBtn" class="pdf-button">
+                Download Converted Text as PDF
+            </button>
+        </div>
+
+        <a class="back-link" href="{{ url_for('learn') }}">
+            ← Back to Learning Methods
+        </a>
+    </section>
+</main>
+
+<script>
+    // ==========================================
+    // LIVE MICROPHONE SPEECH RECOGNITION
+    // ==========================================
+
+    const startBtn = document.getElementById("startBtn");
+    const stopBtn = document.getElementById("stopBtn");
+    const clearBtn = document.getElementById("clearBtn");
+    const copyBtn = document.getElementById("copyBtn");
+    const language = document.getElementById("language");
+    const transcript = document.getElementById("transcript");
+    const status = document.getElementById("status");
+
+    const SpeechRecognition =
+        window.SpeechRecognition ||
+        window.webkitSpeechRecognition;
+
+    let recognition = null;
+    let listening = false;
+    let finalText = "";
+
+    if (!SpeechRecognition) {
+        startBtn.disabled = true;
+        status.textContent =
+            "Live speech recognition is unavailable in this browser. " +
+            "Try Google Chrome and allow microphone access.";
+    } else {
+        recognition = new SpeechRecognition();
+        recognition.continuous = true;
+        recognition.interimResults = true;
+        recognition.lang = language.value;
+
+        recognition.onstart = () => {
+            listening = true;
+            startBtn.disabled = true;
+            stopBtn.disabled = false;
+            language.disabled = true;
+            status.textContent = "Listening... Speak clearly.";
+        };
+
+        recognition.onresult = (event) => {
+            let interimText = "";
+
+            for (let i = event.resultIndex; i < event.results.length; i++) {
+                const phrase = event.results[i][0].transcript;
+
+                if (event.results[i].isFinal) {
+                    finalText += phrase + " ";
+                } else {
+                    interimText += phrase;
+                }
+            }
+
+            transcript.value = finalText + interimText;
+        };
+
+        recognition.onerror = (event) => {
+            status.textContent =
+                "Recognition error: " + event.error +
+                ". Check your microphone and browser permissions.";
+        };
+
+        recognition.onend = () => {
+            listening = false;
+            startBtn.disabled = false;
+            stopBtn.disabled = true;
+            language.disabled = false;
+
+            if (status.textContent.startsWith("Listening...")) {
+                status.textContent =
+                    "Recognition stopped. You can edit or copy the text.";
+            }
+        };
+
+        startBtn.addEventListener("click", () => {
+            if (listening) return;
+
+            finalText = transcript.value.trim();
+            if (finalText) finalText += " ";
+
+            recognition.lang = language.value;
+
+            try {
+                recognition.start();
+            } catch (error) {
+                status.textContent =
+                    "Could not start recognition. Please try again.";
+            }
+        });
+
+        stopBtn.addEventListener("click", () => {
+            if (listening) {
+                recognition.stop();
+                status.textContent = "Stopping recognition...";
+            }
+        });
+
+        clearBtn.addEventListener("click", () => {
+            if (listening) recognition.stop();
+
+            finalText = "";
+            transcript.value = "";
+            status.textContent = "Transcript cleared.";
+        });
+
+        language.addEventListener("change", () => {
+            recognition.lang = language.value;
+        });
+    }
+
+    copyBtn.addEventListener("click", async () => {
+        if (!transcript.value.trim()) {
+            status.textContent = "There is no text to copy.";
+            return;
+        }
+
+        try {
+            await navigator.clipboard.writeText(transcript.value);
+            status.textContent = "Transcript copied.";
+        } catch (error) {
+            transcript.focus();
+            transcript.select();
+            status.textContent = "Text selected. Press Ctrl+C to copy.";
+        }
+    });
+
+    // ==========================================
+    // UPLOAD AUDIO AND REQUEST BACKEND CONVERSION
+    // ==========================================
+
+    const uploadForm = document.getElementById("audioUploadForm");
+    const audioFile = document.getElementById("audioFile");
+    const fileLanguage = document.getElementById("fileLanguage");
+    const fileTranscript = document.getElementById("fileTranscript");
+    const fileStatus = document.getElementById("fileStatus");
+    const convertFileBtn = document.getElementById("convertFileBtn");
+    const clearFileBtn = document.getElementById("clearFileBtn");
+    const copyFileTextBtn = document.getElementById("copyFileTextBtn");
+
+    uploadForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        if (!audioFile.files.length) {
+            fileStatus.textContent = "Please choose an audio file.";
+            return;
+        }
+
+        const selectedFile = audioFile.files[0];
+        const allowedExtensions = [
+            ".wav", ".mp3", ".ogg", ".flac", ".m4a"
+        ];
+
+        const extension = selectedFile.name
+            .substring(selectedFile.name.lastIndexOf("."))
+            .toLowerCase();
+
+        if (!allowedExtensions.includes(extension)) {
+            fileStatus.textContent =
+                "Unsupported file format. Choose WAV, MP3, OGG, FLAC or M4A.";
+            return;
+        }
+
+        if (selectedFile.size > 25 * 1024 * 1024) {
+            fileStatus.textContent =
+                "The file exceeds 25 MB. Please choose a smaller file.";
+            return;
+        }
+
+        const selectedLanguage = fileLanguage.value;
+
+        if (!["en-IN", "ta-IN", "hi-IN", "en-US"].includes(selectedLanguage)) {
+            fileStatus.textContent = "Please select a supported language.";
+            return;
+        }
+
+        // Build the form data and explicitly set the language.
+        const formData = new FormData(uploadForm);
+        formData.set("language", selectedLanguage);
+
+        convertFileBtn.disabled = true;
+        fileTranscript.value = "";
+        fileStatus.textContent =
+            "Uploading and converting audio. Please wait...";
+
+        try {
+            const response = await fetch(
+                "{{ url_for('convert_audio_file') }}",
+                {
+                    method: "POST",
+                    body: formData
+                }
+            );
+
+            let result;
+
+            try {
+                result = await response.json();
+            } catch (error) {
+                throw new Error(
+                    "The server did not return JSON. Check the Flask terminal."
+                );
+            }
+
+            if (!response.ok) {
+                throw new Error(
+                    result.error || "Audio conversion failed."
+                );
+            }
+
+            if (typeof result.text !== "string") {
+                throw new Error(
+                    "The server response did not contain recognized text."
+                );
+            }
+
+            fileTranscript.value = result.text;
+            fileTranscript.lang =
+                selectedLanguage === "ta-IN" ? "ta" :
+                selectedLanguage.startsWith("hi") ? "hi" : "en";
+
+            if (result.text.trim()) {
+                fileStatus.textContent =
+                    "Conversion finished using " +
+                    fileLanguage.options[fileLanguage.selectedIndex].text +
+                    ". Please check the transcript for accuracy.";
+            } else {
+                fileStatus.textContent =
+                    "No speech was recognized. Try a clearer recording.";
+            }
+
+        } catch (error) {
+            fileStatus.textContent =
+                error.message || "Could not convert this audio file.";
+        } finally {
+            convertFileBtn.disabled = false;
+        }
+    });
+
+    clearFileBtn.addEventListener("click", () => {
+        uploadForm.reset();
+        fileTranscript.value = "";
+        fileStatus.textContent = "Choose another audio file.";
+    });
+
+    copyFileTextBtn.addEventListener("click", async () => {
+        if (!fileTranscript.value.trim()) {
+            fileStatus.textContent = "There is no converted text to copy.";
+            return;
+        }
+
+        try {
+            await navigator.clipboard.writeText(fileTranscript.value);
+            fileStatus.textContent = "Converted text copied.";
+        } catch (error) {
+            fileTranscript.focus();
+            fileTranscript.select();
+            fileStatus.textContent = "Text selected. Press Ctrl+C to copy.";
+        }
+    });
+
+    // ==========================================
+    // PRINT TRANSCRIPT / SAVE AS PDF
+    // ==========================================
+
+    function downloadTranscriptAsPdf(textareaId, filename, title) {
+        const text = document.getElementById(textareaId).value.trim();
+
+        if (!text) {
+            alert("There is no text to download yet.");
+            return;
+        }
+
+        const printWindow = window.open("", "_blank");
+
+        if (!printWindow) {
+            alert("Allow pop-ups for this page, then try again.");
+            return;
+        }
+
+        const escapedText = text
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+
+        const escapedTitle = title
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;");
+
+        printWindow.document.open();
+        printWindow.document.write(`
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>${escapedTitle}</title>
+                <style>
+                    body {
+                        font-family: Arial, "Noto Sans Tamil", sans-serif;
+                        color: #172b45;
+                        margin: 20mm;
+                    }
+                    h1 { font-size: 20pt; }
+                    .transcript {
+                        font-size: 12pt;
+                        line-height: 1.8;
+                        white-space: pre-wrap;
+                        overflow-wrap: anywhere;
+                    }
+                    @page { size: A4; margin: 18mm; }
+                    @media print { body { margin: 0; } }
+                </style>
+            </head>
+            <body>
+                <h1>${escapedTitle}</h1>
+                <div class="transcript">${escapedText}</div>
+                <script>
+                    window.onload = function () {
+                        window.focus();
+                        window.print();
+                    };
+                <\/script>
+            </body>
+            </html>
+        `);
+        printWindow.document.close();
+    }
+
+    document.getElementById("downloadLivePdfBtn")
+        .addEventListener("click", () => {
+            downloadTranscriptAsPdf(
+                "transcript",
+                "microphone-transcript.pdf",
+                "Microphone Speech Transcript"
+            );
+        });
+
+    document.getElementById("downloadFilePdfBtn")
+        .addEventListener("click", () => {
+            downloadTranscriptAsPdf(
+                "fileTranscript",
+                "converted-audio-text.pdf",
+                "Converted Audio Transcript"
+            );
+        });
+</script>
+</body>
+</html>

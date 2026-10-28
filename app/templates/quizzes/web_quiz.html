@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Development Quiz - Accessible Learning</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #1f2937;
+            line-height: 1.6;
+        }
+
+        .navbar {
+            background: white;
+            border-bottom: 1px solid #eee;
+            padding: 18px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+            color: #111827;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #374151;
+            font-size: 15px;
+        }
+
+        .nav-links a:hover {
+            color: #2563eb;
+        }
+
+        .login-btn {
+            background: #2563eb;
+            color: white !important;
+            padding: 9px 18px;
+            border-radius: 8px;
+        }
+
+        .welcome-user {
+            color: #2563eb;
+            font-weight: bold;
+        }
+
+        .profile-btn {
+            background: #2563eb;
+            color: white !important;
+            padding: 9px 15px;
+            border-radius: 8px;
+            text-decoration: none;
+        }
+
+        .logout-btn {
+            background: #ef4444;
+            color: white !important;
+            padding: 9px 15px;
+            border-radius: 8px;
+            text-decoration: none;
+        }
+
+        .create-account-btn {
+            background: #16a34a;
+            color: white !important;
+            padding: 9px 15px;
+            border-radius: 8px;
+            text-decoration: none;
+        }
+
+        .quiz-container {
+            max-width: 850px;
+            margin: 55px auto;
+            padding: 20px;
+        }
+
+        .quiz-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .quiz-header h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+            color: #111827;
+        }
+
+        .quiz-header p {
+            color: #6b7280;
+            font-size: 17px;
+        }
+
+        .quiz-card {
+            background: white;
+            padding: 35px;
+            border-radius: 18px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .question {
+            margin-bottom: 30px;
+            padding: 22px;
+            background: #f8fafc;
+            border-radius: 12px;
+        }
+
+        .question h3 {
+            margin-bottom: 16px;
+            color: #111827;
+        }
+
+        .option {
+            display: block;
+            padding: 10px 12px;
+            margin: 8px 0;
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .option:hover {
+            background: #eff6ff;
+            border-color: #2563eb;
+        }
+
+        .option input {
+            margin-right: 10px;
+        }
+
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: #2563eb;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .submit-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        @media (max-width: 900px) {
+            .navbar {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .quiz-container {
+                margin: 30px auto;
+                padding: 15px;
+            }
+
+            .quiz-card {
+                padding: 20px;
+            }
+
+            .quiz-header h1 {
+                font-size: 28px;
+            }
+
+            .question {
+                padding: 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="navbar">
+
+    <div class="logo">
+        Accessible Learning
+    </div>
+
+    <nav class="nav-links">
+
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('learn') }}">Learn</a>
+        <a href="{{ url_for('text_lessons') }}">Text Lessons</a>
+        <a href="{{ url_for('visual_learning') }}">Visual Learning</a>
+
+        {% if session.get('user_id') %}
+
+            <span class="welcome-user">
+                Welcome, {{ session.get('user_name') }}
+            </span>
+
+            <a href="{{ url_for('profile') }}" class="profile-btn">
+                Profile
+            </a>
+
+            <a href="{{ url_for('logout') }}" class="logout-btn">
+                Logout
+            </a>
+
+        {% else %}
+
+            <a href="{{ url_for('register') }}" class="create-account-btn">
+                Create Account
+            </a>
+
+            <a href="{{ url_for('login') }}" class="login-btn">
+                Login
+            </a>
+
+        {% endif %}
+
+    </nav>
+
+</header>
+
+
+<main class="quiz-container">
+
+    <div class="quiz-header">
+
+        <h1>🌐 Web Development Quiz</h1>
+
+        <p>
+            Test your understanding of HTML, CSS and web development basics.
+        </p>
+
+    </div>
+
+
+    <form method="POST">
+
+        <div class="quiz-card">
+
+            <!-- Question 1 -->
+
+            <div class="question">
+
+                <h3>
+                    1. What does HTML stand for?
+                </h3>
+
+                <label class="option">
+                    <input type="radio" name="q1" value="a" required>
+                    Hyper Text Markup Language
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="q1" value="b">
+                    High Technology Modern Language
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="q1" value="c">
+                    Hyperlink Text Management Language
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="q1" value="d">
+                    Home Tool Markup Language
+                </label>
+
+            </div>
+
+
+            <!-- Question 2 -->
+
+            <div class="question">
+
+                <h3>
+                    2. Which language is mainly used to style a web page?
+                </h3>
+
+                <label class="option">
+                    <input type="radio" name="q2" value="a" required>
+                    CSS
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="q2" value="b">
+                    Python
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="q2" value="c">
+                    SQL
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="q2" value="d">
+                    Java
+                </label>
+
+            </div>
+
+
+            <!-- Question 3 -->
+
+            <div class="question">
+
+                <h3>
+                    3. Which HTML tag is used to create a heading?
+                </h3>
+
+                <label class="option">
+                    <input type="radio" name="q3" value="a" required>
+                    &lt;h1&gt;
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="q3" value="b">
+                    &lt;p&gt;
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="q3" value="c">
+                    &lt;img&gt;
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="q3" value="d">
+                    &lt;table&gt;
+                </label>
+
+            </div>
+
+
+            <!-- Question 4 -->
+
+            <div class="question">
+
+                <h3>
+                    4. What is CSS mainly used for?
+                </h3>
+
+                <label class="option">
+                    <input type="radio" name="q4" value="a" required>
+                    Styling and designing web pages
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="q4" value="b">
+                    Storing database records
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="q4" value="c">
+                    Creating operating systems
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="q4" value="d">
+                    Sending emails
+                </label>
+
+            </div>
+
+
+            <!-- Question 5 -->
+
+            <div class="question">
+
+                <h3>
+                    5. Which technology is used to make web pages interactive?
+                </h3>
+
+                <label class="option">
+                    <input type="radio" name="q5" value="a" required>
+                    JavaScript
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="q5" value="b">
+                    HTML only
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="q5" value="c">
+                    CSS only
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="q5" value="d">
+                    SQLite
+                </label>
+
+            </div>
+
+
+            <button type="submit" class="submit-btn">
+                Submit Web Development Quiz
+            </button>
+
+        </div>
+
+    </form>
+
+
+    <a href="{{ url_for('web_lesson') }}" class="back-link">
+        ← Back to Web Development Lesson
+    </a>
+
+</main>
+
+</body>
+</html>

@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Visual Lesson 03 - Computer Basics</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            color: #1f2937;
+            line-height: 1.6;
+        }
+
+        header {
+            background: white;
+            padding: 18px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e5e7eb;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+            color: #2563eb;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #374151;
+            margin-left: 20px;
+            font-weight: 600;
+        }
+
+        nav a:hover {
+            color: #2563eb;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #2563eb, #4f46e5);
+            color: white;
+            text-align: center;
+            padding: 70px 20px;
+        }
+
+        .lesson-number {
+            font-size: 14px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            max-width: 750px;
+            margin: auto;
+            font-size: 18px;
+        }
+
+        .container {
+            width: 88%;
+            max-width: 1100px;
+            margin: 50px auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .section-title h2 {
+            font-size: 32px;
+            color: #111827;
+            margin-bottom: 10px;
+        }
+
+        .section-title p {
+            color: #6b7280;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 5px 18px rgba(0, 0, 0, 0.07);
+            text-align: center;
+        }
+
+        .icon {
+            font-size: 40px;
+            margin-bottom: 12px;
+        }
+
+        .card h3 {
+            color: #2563eb;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: #6b7280;
+            font-size: 15px;
+        }
+
+        .visual-box {
+            background: white;
+            padding: 35px;
+            border-radius: 18px;
+            box-shadow: 0 5px 18px rgba(0, 0, 0, 0.07);
+        }
+
+        .computer-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .flow-item {
+            background: #eff6ff;
+            border: 2px solid #bfdbfe;
+            padding: 20px;
+            border-radius: 14px;
+            text-align: center;
+            min-width: 150px;
+            font-weight: bold;
+        }
+
+        .flow-item span {
+            display: block;
+            font-size: 35px;
+            margin-bottom: 8px;
+        }
+
+        .arrow {
+            font-size: 28px;
+            color: #2563eb;
+            font-weight: bold;
+        }
+
+        .types {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .type-card {
+            background: white;
+            padding: 28px;
+            border-radius: 16px;
+            box-shadow: 0 5px 18px rgba(0, 0, 0, 0.07);
+        }
+
+        .type-card h3 {
+            color: #4338ca;
+            margin-bottom: 10px;
+        }
+
+        .example {
+            background: #eef2ff;
+            padding: 30px;
+            border-radius: 18px;
+        }
+
+        .example h3 {
+            color: #3730a3;
+            margin-bottom: 12px;
+        }
+
+        .review {
+            background: white;
+            padding: 30px;
+            border-radius: 18px;
+            box-shadow: 0 5px 18px rgba(0, 0, 0, 0.07);
+        }
+
+        .review ul {
+            padding-left: 22px;
+        }
+
+        .quiz {
+            background: white;
+            padding: 35px;
+            border-radius: 18px;
+            box-shadow: 0 5px 18px rgba(0, 0, 0, 0.08);
+        }
+
+        .question {
+            margin-bottom: 28px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .question:last-child {
+            border-bottom: none;
+        }
+
+        .question h3 {
+            margin-bottom: 12px;
+            color: #111827;
+        }
+
+        .option {
+            display: block;
+            padding: 10px 12px;
+            margin: 7px 0;
+            border-radius: 8px;
+            background: #f9fafb;
+            cursor: pointer;
+        }
+
+        .option:hover {
+            background: #eff6ff;
+        }
+
+        .option input {
+            margin-right: 8px;
+        }
+
+        .quiz-buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        button {
+            border: none;
+            padding: 13px 22px;
+            border-radius: 9px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 15px;
+        }
+
+        .check-btn {
+            background: #2563eb;
+            color: white;
+        }
+
+        .check-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .reset-btn {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        #quizResult {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        .score {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .warning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .back-section {
+            text-align: center;
+            margin: 45px 0;
+        }
+
+        .back-btn {
+            display: inline-block;
+            background: #2563eb;
+            color: white;
+            padding: 14px 25px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .back-btn:hover {
+            background: #1d4ed8;
+        }
+
+        footer {
+            background: #111827;
+            color: #d1d5db;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 60px;
+        }
+
+        @media (max-width: 900px) {
+            .cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .types {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav a {
+                margin: 5px;
+                font-size: 14px;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 34px;
+            }
+
+            .container {
+                width: 92%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">
+        Accessible Learning
+    </div>
+
+    <nav>
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('learn') }}">Learn</a>
+        <a href="{{ url_for('visual_learning') }}">Visual Learning</a>
+    </nav>
+
+</header>
+
+
+<section class="hero">
+
+    <div class="lesson-number">
+        VISUAL LESSON 03
+    </div>
+
+    <h1>
+        Computer Basics
+    </h1>
+
+    <p>
+        Learn the basic parts of a computer and understand
+        how hardware, software, input, processing, and output
+        work together.
+    </p>
+
+</section>
+
+
+<div class="container">
+
+
+    <!-- WHAT IS A COMPUTER -->
+
+    <section>
+
+        <div class="section-title">
+
+            <h2>
+                What is a Computer?
+            </h2>
+
+            <p>
+                A computer is an electronic device that receives
+                information, processes it, stores it, and produces results.
+            </p>
+
+        </div>
+
+
+        <div class="cards">
+
+            <div class="card">
+
+                <div class="icon">
+                    📥
+                </div>
+
+                <h3>
+                    Input
+                </h3>
+
+                <p>
+                    Information is entered into the computer
+                    using devices such as a keyboard or mouse.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="icon">
+                    ⚙️
+                </div>
+
+                <h3>
+                    Processing
+                </h3>
+
+                <p>
+                    The computer processes information using
+                    its processor and other components.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="icon">
+                    💾
+                </div>
+
+                <h3>
+                    Storage
+                </h3>
+
+                <p>
+                    Information can be saved for later use
+                    on storage devices.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="icon">
+                    📤
+                </div>
+
+                <h3>
+                    Output
+                </h3>
+
+                <p>
+                    The computer presents results through devices
+                    such as a monitor or speakers.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- COMPUTER WORKFLOW -->
+
+    <section style="margin-top: 65px;">
+
+        <div class="section-title">
+
+            <h2>
+                How a Computer Works
+            </h2>
+
+            <p>
+                A simple visual representation of computer processing.
+            </p>
+
+        </div>
+
+
+        <div class="visual-box">
+
+            <div class="computer-flow">
+
+                <div class="flow-item">
+
+                    <span>⌨️</span>
+
+                    Input
+
+                </div>
+
+                <div class="arrow">
+                    →
+                </div>
+
+                <div class="flow-item">
+
+                    <span>⚙️</span>
+
+                    Processing
+
+                </div>
+
+                <div class="arrow">
+                    →
+                </div>
+
+                <div class="flow-item">
+
+                    <span>📺</span>
+
+                    Output
+
+                </div>
+
+                <div class="arrow">
+                    →
+                </div>
+
+                <div class="flow-item">
+
+                    <span>💾</span>
+
+                    Storage
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- HARDWARE -->
+
+    <section style="margin-top: 65px;">
+
+        <div class="section-title">
+
+            <h2>
+                Computer Hardware
+            </h2>
+
+            <p>
+                Hardware refers to the physical parts of a computer
+                that we can see and touch.
+            </p>
+
+        </div>
+
+
+        <div class="types">
+
+            <div class="type-card">
+
+                <h3>
+                    🖥️ Monitor
+                </h3>
+
+                <p>
+                    Displays visual information from the computer.
+                </p>
+
+            </div>
+
+
+            <div class="type-card">
+
+                <h3>
+                    ⌨️ Keyboard
+                </h3>
+
+                <p>
+                    Allows users to enter text, numbers, and commands.
+                </p>
+
+            </div>
+
+
+            <div class="type-card">
+
+                <h3>
+                    🖱️ Mouse
+                </h3>
+
+                <p>
+                    Allows users to point, select, click, and interact
+                    with items on the screen.
+                </p>
+
+            </div>
+
+
+            <div class="type-card">
+
+                <h3>
+                    🧠 CPU
+                </h3>
+
+                <p>
+                    The Central Processing Unit performs instructions
+                    and helps process information.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- SOFTWARE -->
+
+    <section style="margin-top: 65px;">
+
+        <div class="section-title">
+
+            <h2>
+                Computer Software
+            </h2>
+
+            <p>
+                Software consists of programs and instructions
+                that tell a computer what to do.
+            </p>
+
+        </div>
+
+
+        <div class="cards">
+
+            <div class="card">
+
+                <div class="icon">
+                    🪟
+                </div>
+
+                <h3>
+                    Operating System
+                </h3>
+
+                <p>
+                    Manages computer hardware and provides
+                    a platform for applications.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="icon">
+                    🌐
+                </div>
+
+                <h3>
+                    Applications
+                </h3>
+
+                <p>
+                    Programs that help users perform specific tasks,
+                    such as browsing or writing documents.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="icon">
+                    🧰
+                </div>
+
+                <h3>
+                    Utilities
+                </h3>
+
+                <p>
+                    Programs that help maintain, manage, or protect
+                    a computer system.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="icon">
+                    💻
+                </div>
+
+                <h3>
+                    Programs
+                </h3>
+
+                <p>
+                    Sets of instructions that allow computers
+                    to perform different tasks.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- REAL WORLD EXAMPLE -->
+
+    <section style="margin-top: 65px;">
+
+        <div class="section-title">
+
+            <h2>
+                Real-World Example
+            </h2>
+
+            <p>
+                Sending a message using a computer.
+            </p>
+
+        </div>
+
+
+        <div class="example">
+
+            <h3>
+                💬 Writing and Sending a Message
+            </h3>
+
+            <p>
+                First, you type a message using the keyboard.
+                This is the <strong>input</strong>.
+            </p>
+
+            <br>
+
+            <p>
+                The computer processes your instructions
+                and prepares the message.
+            </p>
+
+            <br>
+
+            <p>
+                The message is displayed on the monitor,
+                which is an example of <strong>output</strong>.
+            </p>
+
+            <br>
+
+            <p>
+                The message or related information may also
+                be stored on the computer or an online service.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- QUICK REVIEW -->
+
+    <section style="margin-top: 65px;">
+
+        <div class="section-title">
+
+            <h2>
+                Quick Review
+            </h2>
+
+            <p>
+                Remember these important ideas.
+            </p>
+
+        </div>
+
+
+        <div class="review">
+
+            <ul>
+
+                <li>
+                    A computer receives, processes, stores,
+                    and produces information.
+                </li>
+
+                <li>
+                    Input devices allow information to enter
+                    a computer.
+                </li>
+
+                <li>
+                    The CPU helps process instructions.
+                </li>
+
+                <li>
+                    Output devices present information to users.
+                </li>
+
+                <li>
+                    Hardware refers to physical computer components.
+                </li>
+
+                <li>
+                    Software consists of programs and instructions.
+                </li>
+
+            </ul>
+
+        </div>
+
+    </section>
+
+
+    <!-- QUIZ -->
+
+    <section style="margin-top: 65px;">
+
+        <div class="section-title">
+
+            <h2>
+                🧠 Test Your Knowledge
+            </h2>
+
+            <p>
+                Answer all 5 questions and check your score.
+            </p>
+
+        </div>
+
+
+        <div class="quiz">
+
+
+            <!-- QUESTION 1 -->
+
+            <div class="question">
+
+                <h3>
+                    1. What is computer hardware?
+                </h3>
+
+                <label class="option">
+                    <input type="radio" name="q1" value="A">
+                    A. The physical parts of a computer
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="q1" value="B">
+                    B. A computer password
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="q1" value="C">
+                    C. An Internet website
+                </label>
+
+            </div>
+
+
+            <!-- QUESTION 2 -->
+
+            <div class="question">
+
+                <h3>
+                    2. Which device is commonly used for input?
+                </h3>
+
+                <label class="option">
+                    <input type="radio" name="q2" value="A">
+                    A. Keyboard
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="q2" value="B">
+                    B. Monitor
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="q2" value="C">
+                    C. Speaker
+                </label>
+
+            </div>
+
+
+            <!-- QUESTION 3 -->
+
+            <div class="question">
+
+                <h3>
+                    3. What does the CPU help the computer do?
+                </h3>
+
+                <label class="option">
+                    <input type="radio" name="q3" value="A">
+                    A. Process instructions
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="q3" value="B">
+                    B. Print paper only
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="q3" value="C">
+                    C. Connect headphones only
+                </label>
+
+            </div>
+
+
+            <!-- QUESTION 4 -->
+
+            <div class="question">
+
+                <h3>
+                    4. True or False: Software consists of programs and instructions.
+                </h3>
+
+                <label class="option">
+                    <input type="radio" name="q4" value="A">
+                    A. True
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="q4" value="B">
+                    B. False
+                </label>
+
+            </div>
+
+
+            <!-- QUESTION 5 -->
+
+            <div class="question">
+
+                <h3>
+                    5. Which device displays visual information?
+                </h3>
+
+                <label class="option">
+                    <input type="radio" name="q5" value="A">
+                    A. Monitor
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="q5" value="B">
+                    B. Keyboard
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="q5" value="C">
+                    C. Mouse
+                </label>
+
+            </div>
+
+
+            <div class="quiz-buttons">
+
+                <button
+                    class="check-btn"
+                    onclick="checkQuiz()"
+                >
+                    Check Answers
+                </button>
+
+                <button
+                    class="reset-btn"
+                    onclick="resetQuiz()"
+                >
+                    Try Again
+                </button>
+
+            </div>
+
+
+            <div id="quizResult"></div>
+
+        </div>
+
+    </section>
+
+
+    <!-- BACK BUTTON -->
+
+    <div class="back-section">
+
+        <a
+            href="{{ url_for('visual_learning') }}"
+            class="back-btn"
+        >
+            ← Back to Visual Lessons
+        </a>
+
+    </div>
+
+</div>
+
+
+<footer>
+
+    <p>
+        AI-Powered Accessible Learning App
+    </p>
+
+    <p>
+        Learn • Understand • Practice • Grow
+    </p>
+
+</footer>
+
+
+<script>
+
+function checkQuiz() {
+
+    const answers = {
+        q1: "A",
+        q2: "A",
+        q3: "A",
+        q4: "A",
+        q5: "A"
+    };
+
+    let score = 0;
+    let unanswered = 0;
+
+    for (let question in answers) {
+
+        const selected = document.querySelector(
+            'input[name="' + question + '"]:checked'
+        );
+
+        if (!selected) {
+
+            unanswered++;
+
+        } else if (selected.value === answers[question]) {
+
+            score++;
+
+        }
+
+    }
+
+    const result = document.getElementById("quizResult");
+
+    result.style.display = "block";
+
+    if (unanswered > 0) {
+
+        result.className = "warning";
+
+        result.innerHTML =
+            "⚠️ Please answer all 5 questions before checking your score.";
+
+        return;
+    }
+
+    result.className = "score";
+
+    let message = "";
+
+    if (score === 5) {
+
+        message =
+            "Excellent! 🎉 You got all 5 questions correct.";
+
+    } else if (score >= 3) {
+
+        message =
+            "Good job! 👍 You understand the main computer concepts.";
+
+    } else {
+
+        message =
+            "Keep practicing! 📚 Review the lesson and try again.";
+
+    }
+
+    result.innerHTML =
+        "Your Score: " + score + " / 5<br>" + message;
+}
+
+
+function resetQuiz() {
+
+    const inputs = document.querySelectorAll(
+        '.quiz input[type="radio"]'
+    );
+
+    inputs.forEach(function(input) {
+
+        input.checked = false;
+
+    });
+
+    const result = document.getElementById("quizResult");
+
+    result.style.display = "none";
+    result.innerHTML = "";
+    result.className = "";
+
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        My Profile - Accessible Learning
+    </title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            font-family: Arial, sans-serif;
+
+            min-height: 100vh;
+
+            background: linear-gradient(
+                135deg,
+                #2563eb,
+                #4f46e5
+            );
+
+            padding: 40px 20px;
+        }
+
+
+        .profile-container {
+
+            width: 100%;
+
+            max-width: 600px;
+
+            margin: 0 auto;
+        }
+
+
+        .profile-card {
+
+            background: white;
+
+            border-radius: 20px;
+
+            padding: 40px;
+
+            box-shadow:
+                0 20px 45px rgba(0, 0, 0, 0.18);
+        }
+
+
+        .profile-icon {
+
+            width: 90px;
+
+            height: 90px;
+
+            margin: 0 auto 20px;
+
+            border-radius: 50%;
+
+            background: #eff6ff;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 42px;
+        }
+
+
+        h1 {
+
+            text-align: center;
+
+            color: #111827;
+
+            margin-bottom: 8px;
+        }
+
+
+        .subtitle {
+
+            text-align: center;
+
+            color: #6b7280;
+
+            margin-bottom: 35px;
+        }
+
+
+        .account-info {
+
+            background: #f9fafb;
+
+            border-radius: 14px;
+
+            padding: 20px;
+
+            margin-bottom: 25px;
+        }
+
+
+        .info-row {
+
+            padding: 15px 0;
+
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+
+        .info-row:last-child {
+
+            border-bottom: none;
+        }
+
+
+        .info-label {
+
+            display: block;
+
+            font-size: 13px;
+
+            color: #6b7280;
+
+            margin-bottom: 5px;
+
+            font-weight: 600;
+        }
+
+
+        .info-value {
+
+            color: #111827;
+
+            font-size: 17px;
+
+            font-weight: 500;
+        }
+
+
+        .buttons {
+
+            display: flex;
+
+            gap: 12px;
+        }
+
+
+        .button {
+
+            flex: 1;
+
+            padding: 13px;
+
+            border-radius: 10px;
+
+            text-align: center;
+
+            text-decoration: none;
+
+            font-weight: bold;
+        }
+
+
+        .home-button {
+
+            background: #2563eb;
+
+            color: white;
+        }
+
+
+        .home-button:hover {
+
+            background: #1d4ed8;
+        }
+
+
+        .logout-button {
+
+            background: #ef4444;
+
+            color: white;
+        }
+
+
+        .logout-button:hover {
+
+            background: #dc2626;
+        }
+
+
+        .accessibility-note {
+
+            margin-top: 25px;
+
+            padding: 15px;
+
+            background: #eff6ff;
+
+            border-radius: 10px;
+
+            color: #374151;
+
+            text-align: center;
+
+            font-size: 14px;
+
+            line-height: 1.5;
+        }
+
+
+        @media (max-width: 500px) {
+
+            .profile-card {
+
+                padding: 28px 22px;
+            }
+
+
+            .buttons {
+
+                flex-direction: column;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <div class="profile-container">
+
+
+        <div class="profile-card">
+
+
+            <div class="profile-icon">
+                👤
+            </div>
+
+
+            <h1>
+                My Profile
+            </h1>
+
+
+            <p class="subtitle">
+                Your Accessible Learning Account
+            </p>
+
+
+            <div class="account-info">
+
+
+                <div class="info-row">
+
+                    <span class="info-label">
+                        Name
+                    </span>
+
+                    <span class="info-value">
+                        {{ name }}
+                    </span>
+
+                </div>
+
+
+                <div class="info-row">
+
+                    <span class="info-label">
+                        Email
+                    </span>
+
+                    <span class="info-value">
+                        {{ email }}
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="buttons">
+
+
+                <a
+                    href="{{ url_for('home') }}"
+                    class="button home-button"
+                >
+                    ← Home
+                </a>
+
+
+                <a
+                    href="{{ url_for('logout') }}"
+                    class="button logout-button"
+                >
+                    Logout
+                </a>
+
+
+            </div>
+
+
+            <div class="accessibility-note">
+
+                Your account helps keep your learning
+                experience connected across the platform.
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</body>
+
+</html>
