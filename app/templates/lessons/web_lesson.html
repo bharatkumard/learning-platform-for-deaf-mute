@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Internet and Web Technology - AI-Powered Accessible Learning</title>
+    <title>Internet and Web Technology - SignBridge Accessible E-Learning Platform</title>
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
@@ -15,14 +15,15 @@
     <header class="navbar">
 
         <div class="logo">
-            AI-Powered Learning
+            SignBridge
+
         </div>
 
         <nav>
             <a href="{{ url_for('home') }}">Home</a>
             <a href="{{ url_for('learn') }}">Learn</a>
             <a href="{{ url_for('text_lessons') }}">Text Lessons</a>
-            <a href="/#convert">Convert</a>
+            <a href="{{ url_for('learn') }}">Convert</a>
             <a href="/#practice">Practice</a>
         </nav>
 
@@ -460,15 +461,15 @@
     <footer>
 
         <h3>
-            AI-Powered Accessible Learning
+            SignBridge Accessible E-Learning Platform
         </h3>
 
         <p>
-            Learning App for Deaf and Mute Students
+            E-Learning Platform for Deaf and speech-impaired learners, providing accessible learning resources and tools.
         </p>
 
         <p>
-            © 2026 AI-Powered Accessible Learning
+            © 2026 SignBridge Accessible E-Learning Platform. All rights reserved.
         </p>
 
     </footer>
